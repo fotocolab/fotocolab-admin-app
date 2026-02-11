@@ -1,0 +1,36 @@
+import 'package:flutter/material.dart';
+import 'package:fotocolab_admin/util/extension/extension.dart';
+import 'package:fotocolab_design_system/design_system/design_system.dart';
+
+class ErrorScreen extends StatefulWidget {
+  const ErrorScreen({super.key});
+
+  @override
+  State<ErrorScreen> createState() => _ErrorScreenState();
+}
+
+class _ErrorScreenState extends State<ErrorScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Row(
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                BrandText.primary(
+                  data: context.loc.oops_something_went_wrong,
+                  fontSize: BrandFontSize.size26,
+                  fontWeight: FontWeight.w500,
+                ),
+                BrandText.grey(data: context.loc.but_dont_worry),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

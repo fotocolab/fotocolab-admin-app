@@ -28,12 +28,6 @@ abstract class NavigationService {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            BrandInkWell(
-              child: Icon(Icons.close, color: AppColors.white),
-              onTap: () {
-                scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
-              },
-            ),
           ],
         ),
         backgroundColor: AppColors.red36,
