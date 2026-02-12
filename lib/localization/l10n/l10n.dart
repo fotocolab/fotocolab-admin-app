@@ -98,6 +98,228 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Fotocolab'**
   String get fotocolab;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @fotocolab_admin.
+  ///
+  /// In en, this message translates to:
+  /// **'Fotocolab Admin'**
+  String get fotocolab_admin;
+
+  /// No description provided for @forgot_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password'**
+  String get forgot_password;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @secure_admin_access.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure admin access'**
+  String get secure_admin_access;
+
+  /// No description provided for @secure_enterprise_access.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure Premium Enterprise Sccess'**
+  String get secure_enterprise_access;
+
+  /// No description provided for @please_enter_your_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get please_enter_your_name;
+
+  /// No description provided for @please_enter_phone_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter phone number'**
+  String get please_enter_phone_number;
+
+  /// No description provided for @phone_number_not_valid.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number not valid'**
+  String get phone_number_not_valid;
+
+  /// No description provided for @please_enter_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter email'**
+  String get please_enter_email;
+
+  /// No description provided for @not_a_valid_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Not a valid email'**
+  String get not_a_valid_email;
+
+  /// No description provided for @please_enter_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter amount'**
+  String get please_enter_amount;
+
+  /// No description provided for @please_enter_a_valid_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid amount'**
+  String get please_enter_a_valid_amount;
+
+  /// No description provided for @please_enter.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter'**
+  String get please_enter;
+
+  /// No description provided for @minimum_eigth_characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum 8 characters'**
+  String get minimum_eigth_characters;
+
+  /// No description provided for @at_least_one_uppercase_letter.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one uppercase letter'**
+  String get at_least_one_uppercase_letter;
+
+  /// No description provided for @at_least_one_lowercase_letter.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one lowercase letter'**
+  String get at_least_one_lowercase_letter;
+
+  /// No description provided for @at_least_one_digit.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one digit'**
+  String get at_least_one_digit;
+
+  /// No description provided for @at_least_one_special_character.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one special character (e.g. !@#%)'**
+  String get at_least_one_special_character;
+
+  /// No description provided for @no_whitespace_allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'No whitespace allowed'**
+  String get no_whitespace_allowed;
+
+  /// No description provided for @passwords_do_not_match.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwords_do_not_match;
+
+  /// No description provided for @oops_something_went_wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Oops something went wrong'**
+  String get oops_something_went_wrong;
+
+  /// No description provided for @but_dont_worry.
+  ///
+  /// In en, this message translates to:
+  /// **'But don\'t worry - it\'s not your fault.'**
+  String get but_dont_worry;
+
+  /// No description provided for @asset_manager.
+  ///
+  /// In en, this message translates to:
+  /// **'Asset Manager'**
+  String get asset_manager;
+
+  /// No description provided for @bulk_asset_upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulk Asset Upload'**
+  String get bulk_asset_upload;
+
+  /// No description provided for @drag_and_drop.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag & Drop'**
+  String get drag_and_drop;
+
+  /// No description provided for @select_file.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Files'**
+  String get select_file;
+
+  /// No description provided for @active_uploads.
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVE UPLOADS'**
+  String get active_uploads;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @upload_category.
+  ///
+  /// In en, this message translates to:
+  /// **'UPLOAD CATEGORY'**
+  String get upload_category;
+
+  /// No description provided for @select_existing_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Existing Category'**
+  String get select_existing_category;
+
+  /// No description provided for @or_manual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual Entry'**
+  String get or_manual;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @plus.
+  ///
+  /// In en, this message translates to:
+  /// **'+'**
+  String get plus;
+
+  /// No description provided for @keyword.
+  ///
+  /// In en, this message translates to:
+  /// **'Keywords'**
+  String get keyword;
+
+  /// No description provided for @for_search.
+  ///
+  /// In en, this message translates to:
+  /// **'For Search'**
+  String get for_search;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

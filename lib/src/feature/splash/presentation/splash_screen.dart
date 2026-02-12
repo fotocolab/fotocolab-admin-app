@@ -1,18 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fotocolab_admin/route/route_name.dart';
+import 'package:fotocolab_admin/src/feature/profile/presentation/profile_provider.dart';
 import 'package:fotocolab_admin/util/assets/assets.dart';
+import 'package:fotocolab_admin/util/auth/auth_manager.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
+import 'package:go_router/go_router.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
+  late ProfileNotifierProvider provider;
+
+  Future<void> fetchData() async {
+    await AuthManager().fetchToken();
+
+    if (AuthManager().token == null) {
+      gotoLoginScreen();
+    } else {
+      await provider.getProfile();
+      if (provider.user != null) {
+        gotoUploadScreen();
+      } else {
+        gotoLoginScreen();
+      }
+    }
+  }
+
+  void gotoLoginScreen() {
+    context.go(RouteName.login);
+  }
+
+  void gotoUploadScreen() {
+    context.go(RouteName.upload);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchData();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    ref.watch(profileProvider);
+    provider = ref.read(profileProvider.notifier);
     return BaseLayout(
       child: Expanded(
         child: Column(
