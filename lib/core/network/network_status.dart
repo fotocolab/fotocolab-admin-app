@@ -1,6 +1,3 @@
-// Copyright (c) 2025, Indo-Sakura Software Pvt Ltd. All rights reserved.
-// Created By Suresh M, 11/03/2025
-
 enum NetworkStatus {
   status200(statusCode: 200, message: 'OK'),
   status201(statusCode: 201, message: 'Created'),

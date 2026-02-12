@@ -1,6 +1,3 @@
-// Copyright (c) 2025, Indo-Sakura Software Pvt Ltd. All rights reserved.
-// Created By Suresh M, 16/10/2025
-
 import 'dart:ui';
 
 import 'package:fotocolab_admin/util/enum/language_enum.dart';
