@@ -18,5 +18,7 @@ class UploadState with _$UploadState {
     @Default(false) bool isUploading,
     @Default(false) bool isCreateCategoryLoading,
     @Default([]) List<String> keywords,
+    DateTime? selectedFromDate,
+    DateTime? selectedToDate,
   }) = _UploadState;
 }

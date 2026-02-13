@@ -122,4 +122,16 @@ class SEn extends S {
 
   @override
   String get for_search => 'For Search';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get from => 'From';
+
+  @override
+  String get to => 'To';
+
+  @override
+  String get add_category => 'Add category';
 }

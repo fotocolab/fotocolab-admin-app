@@ -320,6 +320,30 @@ abstract class S {
   /// In en, this message translates to:
   /// **'For Search'**
   String get for_search;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @from.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get from;
+
+  /// No description provided for @to.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get to;
+
+  /// No description provided for @add_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Add category'**
+  String get add_category;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

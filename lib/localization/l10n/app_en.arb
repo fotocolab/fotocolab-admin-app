@@ -36,5 +36,9 @@
     "add":"Add",
     "plus":"+",
     "keyword":"Keywords",
-    "for_search":"For Search"
+    "for_search":"For Search",
+    "date":"Date",
+    "from":"From",
+    "to":"To",
+    "add_category":"Add category"
 }
