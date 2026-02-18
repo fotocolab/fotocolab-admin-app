@@ -4,6 +4,8 @@ abstract class RouteName {
   static String splash = '/';
   static String login = '/login';
   static String error = '/error';
+  static String home = '/home';
+  static String profile = '/profile';
   static String upload = '/upload';
   static String subscription = '/subscription';
   static String createSubscription = '/create_subscription';

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fotocolab_admin/route/route_name.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
+import 'package:go_router/go_router.dart';
 
 class SubscriptionScreen extends ConsumerStatefulWidget {
   const SubscriptionScreen({super.key});
@@ -11,7 +13,10 @@ class SubscriptionScreen extends ConsumerStatefulWidget {
 }
 
 class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
-  Future<void> createPlanOnTap() async {}
+  Future<void> createPlanOnTap() async {
+    context.push(RouteName.createSubscription);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseLayout(

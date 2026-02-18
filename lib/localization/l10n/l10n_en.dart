@@ -170,4 +170,20 @@ class SEn extends S {
 
   @override
   String get create => 'Create';
+
+  @override
+  String get are_you_sure_you_want_to_exit => 'Are you sure you want to exit?';
+
+  @override
+  String get are_you_sure => 'Are your sure?';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get discard_changes => 'Discard Changes';
+
+  @override
+  String get are_you_sure_want_to_discard_changes =>
+      'Are you sure want to discard changes?';
 }

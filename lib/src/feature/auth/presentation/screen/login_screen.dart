@@ -35,13 +35,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         password: passwordController.text,
       );
       if (isLogin) {
-        gotoUpload();
+        gotoHome();
       }
     }
   }
 
-  void gotoUpload() {
-    context.go(RouteName.upload);
+  void gotoHome() {
+    context.go(RouteName.home);
   }
 
   @override

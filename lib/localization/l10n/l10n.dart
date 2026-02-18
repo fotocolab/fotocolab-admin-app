@@ -416,6 +416,36 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Create'**
   String get create;
+
+  /// No description provided for @are_you_sure_you_want_to_exit.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to exit?'**
+  String get are_you_sure_you_want_to_exit;
+
+  /// No description provided for @are_you_sure.
+  ///
+  /// In en, this message translates to:
+  /// **'Are your sure?'**
+  String get are_you_sure;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @discard_changes.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard Changes'**
+  String get discard_changes;
+
+  /// No description provided for @are_you_sure_want_to_discard_changes.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure want to discard changes?'**
+  String get are_you_sure_want_to_discard_changes;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

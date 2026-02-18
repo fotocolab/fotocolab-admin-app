@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fotocolab_admin/route/route_name.dart';
-import 'package:fotocolab_admin/src/feature/profile/presentation/profile_provider.dart';
+import 'package:fotocolab_admin/src/feature/profile/presentation/provider/profile_provider.dart';
 import 'package:fotocolab_admin/util/assets/assets.dart';
 import 'package:fotocolab_admin/util/auth/auth_manager.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
