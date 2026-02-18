@@ -36,5 +36,21 @@
     "add":"Add",
     "plus":"+",
     "keyword":"Keywords",
-    "for_search":"For Search"
+    "for_search":"For Search",
+    "date":"Date",
+    "from":"From",
+    "to":"To",
+    "add_category":"Add category",
+    "subscription_plans":"Subcription Plans",
+    "manage_tiers":"Manager Tiers",
+    "configure_pricing_and_limits":"Configure pricing and limits",
+    "create_new_plan":"Create New Plan",
+    "plan":"Plan",
+    "price":"PRICE",
+    "plan_title":"PLAN TITLE / TAGLINE",
+    "features":"FEATURES",
+    "add_feature":"Add Feature",
+    "plan_name":"PLAN NAME",
+    "enter_features":"Enter features",
+    "create":"Create"
 }
