@@ -344,6 +344,78 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Add category'**
   String get add_category;
+
+  /// No description provided for @subscription_plans.
+  ///
+  /// In en, this message translates to:
+  /// **'Subcription Plans'**
+  String get subscription_plans;
+
+  /// No description provided for @manage_tiers.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager Tiers'**
+  String get manage_tiers;
+
+  /// No description provided for @configure_pricing_and_limits.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure pricing and limits'**
+  String get configure_pricing_and_limits;
+
+  /// No description provided for @create_new_plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Plan'**
+  String get create_new_plan;
+
+  /// No description provided for @plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get plan;
+
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'PRICE'**
+  String get price;
+
+  /// No description provided for @plan_title.
+  ///
+  /// In en, this message translates to:
+  /// **'PLAN TITLE / TAGLINE'**
+  String get plan_title;
+
+  /// No description provided for @features.
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURES'**
+  String get features;
+
+  /// No description provided for @add_feature.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Feature'**
+  String get add_feature;
+
+  /// No description provided for @plan_name.
+  ///
+  /// In en, this message translates to:
+  /// **'PLAN NAME'**
+  String get plan_name;
+
+  /// No description provided for @enter_features.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter features'**
+  String get enter_features;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
