@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fotocolab_admin/core/model/upload/request/category/upload_category_request_model.dart';
 import 'package:fotocolab_admin/core/model/upload/response/category/upload_category_response_model.dart';
 import 'package:fotocolab_admin/core/model/upload/state/upload_state.dart';
 import 'package:fotocolab_admin/core/network/network_status.dart';
@@ -34,6 +35,14 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
 
   List<String> get keywords => state.keywords;
 
+  DateTime get firstDate => DateTime(DateTime.now().year - 1);
+
+  DateTime get lastDate => DateTime(DateTime.now().year + 3);
+
+  DateTime? get selectedFromDate => state.selectedFromDate;
+
+  DateTime? get selectedToDate => state.selectedToDate;
+
   Future<void> getUploadCategory() async {
     state = state.copyWith(isCategoryLoading: true);
 
@@ -52,9 +61,17 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
   Future<void> createUploadCategory({String? categoryName}) async {
     state = state.copyWith(isCreateCategoryLoading: true);
 
+    var request = UploadCategoryRequestModel(
+      categoryName: categoryName,
+      dateRange: DateRage(
+        from: selectedFromDate?.toString(),
+        to: selectedToDate?.toString(),
+      ),
+    );
+
     var result = await ref
         .read(uploadRemoteRepoProvider)
-        .createCategory(categoryName: categoryName);
+        .createCategory(request: request);
 
     if (result.status == ActionStatus.success.code) {
       await getUploadCategory();
@@ -123,5 +140,17 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
 
   set setSelectedUploadCategory(UploadCategoryResponseModel value) {
     state = state.copyWith(selectedUploadCategory: value);
+  }
+
+  set setSelectedFromDate(DateTime value) {
+    state = state.copyWith(selectedFromDate: value);
+  }
+
+  set setSelectedToDate(DateTime value) {
+    state = state.copyWith(selectedToDate: value);
+  }
+
+  void clearSelectedDate() {
+    state = state.copyWith(selectedFromDate: null, selectedToDate: null);
   }
 }

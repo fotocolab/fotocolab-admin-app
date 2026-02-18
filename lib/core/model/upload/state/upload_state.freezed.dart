@@ -26,6 +26,8 @@ mixin _$UploadState {
   bool get isUploading => throw _privateConstructorUsedError;
   bool get isCreateCategoryLoading => throw _privateConstructorUsedError;
   List<String> get keywords => throw _privateConstructorUsedError;
+  DateTime? get selectedFromDate => throw _privateConstructorUsedError;
+  DateTime? get selectedToDate => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UploadStateCopyWith<UploadState> get copyWith =>
@@ -46,7 +48,9 @@ abstract class $UploadStateCopyWith<$Res> {
       bool isCategoryLoading,
       bool isUploading,
       bool isCreateCategoryLoading,
-      List<String> keywords});
+      List<String> keywords,
+      DateTime? selectedFromDate,
+      DateTime? selectedToDate});
 
   $UploadCategoryResponseModelCopyWith<$Res>? get selectedUploadCategory;
 }
@@ -72,6 +76,8 @@ class _$UploadStateCopyWithImpl<$Res, $Val extends UploadState>
     Object? isUploading = null,
     Object? isCreateCategoryLoading = null,
     Object? keywords = null,
+    Object? selectedFromDate = freezed,
+    Object? selectedToDate = freezed,
   }) {
     return _then(_value.copyWith(
       selectedUploadType: null == selectedUploadType
@@ -106,6 +112,14 @@ class _$UploadStateCopyWithImpl<$Res, $Val extends UploadState>
           ? _value.keywords
           : keywords // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      selectedFromDate: freezed == selectedFromDate
+          ? _value.selectedFromDate
+          : selectedFromDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      selectedToDate: freezed == selectedToDate
+          ? _value.selectedToDate
+          : selectedToDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 
@@ -139,7 +153,9 @@ abstract class _$$UploadStateImplCopyWith<$Res>
       bool isCategoryLoading,
       bool isUploading,
       bool isCreateCategoryLoading,
-      List<String> keywords});
+      List<String> keywords,
+      DateTime? selectedFromDate,
+      DateTime? selectedToDate});
 
   @override
   $UploadCategoryResponseModelCopyWith<$Res>? get selectedUploadCategory;
@@ -164,6 +180,8 @@ class __$$UploadStateImplCopyWithImpl<$Res>
     Object? isUploading = null,
     Object? isCreateCategoryLoading = null,
     Object? keywords = null,
+    Object? selectedFromDate = freezed,
+    Object? selectedToDate = freezed,
   }) {
     return _then(_$UploadStateImpl(
       selectedUploadType: null == selectedUploadType
@@ -198,6 +216,14 @@ class __$$UploadStateImplCopyWithImpl<$Res>
           ? _value._keywords
           : keywords // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      selectedFromDate: freezed == selectedFromDate
+          ? _value.selectedFromDate
+          : selectedFromDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      selectedToDate: freezed == selectedToDate
+          ? _value.selectedToDate
+          : selectedToDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -213,7 +239,9 @@ class _$UploadStateImpl implements _UploadState {
       this.isCategoryLoading = false,
       this.isUploading = false,
       this.isCreateCategoryLoading = false,
-      final List<String> keywords = const []})
+      final List<String> keywords = const [],
+      this.selectedFromDate,
+      this.selectedToDate})
       : _selectedFiles = selectedFiles,
         _uploadCategory = uploadCategory,
         _keywords = keywords;
@@ -260,8 +288,13 @@ class _$UploadStateImpl implements _UploadState {
   }
 
   @override
+  final DateTime? selectedFromDate;
+  @override
+  final DateTime? selectedToDate;
+
+  @override
   String toString() {
-    return 'UploadState(selectedUploadType: $selectedUploadType, selectedFiles: $selectedFiles, uploadCategory: $uploadCategory, selectedUploadCategory: $selectedUploadCategory, isCategoryLoading: $isCategoryLoading, isUploading: $isUploading, isCreateCategoryLoading: $isCreateCategoryLoading, keywords: $keywords)';
+    return 'UploadState(selectedUploadType: $selectedUploadType, selectedFiles: $selectedFiles, uploadCategory: $uploadCategory, selectedUploadCategory: $selectedUploadCategory, isCategoryLoading: $isCategoryLoading, isUploading: $isUploading, isCreateCategoryLoading: $isCreateCategoryLoading, keywords: $keywords, selectedFromDate: $selectedFromDate, selectedToDate: $selectedToDate)';
   }
 
   @override
@@ -284,7 +317,11 @@ class _$UploadStateImpl implements _UploadState {
             (identical(
                     other.isCreateCategoryLoading, isCreateCategoryLoading) ||
                 other.isCreateCategoryLoading == isCreateCategoryLoading) &&
-            const DeepCollectionEquality().equals(other._keywords, _keywords));
+            const DeepCollectionEquality().equals(other._keywords, _keywords) &&
+            (identical(other.selectedFromDate, selectedFromDate) ||
+                other.selectedFromDate == selectedFromDate) &&
+            (identical(other.selectedToDate, selectedToDate) ||
+                other.selectedToDate == selectedToDate));
   }
 
   @override
@@ -297,7 +334,9 @@ class _$UploadStateImpl implements _UploadState {
       isCategoryLoading,
       isUploading,
       isCreateCategoryLoading,
-      const DeepCollectionEquality().hash(_keywords));
+      const DeepCollectionEquality().hash(_keywords),
+      selectedFromDate,
+      selectedToDate);
 
   @JsonKey(ignore: true)
   @override
@@ -315,7 +354,9 @@ abstract class _UploadState implements UploadState {
       final bool isCategoryLoading,
       final bool isUploading,
       final bool isCreateCategoryLoading,
-      final List<String> keywords}) = _$UploadStateImpl;
+      final List<String> keywords,
+      final DateTime? selectedFromDate,
+      final DateTime? selectedToDate}) = _$UploadStateImpl;
 
   @override
   UploadEnum get selectedUploadType;
@@ -333,6 +374,10 @@ abstract class _UploadState implements UploadState {
   bool get isCreateCategoryLoading;
   @override
   List<String> get keywords;
+  @override
+  DateTime? get selectedFromDate;
+  @override
+  DateTime? get selectedToDate;
   @override
   @JsonKey(ignore: true)
   _$$UploadStateImplCopyWith<_$UploadStateImpl> get copyWith =>

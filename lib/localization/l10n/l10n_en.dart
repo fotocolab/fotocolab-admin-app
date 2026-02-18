@@ -122,4 +122,52 @@ class SEn extends S {
 
   @override
   String get for_search => 'For Search';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get from => 'From';
+
+  @override
+  String get to => 'To';
+
+  @override
+  String get add_category => 'Add category';
+
+  @override
+  String get subscription_plans => 'Subcription Plans';
+
+  @override
+  String get manage_tiers => 'Manager Tiers';
+
+  @override
+  String get configure_pricing_and_limits => 'Configure pricing and limits';
+
+  @override
+  String get create_new_plan => 'Create New Plan';
+
+  @override
+  String get plan => 'Plan';
+
+  @override
+  String get price => 'PRICE';
+
+  @override
+  String get plan_title => 'PLAN TITLE / TAGLINE';
+
+  @override
+  String get features => 'FEATURES';
+
+  @override
+  String get add_feature => 'Add Feature';
+
+  @override
+  String get plan_name => 'PLAN NAME';
+
+  @override
+  String get enter_features => 'Enter features';
+
+  @override
+  String get create => 'Create';
 }

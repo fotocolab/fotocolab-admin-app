@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fotocolab_admin/core/model/base/base_dynamic_response_model.dart';
 import 'package:fotocolab_admin/core/model/profile/response/user/user_response_model.dart';
+import 'package:fotocolab_admin/core/model/upload/request/category/upload_category_request_model.dart';
 import 'package:fotocolab_admin/core/model/upload/response/category/upload_category_response_model.dart';
 import 'package:fotocolab_admin/core/network/endpoints/upload_endpoint.dart';
 import 'package:fotocolab_admin/core/network/network.dart';
@@ -46,12 +47,12 @@ class UploadRemoteRepo implements UploadRepo {
 
   @override
   Future<BaseDynamicResponse<UploadCategoryResponseModel?>> createCategory({
-    String? categoryName,
+    UploadCategoryRequestModel? request,
   }) async {
     try {
       var response = await NetworkClient.post(
         endPoint: UploadEndpoint.createCategory,
-        body: {'categoryName': categoryName},
+        body: request,
       );
       if (response?.statusCode == NetworkStatus.status201.statusCode) {
         var body = json.decode(response!.body);
