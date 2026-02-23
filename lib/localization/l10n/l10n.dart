@@ -446,6 +446,108 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Are you sure want to discard changes?'**
   String get are_you_sure_want_to_discard_changes;
+
+  /// No description provided for @plan_duration.
+  ///
+  /// In en, this message translates to:
+  /// **'PLAN DURATION'**
+  String get plan_duration;
+
+  /// No description provided for @days.
+  ///
+  /// In en, this message translates to:
+  /// **'DAYS'**
+  String get days;
+
+  /// No description provided for @select_all.
+  ///
+  /// In en, this message translates to:
+  /// **'Select All'**
+  String get select_all;
+
+  /// No description provided for @deselect.
+  ///
+  /// In en, this message translates to:
+  /// **'DESELECT'**
+  String get deselect;
+
+  /// No description provided for @please_select_plan_duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select plan duration'**
+  String get please_select_plan_duration;
+
+  /// No description provided for @per_day_download.
+  ///
+  /// In en, this message translates to:
+  /// **'Per day download'**
+  String get per_day_download;
+
+  /// No description provided for @plan_created.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan created successfully'**
+  String get plan_created;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @delete_q.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete?'**
+  String get delete_q;
+
+  /// No description provided for @are_you_sure_want_to_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure want to delete this Plan?'**
+  String get are_you_sure_want_to_delete;
+
+  /// No description provided for @deactivate_q.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate?'**
+  String get deactivate_q;
+
+  /// No description provided for @are_you_sure_want_to_deactivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure want to deactivate this Plan?'**
+  String get are_you_sure_want_to_deactivate;
+
+  /// No description provided for @activate_q.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate?'**
+  String get activate_q;
+
+  /// No description provided for @are_you_sure_want_to_activate.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure want to activate this Plan?'**
+  String get are_you_sure_want_to_activate;
+
+  /// No description provided for @edit_plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Plan'**
+  String get edit_plan;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @plan_updated_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan updated successfully'**
+  String get plan_updated_successfully;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

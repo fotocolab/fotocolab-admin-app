@@ -7,8 +7,10 @@ part 'subscription_feature_response_model.g.dart';
 @freezed
 class SubscriptionFeatureResponseModel with _$SubscriptionFeatureResponseModel {
   const factory SubscriptionFeatureResponseModel({
-    @Default(0) int index,
-    @Default('') String feature,
+    required int id,
+    required String key,
+    required String displayValue,
+    @Default(false) bool value,
   }) = _SubscriptionFeatureResponseModel;
 
   factory SubscriptionFeatureResponseModel.fromJson(

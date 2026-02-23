@@ -19,6 +19,15 @@ extension StringOperation on String {
       return this;
     }
   }
+
+  String camelCaseToTitle() {
+    final result = (this).replaceAllMapped(
+      RegExp(r'([a-z])([A-Z])'),
+      (match) => '${match.group(1)} ${match.group(2)}',
+    );
+
+    return result[0].toUpperCase() + result.substring(1);
+  }
 }
 
 extension AppColorFilter on Color {

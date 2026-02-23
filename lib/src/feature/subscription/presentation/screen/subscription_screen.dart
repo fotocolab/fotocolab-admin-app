@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fotocolab_admin/route/route_name.dart';
+import 'package:fotocolab_admin/src/feature/subscription/presentation/provider/subscription_provider.dart';
+import 'package:fotocolab_admin/src/feature/subscription/presentation/widget/plans_details_widget.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
 import 'package:go_router/go_router.dart';
@@ -13,14 +15,30 @@ class SubscriptionScreen extends ConsumerStatefulWidget {
 }
 
 class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
+  late SubscriptionNotifierProvider provider;
   Future<void> createPlanOnTap() async {
     context.push(RouteName.createSubscription);
   }
 
+  Future<void> fetchData() async {
+    await provider.getAllPlan();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchData();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    ref.watch(subscriptionProvider);
+    provider = ref.read(subscriptionProvider.notifier);
     return BaseLayout(
-      appBar: BrandAppBar(title: context.loc.subscription_plans),
+      // appBar: BrandAppBar(title: context.loc.subscription_plans),
       child: Expanded(
         child: SingleChildScrollView(
           child: Padding(
@@ -48,6 +66,9 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                     color: AppColors.white,
                   ),
                 ),
+                BrandVSpace.gap20(),
+
+                PlansDetailsWidget(),
               ],
             ),
           ),

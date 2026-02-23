@@ -57,5 +57,22 @@
     "are_you_sure": "Are your sure?",
     "confirm": "Confirm",
     "discard_changes": "Discard Changes",
-    "are_you_sure_want_to_discard_changes": "Are you sure want to discard changes?"
+    "are_you_sure_want_to_discard_changes": "Are you sure want to discard changes?",
+    "plan_duration": "PLAN DURATION",
+    "days": "DAYS",
+    "select_all": "Select All",
+    "deselect": "DESELECT",
+    "please_select_plan_duration": "Please select plan duration",
+    "per_day_download": "Per day download",
+    "plan_created": "Plan created successfully",
+    "delete": "Delete",
+    "delete_q": "Delete?",
+    "are_you_sure_want_to_delete": "Are you sure want to delete this Plan?",
+    "deactivate_q": "Deactivate?",
+    "are_you_sure_want_to_deactivate": "Are you sure want to deactivate this Plan?",
+    "activate_q": "Activate?",
+    "are_you_sure_want_to_activate": "Are you sure want to activate this Plan?",
+    "edit_plan": "Edit Plan",
+    "update": "Update",
+    "plan_updated_successfully": "Plan updated successfully"
 }

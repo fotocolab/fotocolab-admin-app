@@ -12,6 +12,8 @@ class AuthNotifierProvider extends StateNotifier<AuthState> {
 
   final Ref ref;
 
+  bool get isLoading => state.isLoading;
+
   Future<bool> login({required String email, required String password}) async {
     state = state.copyWith(isLoading: true);
 

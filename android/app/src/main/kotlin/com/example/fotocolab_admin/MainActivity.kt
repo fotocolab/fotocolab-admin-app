@@ -1,4 +1,4 @@
-package com.example.fotocolab_admin
+package com.fotocolab.admin
 
 import io.flutter.embedding.android.FlutterActivity
 

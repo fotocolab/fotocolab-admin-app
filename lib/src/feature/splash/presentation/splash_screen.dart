@@ -26,7 +26,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     } else {
       await provider.getProfile();
       if (provider.user != null) {
-        gotoUploadScreen();
+        gotoHomeScreen();
       } else {
         gotoLoginScreen();
       }
@@ -37,8 +37,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     context.go(RouteName.login);
   }
 
-  void gotoUploadScreen() {
-    context.go(RouteName.upload);
+  void gotoHomeScreen() {
+    context.go(RouteName.home);
   }
 
   @override

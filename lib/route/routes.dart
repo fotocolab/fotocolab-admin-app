@@ -8,6 +8,7 @@ import 'package:fotocolab_admin/src/feature/home/presentation/screen/home_screen
 import 'package:fotocolab_admin/src/feature/profile/presentation/screen/profile_screen.dart';
 import 'package:fotocolab_admin/src/feature/splash/presentation/splash_screen.dart';
 import 'package:fotocolab_admin/src/feature/subscription/presentation/screen/create_subscription_screen.dart';
+import 'package:fotocolab_admin/src/feature/subscription/presentation/screen/edit_subscription_screen.dart';
 import 'package:fotocolab_admin/src/feature/subscription/presentation/screen/subscription_screen.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/screen/upload_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -48,6 +49,12 @@ final GoRouter routerConfig = GoRouter(
     GoRoute(
       path: RouteName.createSubscription,
       builder: (context, state) => CreateSubscriptionScreen(),
+    ),
+
+    GoRoute(
+      path: RouteName.editSubscription,
+      builder: (context, state) =>
+          EditSubscriptionScreen(routeArgs: state.extra),
     ),
   ],
 );

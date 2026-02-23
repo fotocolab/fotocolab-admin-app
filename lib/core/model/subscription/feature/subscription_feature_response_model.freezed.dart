@@ -21,8 +21,10 @@ SubscriptionFeatureResponseModel _$SubscriptionFeatureResponseModelFromJson(
 
 /// @nodoc
 mixin _$SubscriptionFeatureResponseModel {
-  int get index => throw _privateConstructorUsedError;
-  String get feature => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get key => throw _privateConstructorUsedError;
+  String get displayValue => throw _privateConstructorUsedError;
+  bool get value => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,7 +40,7 @@ abstract class $SubscriptionFeatureResponseModelCopyWith<$Res> {
       _$SubscriptionFeatureResponseModelCopyWithImpl<$Res,
           SubscriptionFeatureResponseModel>;
   @useResult
-  $Res call({int index, String feature});
+  $Res call({int id, String key, String displayValue, bool value});
 }
 
 /// @nodoc
@@ -55,18 +57,28 @@ class _$SubscriptionFeatureResponseModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? index = null,
-    Object? feature = null,
+    Object? id = null,
+    Object? key = null,
+    Object? displayValue = null,
+    Object? value = null,
   }) {
     return _then(_value.copyWith(
-      index: null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as int,
-      feature: null == feature
-          ? _value.feature
-          : feature // ignore: cast_nullable_to_non_nullable
+      key: null == key
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
               as String,
+      displayValue: null == displayValue
+          ? _value.displayValue
+          : displayValue // ignore: cast_nullable_to_non_nullable
+              as String,
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -80,7 +92,7 @@ abstract class _$$SubscriptionFeatureResponseModelImplCopyWith<$Res>
       __$$SubscriptionFeatureResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int index, String feature});
+  $Res call({int id, String key, String displayValue, bool value});
 }
 
 /// @nodoc
@@ -96,18 +108,28 @@ class __$$SubscriptionFeatureResponseModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? index = null,
-    Object? feature = null,
+    Object? id = null,
+    Object? key = null,
+    Object? displayValue = null,
+    Object? value = null,
   }) {
     return _then(_$SubscriptionFeatureResponseModelImpl(
-      index: null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as int,
-      feature: null == feature
-          ? _value.feature
-          : feature // ignore: cast_nullable_to_non_nullable
+      key: null == key
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
               as String,
+      displayValue: null == displayValue
+          ? _value.displayValue
+          : displayValue // ignore: cast_nullable_to_non_nullable
+              as String,
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -117,22 +139,28 @@ class __$$SubscriptionFeatureResponseModelImplCopyWithImpl<$Res>
 class _$SubscriptionFeatureResponseModelImpl
     implements _SubscriptionFeatureResponseModel {
   const _$SubscriptionFeatureResponseModelImpl(
-      {this.index = 0, this.feature = ''});
+      {required this.id,
+      required this.key,
+      required this.displayValue,
+      this.value = false});
 
   factory _$SubscriptionFeatureResponseModelImpl.fromJson(
           Map<String, dynamic> json) =>
       _$$SubscriptionFeatureResponseModelImplFromJson(json);
 
   @override
-  @JsonKey()
-  final int index;
+  final int id;
+  @override
+  final String key;
+  @override
+  final String displayValue;
   @override
   @JsonKey()
-  final String feature;
+  final bool value;
 
   @override
   String toString() {
-    return 'SubscriptionFeatureResponseModel(index: $index, feature: $feature)';
+    return 'SubscriptionFeatureResponseModel(id: $id, key: $key, displayValue: $displayValue, value: $value)';
   }
 
   @override
@@ -140,13 +168,16 @@ class _$SubscriptionFeatureResponseModelImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SubscriptionFeatureResponseModelImpl &&
-            (identical(other.index, index) || other.index == index) &&
-            (identical(other.feature, feature) || other.feature == feature));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.key, key) || other.key == key) &&
+            (identical(other.displayValue, displayValue) ||
+                other.displayValue == displayValue) &&
+            (identical(other.value, value) || other.value == value));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, index, feature);
+  int get hashCode => Object.hash(runtimeType, id, key, displayValue, value);
 
   @JsonKey(ignore: true)
   @override
@@ -167,17 +198,23 @@ class _$SubscriptionFeatureResponseModelImpl
 abstract class _SubscriptionFeatureResponseModel
     implements SubscriptionFeatureResponseModel {
   const factory _SubscriptionFeatureResponseModel(
-      {final int index,
-      final String feature}) = _$SubscriptionFeatureResponseModelImpl;
+      {required final int id,
+      required final String key,
+      required final String displayValue,
+      final bool value}) = _$SubscriptionFeatureResponseModelImpl;
 
   factory _SubscriptionFeatureResponseModel.fromJson(
           Map<String, dynamic> json) =
       _$SubscriptionFeatureResponseModelImpl.fromJson;
 
   @override
-  int get index;
+  int get id;
   @override
-  String get feature;
+  String get key;
+  @override
+  String get displayValue;
+  @override
+  bool get value;
   @override
   @JsonKey(ignore: true)
   _$$SubscriptionFeatureResponseModelImplCopyWith<

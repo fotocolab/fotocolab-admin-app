@@ -9,4 +9,5 @@ abstract class RouteName {
   static String upload = '/upload';
   static String subscription = '/subscription';
   static String createSubscription = '/create_subscription';
+  static String editSubscription = '/edit_subscription';
 }

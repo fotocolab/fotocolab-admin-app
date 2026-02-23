@@ -186,4 +186,58 @@ class SEn extends S {
   @override
   String get are_you_sure_want_to_discard_changes =>
       'Are you sure want to discard changes?';
+
+  @override
+  String get plan_duration => 'PLAN DURATION';
+
+  @override
+  String get days => 'DAYS';
+
+  @override
+  String get select_all => 'Select All';
+
+  @override
+  String get deselect => 'DESELECT';
+
+  @override
+  String get please_select_plan_duration => 'Please select plan duration';
+
+  @override
+  String get per_day_download => 'Per day download';
+
+  @override
+  String get plan_created => 'Plan created successfully';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get delete_q => 'Delete?';
+
+  @override
+  String get are_you_sure_want_to_delete =>
+      'Are you sure want to delete this Plan?';
+
+  @override
+  String get deactivate_q => 'Deactivate?';
+
+  @override
+  String get are_you_sure_want_to_deactivate =>
+      'Are you sure want to deactivate this Plan?';
+
+  @override
+  String get activate_q => 'Activate?';
+
+  @override
+  String get are_you_sure_want_to_activate =>
+      'Are you sure want to activate this Plan?';
+
+  @override
+  String get edit_plan => 'Edit Plan';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get plan_updated_successfully => 'Plan updated successfully';
 }
