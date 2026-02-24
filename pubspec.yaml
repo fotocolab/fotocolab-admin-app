@@ -71,6 +71,7 @@ dependencies:
   connectivity_plus: ^7.0.0
   webview_flutter: ^4.13.0
   local_auth: ^3.0.0
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:

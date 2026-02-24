@@ -17,8 +17,14 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SubscriptionState {
   bool get isLoading => throw _privateConstructorUsedError;
-  List<SubscriptionFeatureResponseModel> get featuresList =>
+  SubscriptionDurationEnum? get selectedPlanDurationEnum =>
       throw _privateConstructorUsedError;
+  Features get features => throw _privateConstructorUsedError;
+  bool get isSelectAllFeatures => throw _privateConstructorUsedError;
+  List<PlansResponseModel> get plans => throw _privateConstructorUsedError;
+  bool get isDeletePlanLoading => throw _privateConstructorUsedError;
+  bool get isDeactivatePlanLoading => throw _privateConstructorUsedError;
+  bool get isUpdatePlanLoading => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SubscriptionStateCopyWith<SubscriptionState> get copyWith =>
@@ -32,7 +38,16 @@ abstract class $SubscriptionStateCopyWith<$Res> {
       _$SubscriptionStateCopyWithImpl<$Res, SubscriptionState>;
   @useResult
   $Res call(
-      {bool isLoading, List<SubscriptionFeatureResponseModel> featuresList});
+      {bool isLoading,
+      SubscriptionDurationEnum? selectedPlanDurationEnum,
+      Features features,
+      bool isSelectAllFeatures,
+      List<PlansResponseModel> plans,
+      bool isDeletePlanLoading,
+      bool isDeactivatePlanLoading,
+      bool isUpdatePlanLoading});
+
+  $FeaturesCopyWith<$Res> get features;
 }
 
 /// @nodoc
@@ -49,18 +64,56 @@ class _$SubscriptionStateCopyWithImpl<$Res, $Val extends SubscriptionState>
   @override
   $Res call({
     Object? isLoading = null,
-    Object? featuresList = null,
+    Object? selectedPlanDurationEnum = freezed,
+    Object? features = null,
+    Object? isSelectAllFeatures = null,
+    Object? plans = null,
+    Object? isDeletePlanLoading = null,
+    Object? isDeactivatePlanLoading = null,
+    Object? isUpdatePlanLoading = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      featuresList: null == featuresList
-          ? _value.featuresList
-          : featuresList // ignore: cast_nullable_to_non_nullable
-              as List<SubscriptionFeatureResponseModel>,
+      selectedPlanDurationEnum: freezed == selectedPlanDurationEnum
+          ? _value.selectedPlanDurationEnum
+          : selectedPlanDurationEnum // ignore: cast_nullable_to_non_nullable
+              as SubscriptionDurationEnum?,
+      features: null == features
+          ? _value.features
+          : features // ignore: cast_nullable_to_non_nullable
+              as Features,
+      isSelectAllFeatures: null == isSelectAllFeatures
+          ? _value.isSelectAllFeatures
+          : isSelectAllFeatures // ignore: cast_nullable_to_non_nullable
+              as bool,
+      plans: null == plans
+          ? _value.plans
+          : plans // ignore: cast_nullable_to_non_nullable
+              as List<PlansResponseModel>,
+      isDeletePlanLoading: null == isDeletePlanLoading
+          ? _value.isDeletePlanLoading
+          : isDeletePlanLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDeactivatePlanLoading: null == isDeactivatePlanLoading
+          ? _value.isDeactivatePlanLoading
+          : isDeactivatePlanLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isUpdatePlanLoading: null == isUpdatePlanLoading
+          ? _value.isUpdatePlanLoading
+          : isUpdatePlanLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $FeaturesCopyWith<$Res> get features {
+    return $FeaturesCopyWith<$Res>(_value.features, (value) {
+      return _then(_value.copyWith(features: value) as $Val);
+    });
   }
 }
 
@@ -73,7 +126,17 @@ abstract class _$$SubscriptionStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool isLoading, List<SubscriptionFeatureResponseModel> featuresList});
+      {bool isLoading,
+      SubscriptionDurationEnum? selectedPlanDurationEnum,
+      Features features,
+      bool isSelectAllFeatures,
+      List<PlansResponseModel> plans,
+      bool isDeletePlanLoading,
+      bool isDeactivatePlanLoading,
+      bool isUpdatePlanLoading});
+
+  @override
+  $FeaturesCopyWith<$Res> get features;
 }
 
 /// @nodoc
@@ -88,17 +151,47 @@ class __$$SubscriptionStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
-    Object? featuresList = null,
+    Object? selectedPlanDurationEnum = freezed,
+    Object? features = null,
+    Object? isSelectAllFeatures = null,
+    Object? plans = null,
+    Object? isDeletePlanLoading = null,
+    Object? isDeactivatePlanLoading = null,
+    Object? isUpdatePlanLoading = null,
   }) {
     return _then(_$SubscriptionStateImpl(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      featuresList: null == featuresList
-          ? _value._featuresList
-          : featuresList // ignore: cast_nullable_to_non_nullable
-              as List<SubscriptionFeatureResponseModel>,
+      selectedPlanDurationEnum: freezed == selectedPlanDurationEnum
+          ? _value.selectedPlanDurationEnum
+          : selectedPlanDurationEnum // ignore: cast_nullable_to_non_nullable
+              as SubscriptionDurationEnum?,
+      features: null == features
+          ? _value.features
+          : features // ignore: cast_nullable_to_non_nullable
+              as Features,
+      isSelectAllFeatures: null == isSelectAllFeatures
+          ? _value.isSelectAllFeatures
+          : isSelectAllFeatures // ignore: cast_nullable_to_non_nullable
+              as bool,
+      plans: null == plans
+          ? _value._plans
+          : plans // ignore: cast_nullable_to_non_nullable
+              as List<PlansResponseModel>,
+      isDeletePlanLoading: null == isDeletePlanLoading
+          ? _value.isDeletePlanLoading
+          : isDeletePlanLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDeactivatePlanLoading: null == isDeactivatePlanLoading
+          ? _value.isDeactivatePlanLoading
+          : isDeactivatePlanLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isUpdatePlanLoading: null == isUpdatePlanLoading
+          ? _value.isUpdatePlanLoading
+          : isUpdatePlanLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -108,27 +201,57 @@ class __$$SubscriptionStateImplCopyWithImpl<$Res>
 class _$SubscriptionStateImpl implements _SubscriptionState {
   const _$SubscriptionStateImpl(
       {this.isLoading = false,
-      final List<SubscriptionFeatureResponseModel> featuresList = const [
-        SubscriptionFeatureResponseModel(index: 0, feature: ''),
-        SubscriptionFeatureResponseModel(index: 1, feature: '')
-      ]})
-      : _featuresList = featuresList;
+      this.selectedPlanDurationEnum,
+      this.features = const Features(
+          fontAccesibility: false,
+          hideAds: false,
+          noWatermark: false,
+          perDayDownloads: 1,
+          premiumFeeds: false,
+          qualityDownload: false,
+          unLimitedDownloads: false,
+          updateLogo: false,
+          updateSignature: false),
+      this.isSelectAllFeatures = false,
+      final List<PlansResponseModel> plans = const [],
+      this.isDeletePlanLoading = false,
+      this.isDeactivatePlanLoading = false,
+      this.isUpdatePlanLoading = false})
+      : _plans = plans;
 
   @override
   @JsonKey()
   final bool isLoading;
-  final List<SubscriptionFeatureResponseModel> _featuresList;
+  @override
+  final SubscriptionDurationEnum? selectedPlanDurationEnum;
   @override
   @JsonKey()
-  List<SubscriptionFeatureResponseModel> get featuresList {
-    if (_featuresList is EqualUnmodifiableListView) return _featuresList;
+  final Features features;
+  @override
+  @JsonKey()
+  final bool isSelectAllFeatures;
+  final List<PlansResponseModel> _plans;
+  @override
+  @JsonKey()
+  List<PlansResponseModel> get plans {
+    if (_plans is EqualUnmodifiableListView) return _plans;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_featuresList);
+    return EqualUnmodifiableListView(_plans);
   }
 
   @override
+  @JsonKey()
+  final bool isDeletePlanLoading;
+  @override
+  @JsonKey()
+  final bool isDeactivatePlanLoading;
+  @override
+  @JsonKey()
+  final bool isUpdatePlanLoading;
+
+  @override
   String toString() {
-    return 'SubscriptionState(isLoading: $isLoading, featuresList: $featuresList)';
+    return 'SubscriptionState(isLoading: $isLoading, selectedPlanDurationEnum: $selectedPlanDurationEnum, features: $features, isSelectAllFeatures: $isSelectAllFeatures, plans: $plans, isDeletePlanLoading: $isDeletePlanLoading, isDeactivatePlanLoading: $isDeactivatePlanLoading, isUpdatePlanLoading: $isUpdatePlanLoading)';
   }
 
   @override
@@ -138,13 +261,34 @@ class _$SubscriptionStateImpl implements _SubscriptionState {
             other is _$SubscriptionStateImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            const DeepCollectionEquality()
-                .equals(other._featuresList, _featuresList));
+            (identical(
+                    other.selectedPlanDurationEnum, selectedPlanDurationEnum) ||
+                other.selectedPlanDurationEnum == selectedPlanDurationEnum) &&
+            (identical(other.features, features) ||
+                other.features == features) &&
+            (identical(other.isSelectAllFeatures, isSelectAllFeatures) ||
+                other.isSelectAllFeatures == isSelectAllFeatures) &&
+            const DeepCollectionEquality().equals(other._plans, _plans) &&
+            (identical(other.isDeletePlanLoading, isDeletePlanLoading) ||
+                other.isDeletePlanLoading == isDeletePlanLoading) &&
+            (identical(
+                    other.isDeactivatePlanLoading, isDeactivatePlanLoading) ||
+                other.isDeactivatePlanLoading == isDeactivatePlanLoading) &&
+            (identical(other.isUpdatePlanLoading, isUpdatePlanLoading) ||
+                other.isUpdatePlanLoading == isUpdatePlanLoading));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading,
-      const DeepCollectionEquality().hash(_featuresList));
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      selectedPlanDurationEnum,
+      features,
+      isSelectAllFeatures,
+      const DeepCollectionEquality().hash(_plans),
+      isDeletePlanLoading,
+      isDeactivatePlanLoading,
+      isUpdatePlanLoading);
 
   @JsonKey(ignore: true)
   @override
@@ -156,14 +300,31 @@ class _$SubscriptionStateImpl implements _SubscriptionState {
 
 abstract class _SubscriptionState implements SubscriptionState {
   const factory _SubscriptionState(
-          {final bool isLoading,
-          final List<SubscriptionFeatureResponseModel> featuresList}) =
-      _$SubscriptionStateImpl;
+      {final bool isLoading,
+      final SubscriptionDurationEnum? selectedPlanDurationEnum,
+      final Features features,
+      final bool isSelectAllFeatures,
+      final List<PlansResponseModel> plans,
+      final bool isDeletePlanLoading,
+      final bool isDeactivatePlanLoading,
+      final bool isUpdatePlanLoading}) = _$SubscriptionStateImpl;
 
   @override
   bool get isLoading;
   @override
-  List<SubscriptionFeatureResponseModel> get featuresList;
+  SubscriptionDurationEnum? get selectedPlanDurationEnum;
+  @override
+  Features get features;
+  @override
+  bool get isSelectAllFeatures;
+  @override
+  List<PlansResponseModel> get plans;
+  @override
+  bool get isDeletePlanLoading;
+  @override
+  bool get isDeactivatePlanLoading;
+  @override
+  bool get isUpdatePlanLoading;
   @override
   @JsonKey(ignore: true)
   _$$SubscriptionStateImplCopyWith<_$SubscriptionStateImpl> get copyWith =>

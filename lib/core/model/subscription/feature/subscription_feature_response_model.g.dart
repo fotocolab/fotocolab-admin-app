@@ -10,13 +10,17 @@ _$SubscriptionFeatureResponseModelImpl
     _$$SubscriptionFeatureResponseModelImplFromJson(
             Map<String, dynamic> json) =>
         _$SubscriptionFeatureResponseModelImpl(
-          index: (json['index'] as num?)?.toInt() ?? 0,
-          feature: json['feature'] as String? ?? '',
+          id: (json['id'] as num).toInt(),
+          key: json['key'] as String,
+          displayValue: json['displayValue'] as String,
+          value: json['value'] as bool? ?? false,
         );
 
 Map<String, dynamic> _$$SubscriptionFeatureResponseModelImplToJson(
         _$SubscriptionFeatureResponseModelImpl instance) =>
     <String, dynamic>{
-      'index': instance.index,
-      'feature': instance.feature,
+      'id': instance.id,
+      'key': instance.key,
+      'displayValue': instance.displayValue,
+      'value': instance.value,
     };

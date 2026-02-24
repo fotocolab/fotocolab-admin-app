@@ -35,13 +35,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         password: passwordController.text,
       );
       if (isLogin) {
-        gotoUpload();
+        gotoHome();
       }
     }
   }
 
-  void gotoUpload() {
-    context.go(RouteName.upload);
+  void gotoHome() {
+    context.go(RouteName.home);
   }
 
   @override
@@ -101,6 +101,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   BrandVSpace.gap100(),
                   BrandButton.primary(
                     title: context.loc.login,
+                    isLoading: provider.isLoading,
                     onTap: loginOnTap,
                     fontColor: AppColors.secondary,
                     rightIcon: Icon(Icons.arrow_forward_rounded),

@@ -5,7 +5,6 @@ import 'package:fotocolab_admin/src/feature/upload/presentation/widget/active_up
 import 'package:fotocolab_admin/src/feature/upload/presentation/widget/bulk_upload_widget.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/widget/category_widget.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/widget/upload_type_widget.dart';
-import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
 
 class UploadScreen extends ConsumerStatefulWidget {
@@ -22,11 +21,11 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
     ref.watch(uploadProvider);
     provider = ref.read(uploadProvider.notifier);
     return BaseLayout(
-      appBar: BrandAppBar(
-        title: context.loc.asset_manager,
-        centerTitle: false,
-        showBackButton: false,
-      ),
+      // appBar: BrandAppBar(
+      //   title: context.loc.asset_manager,
+      //   centerTitle: false,
+      //   showBackButton: false,
+      // ),
       child: Expanded(
         child: SingleChildScrollView(
           child: Padding(
