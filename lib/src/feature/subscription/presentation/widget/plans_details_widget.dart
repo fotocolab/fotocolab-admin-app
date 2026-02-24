@@ -137,7 +137,7 @@ class _PlansDetailsWidgetState extends ConsumerState<PlansDetailsWidget> {
                     if (item.features != null)
                       ...item.features!.toJson().entries.map((e) {
                         if (e.key ==
-                            SubscriptionFeatureEnum.unLimitedDownloads.name) {
+                            SubscriptionFeatureEnum.unlimitedDownloads.name) {
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 16),
                             child: Column(

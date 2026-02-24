@@ -468,7 +468,7 @@ mixin _$Features {
   bool get premiumFeeds => throw _privateConstructorUsedError;
   bool get qualityDownload => throw _privateConstructorUsedError;
   bool get noWatermark => throw _privateConstructorUsedError;
-  bool get unLimitedDownloads => throw _privateConstructorUsedError;
+  bool get unlimitedDownloads => throw _privateConstructorUsedError;
   int get perDayDownloads => throw _privateConstructorUsedError;
   bool get hideAds => throw _privateConstructorUsedError;
   bool get fontAccesibility => throw _privateConstructorUsedError;
@@ -490,7 +490,7 @@ abstract class $FeaturesCopyWith<$Res> {
       {bool premiumFeeds,
       bool qualityDownload,
       bool noWatermark,
-      bool unLimitedDownloads,
+      bool unlimitedDownloads,
       int perDayDownloads,
       bool hideAds,
       bool fontAccesibility,
@@ -514,7 +514,7 @@ class _$FeaturesCopyWithImpl<$Res, $Val extends Features>
     Object? premiumFeeds = null,
     Object? qualityDownload = null,
     Object? noWatermark = null,
-    Object? unLimitedDownloads = null,
+    Object? unlimitedDownloads = null,
     Object? perDayDownloads = null,
     Object? hideAds = null,
     Object? fontAccesibility = null,
@@ -534,9 +534,9 @@ class _$FeaturesCopyWithImpl<$Res, $Val extends Features>
           ? _value.noWatermark
           : noWatermark // ignore: cast_nullable_to_non_nullable
               as bool,
-      unLimitedDownloads: null == unLimitedDownloads
-          ? _value.unLimitedDownloads
-          : unLimitedDownloads // ignore: cast_nullable_to_non_nullable
+      unlimitedDownloads: null == unlimitedDownloads
+          ? _value.unlimitedDownloads
+          : unlimitedDownloads // ignore: cast_nullable_to_non_nullable
               as bool,
       perDayDownloads: null == perDayDownloads
           ? _value.perDayDownloads
@@ -574,7 +574,7 @@ abstract class _$$FeaturesImplCopyWith<$Res>
       {bool premiumFeeds,
       bool qualityDownload,
       bool noWatermark,
-      bool unLimitedDownloads,
+      bool unlimitedDownloads,
       int perDayDownloads,
       bool hideAds,
       bool fontAccesibility,
@@ -596,7 +596,7 @@ class __$$FeaturesImplCopyWithImpl<$Res>
     Object? premiumFeeds = null,
     Object? qualityDownload = null,
     Object? noWatermark = null,
-    Object? unLimitedDownloads = null,
+    Object? unlimitedDownloads = null,
     Object? perDayDownloads = null,
     Object? hideAds = null,
     Object? fontAccesibility = null,
@@ -616,9 +616,9 @@ class __$$FeaturesImplCopyWithImpl<$Res>
           ? _value.noWatermark
           : noWatermark // ignore: cast_nullable_to_non_nullable
               as bool,
-      unLimitedDownloads: null == unLimitedDownloads
-          ? _value.unLimitedDownloads
-          : unLimitedDownloads // ignore: cast_nullable_to_non_nullable
+      unlimitedDownloads: null == unlimitedDownloads
+          ? _value.unlimitedDownloads
+          : unlimitedDownloads // ignore: cast_nullable_to_non_nullable
               as bool,
       perDayDownloads: null == perDayDownloads
           ? _value.perDayDownloads
@@ -651,7 +651,7 @@ class _$FeaturesImpl implements _Features {
       {this.premiumFeeds = false,
       this.qualityDownload = false,
       this.noWatermark = false,
-      this.unLimitedDownloads = false,
+      this.unlimitedDownloads = false,
       this.perDayDownloads = 1,
       this.hideAds = false,
       this.fontAccesibility = false,
@@ -672,7 +672,7 @@ class _$FeaturesImpl implements _Features {
   final bool noWatermark;
   @override
   @JsonKey()
-  final bool unLimitedDownloads;
+  final bool unlimitedDownloads;
   @override
   @JsonKey()
   final int perDayDownloads;
@@ -691,7 +691,7 @@ class _$FeaturesImpl implements _Features {
 
   @override
   String toString() {
-    return 'Features(premiumFeeds: $premiumFeeds, qualityDownload: $qualityDownload, noWatermark: $noWatermark, unLimitedDownloads: $unLimitedDownloads, perDayDownloads: $perDayDownloads, hideAds: $hideAds, fontAccesibility: $fontAccesibility, updateLogo: $updateLogo, updateSignature: $updateSignature)';
+    return 'Features(premiumFeeds: $premiumFeeds, qualityDownload: $qualityDownload, noWatermark: $noWatermark, unlimitedDownloads: $unlimitedDownloads, perDayDownloads: $perDayDownloads, hideAds: $hideAds, fontAccesibility: $fontAccesibility, updateLogo: $updateLogo, updateSignature: $updateSignature)';
   }
 
   @override
@@ -705,8 +705,8 @@ class _$FeaturesImpl implements _Features {
                 other.qualityDownload == qualityDownload) &&
             (identical(other.noWatermark, noWatermark) ||
                 other.noWatermark == noWatermark) &&
-            (identical(other.unLimitedDownloads, unLimitedDownloads) ||
-                other.unLimitedDownloads == unLimitedDownloads) &&
+            (identical(other.unlimitedDownloads, unlimitedDownloads) ||
+                other.unlimitedDownloads == unlimitedDownloads) &&
             (identical(other.perDayDownloads, perDayDownloads) ||
                 other.perDayDownloads == perDayDownloads) &&
             (identical(other.hideAds, hideAds) || other.hideAds == hideAds) &&
@@ -725,7 +725,7 @@ class _$FeaturesImpl implements _Features {
       premiumFeeds,
       qualityDownload,
       noWatermark,
-      unLimitedDownloads,
+      unlimitedDownloads,
       perDayDownloads,
       hideAds,
       fontAccesibility,
@@ -751,7 +751,7 @@ abstract class _Features implements Features {
       {final bool premiumFeeds,
       final bool qualityDownload,
       final bool noWatermark,
-      final bool unLimitedDownloads,
+      final bool unlimitedDownloads,
       final int perDayDownloads,
       final bool hideAds,
       final bool fontAccesibility,
@@ -768,7 +768,7 @@ abstract class _Features implements Features {
   @override
   bool get noWatermark;
   @override
-  bool get unLimitedDownloads;
+  bool get unlimitedDownloads;
   @override
   int get perDayDownloads;
   @override

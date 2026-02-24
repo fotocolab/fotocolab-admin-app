@@ -125,7 +125,7 @@ class _CreateSubscriptionScreenState
                           ...provider.features.toJson().entries.map((e) {
                             if (e.key ==
                                 SubscriptionFeatureEnum
-                                    .unLimitedDownloads
+                                    .unlimitedDownloads
                                     .name) {
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 16),

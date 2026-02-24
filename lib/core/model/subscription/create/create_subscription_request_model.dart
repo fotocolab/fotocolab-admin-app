@@ -35,7 +35,7 @@ class Features with _$Features {
     @Default(false) bool premiumFeeds,
     @Default(false) bool qualityDownload,
     @Default(false) bool noWatermark,
-    @Default(false) bool unLimitedDownloads,
+    @Default(false) bool unlimitedDownloads,
     @Default(1) int perDayDownloads,
     @Default(false) bool hideAds,
     @Default(false) bool fontAccesibility,

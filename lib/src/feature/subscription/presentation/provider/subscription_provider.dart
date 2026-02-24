@@ -174,7 +174,7 @@ class SubscriptionNotifierProvider extends StateNotifier<SubscriptionState> {
         perDayDownloads: 2,
         premiumFeeds: false,
         qualityDownload: false,
-        unLimitedDownloads: false,
+        unlimitedDownloads: false,
         updateLogo: false,
         updateSignature: false,
       );
@@ -186,7 +186,7 @@ class SubscriptionNotifierProvider extends StateNotifier<SubscriptionState> {
         perDayDownloads: 2,
         premiumFeeds: true,
         qualityDownload: true,
-        unLimitedDownloads: true,
+        unlimitedDownloads: true,
         updateLogo: true,
         updateSignature: true,
       );
