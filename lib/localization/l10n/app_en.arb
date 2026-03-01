@@ -74,5 +74,7 @@
     "are_you_sure_want_to_activate": "Are you sure want to activate this Plan?",
     "edit_plan": "Edit Plan",
     "update": "Update",
-    "plan_updated_successfully": "Plan updated successfully"
+    "plan_updated_successfully": "Plan updated successfully",
+    "create_category":"Create Category",
+    "category_name":"Category name"
 }

@@ -29,15 +29,20 @@ class _ActiveUploadsWidgetState extends ConsumerState<ActiveUploadsWidget> {
         ),
         BrandVSpace.gap10(),
         SizedBox(
-          height: 200,
+          height: 75,
+          width: context.screenWidth,
           child: ListView.separated(
             shrinkWrap: true,
             itemCount: provider.selectedFiles.length,
+            scrollDirection: .horizontal,
             itemBuilder: (context, index) {
               var item = provider.selectedFiles[index];
-              return UploadingStatusTile(fileName: item.name);
+              return UploadingStatusTile(
+                fileName: item.name,
+                fileSize: item.size.toMb.toStringAsFixed(2),
+              );
             },
-            separatorBuilder: (context, index) => BrandVSpace.gap10(),
+            separatorBuilder: (context, index) => BrandHSpace.gap10(),
           ),
         ),
       ],
