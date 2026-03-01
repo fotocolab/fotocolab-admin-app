@@ -1,1 +1,1 @@
-enum SubscriptionFeatureEnum { unLimitedDownloads, perDayDownloads }
+enum SubscriptionFeatureEnum { unlimitedDownloads, perDayDownloads }

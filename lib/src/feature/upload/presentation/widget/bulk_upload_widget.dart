@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fotocolab_admin/route/navigation_service.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/provider/upload_provider.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_admin/util/file_manager/file_manager.dart';
@@ -19,12 +18,6 @@ class _BulkUploadWidgetState extends ConsumerState<BulkUploadWidget> {
   Future<void> selectFileOnTap() async {
     var files = await FileManager.uploadMultiple();
     provider.setSelectedFiles = files;
-    bool isUploaded = await provider.uploadFiles();
-    if (isUploaded) {
-      NavigationService.showSuccessSnackbar(message: 'Files are uploaded');
-    } else {
-      NavigationService.showErrorSnackbar();
-    }
   }
 
   @override

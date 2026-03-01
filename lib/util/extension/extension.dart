@@ -33,3 +33,7 @@ extension StringOperation on String {
 extension AppColorFilter on Color {
   ColorFilter get colorFilter => ColorFilter.mode(this, BlendMode.src);
 }
+
+extension FileSize on int {
+  double get toMb => (((this) / 1024) / 1024);
+}

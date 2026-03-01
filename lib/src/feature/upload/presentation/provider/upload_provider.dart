@@ -89,7 +89,8 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
 
   Future<bool> uploadFiles() async {
     if (selectedUploadCategory == null ||
-        selectedUploadCategory!.categoryId == null) {
+        selectedUploadCategory!.categoryId == null ||
+        selectedFiles.isEmpty) {
       return false;
     }
     state = state.copyWith(isUploading: true);
@@ -107,7 +108,7 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
       state = state.copyWith(isUploading: false, selectedFiles: []);
       return true;
     } else {
-      state = state.copyWith(isUploading: false, selectedFiles: []);
+      state = state.copyWith(isUploading: false);
     }
     return false;
   }
@@ -152,5 +153,15 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
 
   void clearSelectedDate() {
     state = state.copyWith(selectedFromDate: null, selectedToDate: null);
+  }
+
+  void clearData() {
+    state = state.copyWith(
+      selectedFromDate: null,
+      selectedToDate: null,
+      selectedFiles: [],
+      keywords: [],
+      selectedUploadCategory: null,
+    );
   }
 }

@@ -10,4 +10,5 @@ abstract class RouteName {
   static String subscription = '/subscription';
   static String createSubscription = '/create_subscription';
   static String editSubscription = '/edit_subscription';
+  static String createCategory = '/create_category';
 }

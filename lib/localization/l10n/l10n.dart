@@ -548,6 +548,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Plan updated successfully'**
   String get plan_updated_successfully;
+
+  /// No description provided for @create_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Category'**
+  String get create_category;
+
+  /// No description provided for @category_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Category name'**
+  String get category_name;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

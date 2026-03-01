@@ -24,6 +24,7 @@ class UploadTypeWidget extends ConsumerWidget {
                 title: UploadEnum.free.displayValue,
                 borderRadius: 12,
                 isSelected: provider.selectedUploadType == UploadEnum.free,
+                showCheck: provider.selectedUploadType == UploadEnum.free,
                 onTap: (value) {
                   provider.setSelectedUploadType = UploadEnum.free;
                 },
@@ -35,6 +36,7 @@ class UploadTypeWidget extends ConsumerWidget {
                 title: UploadEnum.paid.displayValue,
                 borderRadius: 12,
                 isSelected: provider.selectedUploadType == UploadEnum.paid,
+                showCheck: provider.selectedUploadType == UploadEnum.paid,
                 onTap: (value) {
                   provider.setSelectedUploadType = UploadEnum.paid;
                 },

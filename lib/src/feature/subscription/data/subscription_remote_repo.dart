@@ -21,7 +21,7 @@ class SubscriptionRemoteRepo implements SubscriptionRepo {
         body: request.toJson(),
       );
 
-      if (response?.statusCode == NetworkStatus.status200.statusCode) {
+      if (response?.statusCode == NetworkStatus.status201.statusCode) {
         var body = json.decode(response!.body);
 
         var result = BaseDynamicResponse<User?>.fromJson(

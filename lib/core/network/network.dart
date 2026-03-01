@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fotocolab_admin/core/network/internet_manager.dart';
 import 'package:fotocolab_admin/core/network/network_status.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -140,6 +141,8 @@ abstract class NetworkClient {
     dynamic body,
     bool showError = true,
   }) async {
+    var isInternet = await InternetManager.checkConnection();
+    if (!isInternet) return null;
     try {
       var response = await http.post(
         Uri.parse('$appDomain$endPoint'),
@@ -625,7 +628,7 @@ abstract class NetworkClient {
           jsonResponse['data']['token'] ?? AuthManager().token,
         );
       } catch (e) {
-        rethrow;
+        return http.Response(json.encode(jsonResponse), 201);
       }
       return http.Response(json.encode(jsonResponse), 201);
     } else if (response.statusCode == NetworkStatus.status400.statusCode) {

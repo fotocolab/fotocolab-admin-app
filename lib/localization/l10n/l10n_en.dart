@@ -240,4 +240,10 @@ class SEn extends S {
 
   @override
   String get plan_updated_successfully => 'Plan updated successfully';
+
+  @override
+  String get create_category => 'Create Category';
+
+  @override
+  String get category_name => 'Category name';
 }

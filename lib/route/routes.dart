@@ -10,6 +10,7 @@ import 'package:fotocolab_admin/src/feature/splash/presentation/splash_screen.da
 import 'package:fotocolab_admin/src/feature/subscription/presentation/screen/create_subscription_screen.dart';
 import 'package:fotocolab_admin/src/feature/subscription/presentation/screen/edit_subscription_screen.dart';
 import 'package:fotocolab_admin/src/feature/subscription/presentation/screen/subscription_screen.dart';
+import 'package:fotocolab_admin/src/feature/upload/presentation/screen/create_category_screen.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/screen/upload_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -55,6 +56,11 @@ final GoRouter routerConfig = GoRouter(
       path: RouteName.editSubscription,
       builder: (context, state) =>
           EditSubscriptionScreen(routeArgs: state.extra),
+    ),
+
+    GoRoute(
+      path: RouteName.createCategory,
+      builder: (context, state) => CreateCategoryScreen(),
     ),
   ],
 );

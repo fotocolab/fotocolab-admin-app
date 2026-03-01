@@ -17,7 +17,7 @@ class SubscriptionState with _$SubscriptionState {
         perDayDownloads: 1,
         premiumFeeds: false,
         qualityDownload: false,
-        unLimitedDownloads: false,
+        unlimitedDownloads: false,
         updateLogo: false,
         updateSignature: false,
       ),

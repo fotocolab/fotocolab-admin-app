@@ -19,13 +19,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   late AuthNotifierProvider provider;
   GlobalKey<FormState> formKey = GlobalKey();
 
-  TextEditingController emailController = TextEditingController(
-    text: 'fotocolabam@gmail.com',
-  );
+  TextEditingController emailController = TextEditingController();
 
-  TextEditingController passwordController = TextEditingController(
-    text: 'fotocolab!AM@9226',
-  );
+  TextEditingController passwordController = TextEditingController();
 
   Future<void> loginOnTap() async {
     bool isValid = formKey.currentState?.validate() ?? false;
