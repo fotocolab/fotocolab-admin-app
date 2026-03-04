@@ -88,7 +88,7 @@ class UploadRemoteRepo implements UploadRepo {
           'keywords': keywords.join(','),
         },
         files: file,
-        documentKey: ["files"],
+        documentKey: List.generate(file.length, (i) => 'files'),
       );
 
       if (response?.statusCode == NetworkStatus.status201.statusCode) {
