@@ -1,1 +1,0 @@
- /Users/suramack/Project/fotocolab/fotocolab_admin/lib/localization/l10n/l10n_en.dart /Users/suramack/Project/fotocolab/fotocolab_admin/lib/localization/l10n/l10n.dart:  /Users/suramack/Project/fotocolab/fotocolab_admin/l10n.yaml /Users/suramack/Project/fotocolab/fotocolab_admin/lib/localization/l10n/app_en.arb
