@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -22,15 +23,22 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Setup SSH agent for private repos
+      - name: Setup SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Add GitHub to known hosts
+      - name: Configure SSH for github-fotocolab alias
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          echo "Host github-fotocolab
+            HostName github.com
+            User git
+            IdentityFile ~/.ssh/id_rsa
+            StrictHostKeyChecking no" >> ~/.ssh/config
+
+      - name: Add GitHub to known hosts
+        run: ssh-keyscan github.com >> ~/.ssh/known_hosts
 
       - name: Install dependencies
         run: flutter pub get
@@ -45,8 +53,8 @@ jobs:
           --dart-define=IS_ENCRYPTION=true \
           --dart-define=ENABLE_DEBUG_PRINT=true \
           --dart-define=PRIVACY_POLICY=https://api.fotocolab.com/privacy \
-          --dart-define=TERMS_AND_CONDITION=https://api.fotocolab.com/terms-and-conditions \
-          --dart-define=REFUND_POLICY=https://api.fotocolab.com/refund-and-cancellation \
+          --dart-define=TERMS_AND_CONDITION=https://api.fotocolab.com/terms_and_conditions \
+          --dart-define=REFUND_POLICY=https://api.fotocolab.com/refund_and_cancellation \
           --dart-define=CONTACT_US=https://api.fotocolab.com/contact \
           --dart-define=ENV=prod
 
