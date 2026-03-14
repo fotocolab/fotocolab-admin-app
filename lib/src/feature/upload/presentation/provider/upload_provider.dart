@@ -43,6 +43,8 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
 
   DateTime? get selectedToDate => state.selectedToDate;
 
+  bool get isImageCropping => state.isImageCropping;
+
   Future<void> getUploadCategory() async {
     state = state.copyWith(isCategoryLoading: true);
 
@@ -149,6 +151,10 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
 
   set setSelectedToDate(DateTime value) {
     state = state.copyWith(selectedToDate: value);
+  }
+
+  set setIsImageCropping(bool value) {
+    state = state.copyWith(isImageCropping: value);
   }
 
   void clearSelectedDate() {

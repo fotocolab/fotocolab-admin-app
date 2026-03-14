@@ -22,6 +22,8 @@ class _CategoryWidgetState extends ConsumerState<CategoryWidget> {
 
   TextEditingController keywordController = TextEditingController();
 
+  TextEditingController categoryController = TextEditingController();
+
   Future<void> fetchData() async {
     await provider.getUploadCategory();
   }
@@ -62,35 +64,57 @@ class _CategoryWidgetState extends ConsumerState<CategoryWidget> {
             BrandVSpace.gap10(),
             if (provider.isCategoryLoading) ...[
               BrandLoaderWidget(width: 50),
-            ] else if (provider.uploadCategory.isEmpty)
-              ...[]
-            else
+            ] else if (provider.uploadCategory.isEmpty) ...[
+              Row(
+                children: [
+                  BrandText.white(data: context.loc.create_category),
+                  BrandHSpace.gap10(),
+                  BrandIconButon(
+                    iconData: Icons.create_new_folder,
+                    onTap: gotoCreateCategoryScreen,
+                  ),
+                ],
+              ),
+            ] else
               Row(
                 children: [
                   Expanded(
-                    child: BrandDropDownButton<UploadCategoryResponseModel>(
-                      selectedValue: provider.selectedUploadCategory,
-                      items: [
-                        // BrandDropdownMenuItem(value: '0', child: BrandTextField()),
-                        ...provider.uploadCategory.map(
-                          (e) =>
-                              BrandDropdownMenuItem<
-                                UploadCategoryResponseModel
-                              >(
-                                value: e,
-                                child: BrandText.white(
-                                  data: e.categoryName ?? '-',
-                                ),
-                              ),
+                    child: DropdownMenu(
+                      width: double.infinity,
+                      hintText: context.loc.category_name,
+                      enableSearch: true,
+                      enableFilter: true,
+                      textStyle: BrandTextStyle(color: AppColors.white),
+                      controller: categoryController,
+                      inputDecorationTheme: InputDecorationTheme(
+                        hintStyle: BrandTextStyle(color: AppColors.grey8D),
+                      ),
+                      menuStyle: MenuStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          AppColors.primary,
                         ),
-                      ],
+                      ),
+                      dropdownMenuEntries: provider.uploadCategory
+                          .map(
+                            (e) =>
+                                DropdownMenuEntry<UploadCategoryResponseModel>(
+                                  value: e,
+                                  label: e.categoryName ?? '-',
+                                  labelWidget: BrandText.white(
+                                    data: e.categoryName ?? '-',
+                                  ),
+                                ),
+                          )
+                          .toList(),
                       onSelected: (value) {
                         provider.setSelectedUploadCategory =
                             value as UploadCategoryResponseModel;
                       },
                     ),
                   ),
+
                   BrandHSpace.gap10(),
+
                   BrandIconButon(
                     iconData: Icons.create_new_folder,
                     onTap: gotoCreateCategoryScreen,

@@ -20,5 +20,6 @@ class UploadState with _$UploadState {
     @Default([]) List<String> keywords,
     DateTime? selectedFromDate,
     DateTime? selectedToDate,
+    @Default(false) bool isImageCropping,
   }) = _UploadState;
 }

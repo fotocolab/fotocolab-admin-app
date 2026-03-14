@@ -560,6 +560,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Category name'**
   String get category_name;
+
+  /// No description provided for @there_is_no_category.
+  ///
+  /// In en, this message translates to:
+  /// **'There is no category'**
+  String get there_is_no_category;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

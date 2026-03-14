@@ -28,6 +28,7 @@ mixin _$UploadState {
   List<String> get keywords => throw _privateConstructorUsedError;
   DateTime? get selectedFromDate => throw _privateConstructorUsedError;
   DateTime? get selectedToDate => throw _privateConstructorUsedError;
+  bool get isImageCropping => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UploadStateCopyWith<UploadState> get copyWith =>
@@ -50,7 +51,8 @@ abstract class $UploadStateCopyWith<$Res> {
       bool isCreateCategoryLoading,
       List<String> keywords,
       DateTime? selectedFromDate,
-      DateTime? selectedToDate});
+      DateTime? selectedToDate,
+      bool isImageCropping});
 
   $UploadCategoryResponseModelCopyWith<$Res>? get selectedUploadCategory;
 }
@@ -78,6 +80,7 @@ class _$UploadStateCopyWithImpl<$Res, $Val extends UploadState>
     Object? keywords = null,
     Object? selectedFromDate = freezed,
     Object? selectedToDate = freezed,
+    Object? isImageCropping = null,
   }) {
     return _then(_value.copyWith(
       selectedUploadType: null == selectedUploadType
@@ -120,6 +123,10 @@ class _$UploadStateCopyWithImpl<$Res, $Val extends UploadState>
           ? _value.selectedToDate
           : selectedToDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isImageCropping: null == isImageCropping
+          ? _value.isImageCropping
+          : isImageCropping // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -155,7 +162,8 @@ abstract class _$$UploadStateImplCopyWith<$Res>
       bool isCreateCategoryLoading,
       List<String> keywords,
       DateTime? selectedFromDate,
-      DateTime? selectedToDate});
+      DateTime? selectedToDate,
+      bool isImageCropping});
 
   @override
   $UploadCategoryResponseModelCopyWith<$Res>? get selectedUploadCategory;
@@ -182,6 +190,7 @@ class __$$UploadStateImplCopyWithImpl<$Res>
     Object? keywords = null,
     Object? selectedFromDate = freezed,
     Object? selectedToDate = freezed,
+    Object? isImageCropping = null,
   }) {
     return _then(_$UploadStateImpl(
       selectedUploadType: null == selectedUploadType
@@ -224,6 +233,10 @@ class __$$UploadStateImplCopyWithImpl<$Res>
           ? _value.selectedToDate
           : selectedToDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isImageCropping: null == isImageCropping
+          ? _value.isImageCropping
+          : isImageCropping // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -241,7 +254,8 @@ class _$UploadStateImpl implements _UploadState {
       this.isCreateCategoryLoading = false,
       final List<String> keywords = const [],
       this.selectedFromDate,
-      this.selectedToDate})
+      this.selectedToDate,
+      this.isImageCropping = false})
       : _selectedFiles = selectedFiles,
         _uploadCategory = uploadCategory,
         _keywords = keywords;
@@ -291,10 +305,13 @@ class _$UploadStateImpl implements _UploadState {
   final DateTime? selectedFromDate;
   @override
   final DateTime? selectedToDate;
+  @override
+  @JsonKey()
+  final bool isImageCropping;
 
   @override
   String toString() {
-    return 'UploadState(selectedUploadType: $selectedUploadType, selectedFiles: $selectedFiles, uploadCategory: $uploadCategory, selectedUploadCategory: $selectedUploadCategory, isCategoryLoading: $isCategoryLoading, isUploading: $isUploading, isCreateCategoryLoading: $isCreateCategoryLoading, keywords: $keywords, selectedFromDate: $selectedFromDate, selectedToDate: $selectedToDate)';
+    return 'UploadState(selectedUploadType: $selectedUploadType, selectedFiles: $selectedFiles, uploadCategory: $uploadCategory, selectedUploadCategory: $selectedUploadCategory, isCategoryLoading: $isCategoryLoading, isUploading: $isUploading, isCreateCategoryLoading: $isCreateCategoryLoading, keywords: $keywords, selectedFromDate: $selectedFromDate, selectedToDate: $selectedToDate, isImageCropping: $isImageCropping)';
   }
 
   @override
@@ -321,7 +338,9 @@ class _$UploadStateImpl implements _UploadState {
             (identical(other.selectedFromDate, selectedFromDate) ||
                 other.selectedFromDate == selectedFromDate) &&
             (identical(other.selectedToDate, selectedToDate) ||
-                other.selectedToDate == selectedToDate));
+                other.selectedToDate == selectedToDate) &&
+            (identical(other.isImageCropping, isImageCropping) ||
+                other.isImageCropping == isImageCropping));
   }
 
   @override
@@ -336,7 +355,8 @@ class _$UploadStateImpl implements _UploadState {
       isCreateCategoryLoading,
       const DeepCollectionEquality().hash(_keywords),
       selectedFromDate,
-      selectedToDate);
+      selectedToDate,
+      isImageCropping);
 
   @JsonKey(ignore: true)
   @override
@@ -356,7 +376,8 @@ abstract class _UploadState implements UploadState {
       final bool isCreateCategoryLoading,
       final List<String> keywords,
       final DateTime? selectedFromDate,
-      final DateTime? selectedToDate}) = _$UploadStateImpl;
+      final DateTime? selectedToDate,
+      final bool isImageCropping}) = _$UploadStateImpl;
 
   @override
   UploadEnum get selectedUploadType;
@@ -378,6 +399,8 @@ abstract class _UploadState implements UploadState {
   DateTime? get selectedFromDate;
   @override
   DateTime? get selectedToDate;
+  @override
+  bool get isImageCropping;
   @override
   @JsonKey(ignore: true)
   _$$UploadStateImplCopyWith<_$UploadStateImpl> get copyWith =>

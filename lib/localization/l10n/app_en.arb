@@ -75,6 +75,7 @@
     "edit_plan": "Edit Plan",
     "update": "Update",
     "plan_updated_successfully": "Plan updated successfully",
-    "create_category":"Create Category",
-    "category_name":"Category name"
+    "create_category": "Create Category",
+    "category_name": "Category name",
+    "there_is_no_category": "There is no category"
 }
