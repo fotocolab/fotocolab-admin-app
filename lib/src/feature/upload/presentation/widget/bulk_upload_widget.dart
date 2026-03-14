@@ -16,8 +16,10 @@ class _BulkUploadWidgetState extends ConsumerState<BulkUploadWidget> {
   late UploadNotifierProvider provider;
 
   Future<void> selectFileOnTap() async {
+    provider.setIsImageCropping = true;
     var files = await FileManager.uploadMultiple();
     provider.setSelectedFiles = files;
+    provider.setIsImageCropping = false;
   }
 
   @override
@@ -59,6 +61,7 @@ class _BulkUploadWidgetState extends ConsumerState<BulkUploadWidget> {
           FittedBox(
             child: BrandButton.primary(
               title: context.loc.select_file,
+              isLoading: provider.isImageCropping,
               borderRadius: 8,
               titlePadding: EdgeInsets.symmetric(horizontal: 16),
               onTap: selectFileOnTap,

@@ -246,4 +246,7 @@ class SEn extends S {
 
   @override
   String get category_name => 'Category name';
+
+  @override
+  String get there_is_no_category => 'There is no category';
 }
