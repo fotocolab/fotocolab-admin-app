@@ -60,7 +60,7 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
     }
   }
 
-  Future<void> createUploadCategory({String? categoryName}) async {
+  Future<bool> createUploadCategory({String? categoryName}) async {
     state = state.copyWith(isCreateCategoryLoading: true);
 
     var request = UploadCategoryRequestModel(
@@ -81,11 +81,13 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
         isCreateCategoryLoading: false,
         selectedUploadCategory: result.data,
       );
+      return true;
     } else {
       state = state.copyWith(
         isCreateCategoryLoading: false,
         selectedUploadCategory: null,
       );
+      return false;
     }
   }
 

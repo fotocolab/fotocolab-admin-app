@@ -566,6 +566,24 @@ abstract class S {
   /// In en, this message translates to:
   /// **'There is no category'**
   String get there_is_no_category;
+
+  /// No description provided for @calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get calendar;
+
+  /// No description provided for @calendar_and_events.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar & Events'**
+  String get calendar_and_events;
+
+  /// No description provided for @event_added_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Event added successfully'**
+  String get event_added_successfully;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
