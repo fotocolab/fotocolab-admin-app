@@ -8,6 +8,7 @@ import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_admin/util/formator/date_formator.dart';
 import 'package:fotocolab_admin/util/validator/validator.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
+import 'package:go_router/go_router.dart';
 
 class CreateCategoryScreen extends ConsumerStatefulWidget {
   final dynamic routeArgs;
@@ -34,6 +35,12 @@ class _CreateCategoryScreenState extends ConsumerState<CreateCategoryScreen> {
         NavigationService.showSuccessSnackbar(
           message: context.loc.event_added_successfully,
         );
+
+        await Future.delayed(const Duration(seconds: 1));
+        
+        if (mounted) {
+          context.pop();
+        }
       }
     }
   }
