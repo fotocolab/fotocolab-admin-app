@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fotocolab_admin/core/model/calendar/response/events/events_response_model.dart';
+import 'package:fotocolab_admin/route/navigation_service.dart';
 import 'package:fotocolab_admin/src/common/date_picker_manager.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/provider/upload_provider.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
@@ -8,7 +10,8 @@ import 'package:fotocolab_admin/util/validator/validator.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
 
 class CreateCategoryScreen extends ConsumerStatefulWidget {
-  const CreateCategoryScreen({super.key});
+  final dynamic routeArgs;
+  const CreateCategoryScreen({super.key, this.routeArgs});
 
   @override
   ConsumerState<CreateCategoryScreen> createState() =>
@@ -24,9 +27,14 @@ class _CreateCategoryScreenState extends ConsumerState<CreateCategoryScreen> {
   Future<void> addCategoryOnTap() async {
     bool isValid = categoryFormKey.currentState?.validate() ?? false;
     if (isValid) {
-      await provider.createUploadCategory(
+      bool isCreated = await provider.createUploadCategory(
         categoryName: categoryController.text,
       );
+      if (isCreated && mounted) {
+        NavigationService.showSuccessSnackbar(
+          message: context.loc.event_added_successfully,
+        );
+      }
     }
   }
 
@@ -56,6 +64,33 @@ class _CreateCategoryScreenState extends ConsumerState<CreateCategoryScreen> {
     provider.clearSelectedDate();
   }
 
+  void init() {
+    if (widget.routeArgs != null) {
+      try {
+        var model = EventsResponseModel.fromJson(widget.routeArgs);
+        categoryController.text = model.eventName ?? '';
+        if (model.fromDate != null) {
+          provider.setSelectedFromDate = model.fromDate!.subtract(
+            Duration(days: 2),
+          );
+        }
+        if (model.endDate != null) {
+          provider.setSelectedToDate = model.endDate!;
+        }
+      } catch (e) {
+        //
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      init();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.watch(uploadProvider);
@@ -66,42 +101,46 @@ class _CreateCategoryScreenState extends ConsumerState<CreateCategoryScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
+            Form(
+              key: categoryFormKey,
+              child: BrandTextField(
+                hintText: context.loc.category_name,
+                controller: categoryController,
+                validator: (value) {
+                  return Validator.empty(context: context, value: value);
+                },
+              ),
+            ),
+            BrandVSpace.gap10(),
             Row(
               crossAxisAlignment: .start,
               children: [
                 Expanded(
-                  child: Form(
-                    key: categoryFormKey,
-                    child: BrandTextField(
-                      hintText: context.loc.category_name,
-                      controller: categoryController,
-                      validator: (value) {
-                        return Validator.empty(context: context, value: value);
-                      },
-                    ),
+                  child: BrandButton.secondary(
+                    title: provider.selectedFromDate == null
+                        ? context.loc.from
+                        : DateFormats.ddMMyyyy.format(
+                            provider.selectedFromDate!,
+                          ),
+                    onTap: fromDateOnTap,
+                    borderColor: AppColors.primary,
+                    bgColor: AppColors.primary.withAlpha(100),
+                    fontColor: AppColors.primary,
+                    fontSize: 12,
                   ),
                 ),
                 BrandHSpace.gap10(),
-                BrandButton.secondary(
-                  title: provider.selectedFromDate == null
-                      ? context.loc.from
-                      : DateFormats.ddMMyyyy.format(provider.selectedFromDate!),
-                  onTap: fromDateOnTap,
-                  borderColor: AppColors.primary,
-                  bgColor: AppColors.primary.withAlpha(100),
-                  fontColor: AppColors.primary,
-                  fontSize: 12,
-                ),
-                BrandHSpace.gap10(),
-                BrandButton.secondary(
-                  title: provider.selectedToDate == null
-                      ? context.loc.to
-                      : DateFormats.ddMMyyyy.format(provider.selectedToDate!),
-                  onTap: toDateOnTap,
-                  borderColor: AppColors.primary,
-                  bgColor: AppColors.primary.withAlpha(100),
-                  fontColor: AppColors.primary,
-                  fontSize: 12,
+                Expanded(
+                  child: BrandButton.secondary(
+                    title: provider.selectedToDate == null
+                        ? context.loc.to
+                        : DateFormats.ddMMyyyy.format(provider.selectedToDate!),
+                    onTap: toDateOnTap,
+                    borderColor: AppColors.primary,
+                    bgColor: AppColors.primary.withAlpha(100),
+                    fontColor: AppColors.primary,
+                    fontSize: 12,
+                  ),
                 ),
                 BrandHSpace.gap10(),
                 BrandIconButon(iconData: Icons.clear, onTap: clearSelectedDate),

@@ -249,4 +249,13 @@ class SEn extends S {
 
   @override
   String get there_is_no_category => 'There is no category';
+
+  @override
+  String get calendar => 'Calendar';
+
+  @override
+  String get calendar_and_events => 'Calendar & Events';
+
+  @override
+  String get event_added_successfully => 'Event added successfully';
 }

@@ -77,5 +77,8 @@
     "plan_updated_successfully": "Plan updated successfully",
     "create_category": "Create Category",
     "category_name": "Category name",
-    "there_is_no_category": "There is no category"
+    "there_is_no_category": "There is no category",
+    "calendar": "Calendar",
+    "calendar_and_events": "Calendar & Events",
+    "event_added_successfully": "Event added successfully"
 }
