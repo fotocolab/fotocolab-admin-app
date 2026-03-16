@@ -4,6 +4,7 @@ import 'package:fotocolab_admin/route/navigation_service.dart';
 import 'package:fotocolab_admin/route/route_name.dart';
 import 'package:fotocolab_admin/src/feature/auth/presentation/screen/login_screen.dart';
 import 'package:fotocolab_admin/src/feature/calendar/presentation/screen/calendar_screen.dart';
+import 'package:fotocolab_admin/src/feature/canvas/presentation/screen/canvas_screen.dart';
 import 'package:fotocolab_admin/src/feature/error/presentation/screen/error_screen.dart';
 import 'package:fotocolab_admin/src/feature/home/presentation/screen/home_screen.dart';
 import 'package:fotocolab_admin/src/feature/profile/presentation/screen/profile_screen.dart';
@@ -67,6 +68,11 @@ final GoRouter routerConfig = GoRouter(
     GoRoute(
       path: RouteName.calendar,
       builder: (context, state) => CalendarScreen(),
+    ),
+
+    GoRoute(
+      path: RouteName.canvas,
+      builder: (context, state) => CanvasScreen(),
     ),
   ],
 );

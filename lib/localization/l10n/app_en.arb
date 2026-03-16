@@ -80,5 +80,12 @@
     "there_is_no_category": "There is no category",
     "calendar": "Calendar",
     "calendar_and_events": "Calendar & Events",
-    "event_added_successfully": "Event added successfully"
+    "event_added_successfully": "Event added successfully",
+    "add_images": "Add Images",
+    "tap_to_select_photos": "Tap to select photos",
+    "select_photos": "Select Photos",
+    "enter_quote": "Enter quote",
+    "enter_or_paste_multiple_quote": "Enter or paste multiple quote",
+    "merge_and_go_back": "Merge & Go Back",
+    "advanced_upload": "Advanced Upload"
 }

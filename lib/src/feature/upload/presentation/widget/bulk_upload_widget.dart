@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fotocolab_admin/route/route_name.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/provider/upload_provider.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_admin/util/file_manager/file_manager.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
+import 'package:go_router/go_router.dart';
 
 class BulkUploadWidget extends ConsumerStatefulWidget {
   const BulkUploadWidget({super.key});
@@ -20,6 +22,10 @@ class _BulkUploadWidgetState extends ConsumerState<BulkUploadWidget> {
     var files = await FileManager.uploadMultiple();
     provider.setSelectedFiles = files;
     provider.setIsImageCropping = false;
+  }
+
+  void advancedUploadOnTap() {
+    context.push(RouteName.canvas);
   }
 
   @override
@@ -65,6 +71,18 @@ class _BulkUploadWidgetState extends ConsumerState<BulkUploadWidget> {
               borderRadius: 8,
               titlePadding: EdgeInsets.symmetric(horizontal: 16),
               onTap: selectFileOnTap,
+            ),
+          ),
+          BrandVSpace.gap10(),
+          FittedBox(
+            child: BrandButton.secondary(
+              title: context.loc.advanced_upload,
+              borderColor: AppColors.primary,
+              bgColor: AppColors.primary.withAlpha(20),
+              fontColor: AppColors.white,
+              borderRadius: 8,
+              titlePadding: EdgeInsets.symmetric(horizontal: 16),
+              onTap: advancedUploadOnTap,
             ),
           ),
         ],

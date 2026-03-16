@@ -258,4 +258,25 @@ class SEn extends S {
 
   @override
   String get event_added_successfully => 'Event added successfully';
+
+  @override
+  String get add_images => 'Add Images';
+
+  @override
+  String get tap_to_select_photos => 'Tap to select photos';
+
+  @override
+  String get select_photos => 'Select Photos';
+
+  @override
+  String get enter_quote => 'Enter quote';
+
+  @override
+  String get enter_or_paste_multiple_quote => 'Enter or paste multiple quote';
+
+  @override
+  String get merge_and_go_back => 'Merge & Go Back';
+
+  @override
+  String get advanced_upload => 'Advanced Upload';
 }
