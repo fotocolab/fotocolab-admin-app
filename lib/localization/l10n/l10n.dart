@@ -584,6 +584,48 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Event added successfully'**
   String get event_added_successfully;
+
+  /// No description provided for @add_images.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Images'**
+  String get add_images;
+
+  /// No description provided for @tap_to_select_photos.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to select photos'**
+  String get tap_to_select_photos;
+
+  /// No description provided for @select_photos.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Photos'**
+  String get select_photos;
+
+  /// No description provided for @enter_quote.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter quote'**
+  String get enter_quote;
+
+  /// No description provided for @enter_or_paste_multiple_quote.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter or paste multiple quote'**
+  String get enter_or_paste_multiple_quote;
+
+  /// No description provided for @merge_and_go_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge & Go Back'**
+  String get merge_and_go_back;
+
+  /// No description provided for @advanced_upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Upload'**
+  String get advanced_upload;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
