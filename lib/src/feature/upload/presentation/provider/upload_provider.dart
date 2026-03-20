@@ -1,6 +1,6 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fotocolab_admin/core/model/upload/request/category/upload_category_request_model.dart';
+import 'package:fotocolab_admin/core/model/upload/request/upload/upload_image_request_model.dart';
 import 'package:fotocolab_admin/core/model/upload/response/category/upload_category_response_model.dart';
 import 'package:fotocolab_admin/core/model/upload/state/upload_state.dart';
 import 'package:fotocolab_admin/core/network/network_status.dart';
@@ -20,7 +20,7 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
 
   UploadEnum get selectedUploadType => state.selectedUploadType;
 
-  List<PlatformFile> get selectedFiles => state.selectedFiles;
+  List<UploadImageRequestModel> get selectedFiles => state.selectedFiles;
 
   List<UploadCategoryResponseModel> get uploadCategory => state.uploadCategory;
 
@@ -139,7 +139,7 @@ class UploadNotifierProvider extends StateNotifier<UploadState> {
     state = state.copyWith(selectedUploadType: value);
   }
 
-  set setSelectedFiles(List<PlatformFile> value) {
+  set setSelectedFiles(List<UploadImageRequestModel> value) {
     state = state.copyWith(selectedFiles: value);
   }
 

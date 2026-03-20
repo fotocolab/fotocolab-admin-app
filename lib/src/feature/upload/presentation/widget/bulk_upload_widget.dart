@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fotocolab_admin/core/model/upload/request/upload/upload_image_request_model.dart';
 import 'package:fotocolab_admin/route/route_name.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/provider/upload_provider.dart';
+import 'package:fotocolab_admin/util/enum/language_enum.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_admin/util/file_manager/file_manager.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
@@ -20,7 +22,13 @@ class _BulkUploadWidgetState extends ConsumerState<BulkUploadWidget> {
   Future<void> selectFileOnTap() async {
     provider.setIsImageCropping = true;
     var files = await FileManager.uploadMultiple();
-    provider.setSelectedFiles = files;
+    List<UploadImageRequestModel> images = [];
+    for (var i in files) {
+      images.add(
+        UploadImageRequestModel(image: i, langauge: LanguageEnum.english.value),
+      );
+    }
+    provider.setSelectedFiles = images;
     provider.setIsImageCropping = false;
   }
 

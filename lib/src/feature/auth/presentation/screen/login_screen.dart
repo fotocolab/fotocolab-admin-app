@@ -85,6 +85,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   BrandTextField(
                     hintText: context.loc.password,
                     controller: passwordController,
+                    obscureText: true,
                     validator: (value) {
                       return Validator.password(
                         pwd: value ?? '',

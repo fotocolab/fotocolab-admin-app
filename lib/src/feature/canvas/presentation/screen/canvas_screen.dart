@@ -1,8 +1,12 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fotocolab_admin/core/model/canvas/response/image_title_response_model.dart';
+import 'package:fotocolab_admin/core/model/upload/request/upload/upload_image_request_model.dart';
 import 'package:fotocolab_admin/src/feature/canvas/presentation/widget/image_title_widget.dart';
+import 'package:fotocolab_admin/src/feature/language/presentaion/widget/select_language_widget.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/provider/upload_provider.dart';
+import 'package:fotocolab_admin/util/enum/language_enum.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_admin/util/file_manager/file_manager.dart';
 import 'package:fotocolab_admin/util/image/image_manager.dart';
@@ -19,20 +23,23 @@ class CanvasScreen extends ConsumerStatefulWidget {
 class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   late UploadNotifierProvider provider;
 
-  List<ImageTitle> images = [];
+  List<ImageTitleResponseModel> images = [];
 
   List<String> titles = [];
 
   Future<void> attachOnTap() async {
     var imgList = await FileManager.uploadMultiple();
     for (var i in imgList) {
-      images.add(ImageTitle(image: i));
+      images.add(ImageTitleResponseModel(image: i, language: .english));
     }
     setState(() {});
   }
 
   void onChanged(int index, String? value) {
-    images[index] = ImageTitle(image: images[index].image, title: value ?? '');
+    images[index] = images[index].copyWith(
+      image: images[index].image,
+      title: value ?? '',
+    );
   }
 
   void onMultiLineChanged(String? value) {
@@ -45,8 +52,13 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
     if (images.length < length) {
       length = images.length;
     }
+
     for (int i = 0; i < length; i++) {
-      images[i] = ImageTitle(image: images[i].image, title: list[i]);
+      images[i] = images[i].copyWith(
+        image: images[i].image,
+        title: list[i].split('|||').first,
+        language: list[i].split('|||').last.trim().toLowerCase().toLanguageEnum,
+      );
     }
 
     setState(() {});
@@ -57,20 +69,27 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
     setState(() {});
   }
 
+  void onLanguageChanged(LanguageEnum? langauge, int index) {
+    images[index] = images[index].copyWith(language: langauge ?? .english);
+    setState(() {});
+  }
+
   Future<void> mergeOnTap() async {
-    List<PlatformFile> mergedImage = [];
+    List<UploadImageRequestModel> mergedImage = [];
     for (var i in images) {
       try {
         var k = await generateInstagramPoster(
           imageBytes: i.image!.bytes!,
-          title: i.title,
+          title: i.title.split('|||').first,
         );
         var pf = PlatformFile(
           name: i.image?.name ?? 'image',
           size: k.length,
           bytes: k,
         );
-        mergedImage.add(pf);
+        mergedImage.add(
+          UploadImageRequestModel(image: pf, langauge: i.language.value),
+        );
       } catch (e) {
         //
       }
@@ -144,6 +163,8 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                               },
                             ),
                           ),
+                          BrandVSpace.gap16(),
+                          SelectLanguageWidget(),
                         ],
                       ],
                     ),
@@ -167,6 +188,10 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                         deleteOnTap: () {
                           deleteOnTap(index);
                         },
+                        onLanguageChanged: (langauge) {
+                          onLanguageChanged(langauge, index);
+                        },
+                        selectedLanguage: item.language,
                       );
                     },
                   ),
@@ -174,6 +199,10 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                   BrandButton.primary(
                     title: context.loc.merge_and_go_back,
                     onTap: mergeOnTap,
+                    leftIcon: Icon(
+                      Icons.arrow_back_sharp,
+                      color: AppColors.white,
+                    ),
                   ),
                   BrandVSpace.gap100(),
                 ],
@@ -185,10 +214,4 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
       ),
     );
   }
-}
-
-class ImageTitle {
-  final PlatformFile? image;
-  final String title;
-  const ImageTitle({this.image, this.title = ''});
 }

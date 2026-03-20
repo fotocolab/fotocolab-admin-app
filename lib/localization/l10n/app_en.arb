@@ -87,5 +87,8 @@
     "enter_quote": "Enter quote",
     "enter_or_paste_multiple_quote": "Enter or paste multiple quote",
     "merge_and_go_back": "Merge & Go Back",
-    "advanced_upload": "Advanced Upload"
+    "advanced_upload": "Advanced Upload",
+    "default_language": "Default Language",
+    "language": "Language",
+    "quote": "Quote"
 }

@@ -279,4 +279,13 @@ class SEn extends S {
 
   @override
   String get advanced_upload => 'Advanced Upload';
+
+  @override
+  String get default_language => 'Default Language';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get quote => 'Quote';
 }
