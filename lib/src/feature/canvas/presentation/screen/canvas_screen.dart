@@ -11,6 +11,7 @@ import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_admin/util/file_manager/file_manager.dart';
 import 'package:fotocolab_admin/util/image/image_manager.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
+import 'package:fotocolab_design_system/design_system/utils/utils.dart';
 import 'package:go_router/go_router.dart';
 
 class CanvasScreen extends ConsumerStatefulWidget {
@@ -81,6 +82,8 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
         var k = await generateInstagramPoster(
           imageBytes: i.image!.bytes!,
           title: i.title.split('|||').first,
+          fontFamily: BrandFontFamily.fjalla,
+          package: BrandConstansts.packageName,
         );
         var pf = PlatformFile(
           name: i.image?.name ?? 'image',

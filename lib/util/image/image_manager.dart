@@ -12,6 +12,7 @@ Future<Uint8List> generateInstagramPoster({
   double titleFontSize = 48,
   double subtitleFontSize = 24,
   String fontFamily = 'Datatype',
+  String? package,
 }) async {
   // Load the image
   final codec = await ui.instantiateImageCodec(imageBytes);
@@ -62,7 +63,11 @@ Future<Uint8List> generateInstagramPoster({
       final tp = TextPainter(
         text: TextSpan(
           text: testLine,
-          style: TextStyle(fontSize: fontSize, fontFamily: fontFamily),
+          style: TextStyle(
+            fontSize: fontSize,
+            fontFamily: fontFamily,
+            package: package,
+          ),
         ),
         textDirection: TextDirection.ltr,
       )..layout();
@@ -86,6 +91,7 @@ Future<Uint8List> generateInstagramPoster({
         style: TextStyle(
           fontSize: fontSize,
           fontFamily: fontFamily,
+          package: package,
           color: AppColors.white,
           shadows: [
             Shadow(
@@ -111,6 +117,7 @@ Future<Uint8List> generateInstagramPoster({
         style: TextStyle(
           fontSize: fontSize,
           fontFamily: fontFamily,
+          package: package,
           color: fillColor,
         ),
       ),

@@ -52,7 +52,7 @@ class ImageTitleWidget extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Image.memory(image!.bytes!, height: 55),
+                      Image.memory(image!.bytes!, width: 120),
                       BrandHSpace.gap10(),
                       UploadingStatusTile(
                         fileName: image?.name ?? '--',
