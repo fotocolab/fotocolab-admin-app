@@ -50,9 +50,9 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
       //   showBackButton: false,
       // ),
       child: Expanded(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: .start,
               children: [

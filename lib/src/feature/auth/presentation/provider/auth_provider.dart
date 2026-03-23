@@ -14,6 +14,8 @@ class AuthNotifierProvider extends StateNotifier<AuthState> {
 
   bool get isLoading => state.isLoading;
 
+  bool get passwordVisibility => state.passwordVisibility;
+
   Future<bool> login({required String email, required String password}) async {
     state = state.copyWith(isLoading: true);
 
@@ -28,5 +30,9 @@ class AuthNotifierProvider extends StateNotifier<AuthState> {
     } else {
       return false;
     }
+  }
+
+  set setPasswordVisibility(bool value) {
+    state = state.copyWith(passwordVisibility: value);
   }
 }

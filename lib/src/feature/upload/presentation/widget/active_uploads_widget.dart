@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fotocolab_admin/src/feature/canvas/presentation/widget/image_title_widget.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/provider/upload_provider.dart';
-import 'package:fotocolab_admin/src/feature/upload/presentation/widget/uploading_status_tile.dart';
+import 'package:fotocolab_admin/util/enum/language_enum.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
 
@@ -16,6 +17,15 @@ class ActiveUploadsWidget extends ConsumerStatefulWidget {
 class _ActiveUploadsWidgetState extends ConsumerState<ActiveUploadsWidget> {
   late UploadNotifierProvider provider;
 
+  void onLanguageChanged(LanguageEnum? langauge, int index) {
+    var images = [...provider.selectedFiles];
+
+    images[index] = images[index].copyWith(
+      langauge: langauge?.value ?? LanguageEnum.english.value,
+    );
+    provider.setSelectedFiles = images;
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.watch(uploadProvider);
@@ -29,20 +39,28 @@ class _ActiveUploadsWidgetState extends ConsumerState<ActiveUploadsWidget> {
         ),
         BrandVSpace.gap10(),
         SizedBox(
-          height: 75,
+          height: 500,
           width: context.screenWidth,
           child: ListView.separated(
             shrinkWrap: true,
             itemCount: provider.selectedFiles.length,
-            scrollDirection: .horizontal,
             itemBuilder: (context, index) {
               var item = provider.selectedFiles[index];
-              return UploadingStatusTile(
-                fileName: item.name,
-                fileSize: item.size.toMb.toStringAsFixed(2),
+              return ImageTitleWidget(
+                image: item.image!,
+                showQuotes: false,
+                showDelete: false,
+                selectedLanguage: item.langauge.toLanguageEnum,
+                onLanguageChanged: (langauge) {
+                  onLanguageChanged(langauge, index);
+                },
               );
+              // return UploadingStatusTile(
+              //   fileName: item.image!.name,
+              //   fileSize: item.image!.size.toMb.toStringAsFixed(2),
+              // );
             },
-            separatorBuilder: (context, index) => BrandHSpace.gap10(),
+            separatorBuilder: (context, index) => BrandVSpace.gap10(),
           ),
         ),
       ],

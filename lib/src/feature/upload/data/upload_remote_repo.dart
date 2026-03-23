@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fotocolab_admin/core/model/base/base_dynamic_response_model.dart';
 import 'package:fotocolab_admin/core/model/profile/response/user/user_response_model.dart';
 import 'package:fotocolab_admin/core/model/upload/request/category/upload_category_request_model.dart';
+import 'package:fotocolab_admin/core/model/upload/request/upload/upload_image_request_model.dart';
 import 'package:fotocolab_admin/core/model/upload/response/category/upload_category_response_model.dart';
 import 'package:fotocolab_admin/core/network/endpoints/upload_endpoint.dart';
 import 'package:fotocolab_admin/core/network/network.dart';
@@ -73,7 +73,7 @@ class UploadRemoteRepo implements UploadRepo {
 
   @override
   Future<BaseDynamicResponse<User?>> uploadFiles({
-    required List<PlatformFile> file,
+    required List<UploadImageRequestModel> file,
     required String categoryId,
     required String userType,
     required List<String> keywords,
@@ -86,8 +86,9 @@ class UploadRemoteRepo implements UploadRepo {
           "categoryId": categoryId,
           "userType": userType,
           'keywords': keywords.join(','),
+          "languages": file.map((e) => e.langauge).toList().join(','),
         },
-        files: file,
+        files: file.map((e) => e.image!).toList(),
         documentKey: List.generate(file.length, (i) => 'files'),
       );
 

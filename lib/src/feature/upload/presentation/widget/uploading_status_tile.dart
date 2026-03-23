@@ -21,7 +21,7 @@ class UploadingStatusTile extends StatelessWidget {
           ? BrandConstansts.maxWidth
           : context.screenWidth * 0.5,
       color: AppColors.blue29.withAlpha(150),
-      height: 45,
+      // height: 200,
       borderColor: AppColors.primary.withAlpha(30),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),

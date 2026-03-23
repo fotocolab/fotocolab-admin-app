@@ -279,4 +279,25 @@ class SEn extends S {
 
   @override
   String get advanced_upload => 'Advanced Upload';
+
+  @override
+  String get default_language => 'Default Language';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get quote => 'Quote';
+
+  @override
+  String get how_many_duplicates => 'How many duplicates';
+
+  @override
+  String get duplicate => 'Duplicate';
+
+  @override
+  String get duplicate_image_should_be_one => 'Duplicate image should be one';
+
+  @override
+  String get total_images => 'Total Images';
 }
