@@ -17,7 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$UploadState {
   UploadEnum get selectedUploadType => throw _privateConstructorUsedError;
-  List<PlatformFile> get selectedFiles => throw _privateConstructorUsedError;
+  List<UploadImageRequestModel> get selectedFiles =>
+      throw _privateConstructorUsedError;
   List<UploadCategoryResponseModel> get uploadCategory =>
       throw _privateConstructorUsedError;
   UploadCategoryResponseModel? get selectedUploadCategory =>
@@ -43,7 +44,7 @@ abstract class $UploadStateCopyWith<$Res> {
   @useResult
   $Res call(
       {UploadEnum selectedUploadType,
-      List<PlatformFile> selectedFiles,
+      List<UploadImageRequestModel> selectedFiles,
       List<UploadCategoryResponseModel> uploadCategory,
       UploadCategoryResponseModel? selectedUploadCategory,
       bool isCategoryLoading,
@@ -90,7 +91,7 @@ class _$UploadStateCopyWithImpl<$Res, $Val extends UploadState>
       selectedFiles: null == selectedFiles
           ? _value.selectedFiles
           : selectedFiles // ignore: cast_nullable_to_non_nullable
-              as List<PlatformFile>,
+              as List<UploadImageRequestModel>,
       uploadCategory: null == uploadCategory
           ? _value.uploadCategory
           : uploadCategory // ignore: cast_nullable_to_non_nullable
@@ -154,7 +155,7 @@ abstract class _$$UploadStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {UploadEnum selectedUploadType,
-      List<PlatformFile> selectedFiles,
+      List<UploadImageRequestModel> selectedFiles,
       List<UploadCategoryResponseModel> uploadCategory,
       UploadCategoryResponseModel? selectedUploadCategory,
       bool isCategoryLoading,
@@ -200,7 +201,7 @@ class __$$UploadStateImplCopyWithImpl<$Res>
       selectedFiles: null == selectedFiles
           ? _value._selectedFiles
           : selectedFiles // ignore: cast_nullable_to_non_nullable
-              as List<PlatformFile>,
+              as List<UploadImageRequestModel>,
       uploadCategory: null == uploadCategory
           ? _value._uploadCategory
           : uploadCategory // ignore: cast_nullable_to_non_nullable
@@ -246,7 +247,7 @@ class __$$UploadStateImplCopyWithImpl<$Res>
 class _$UploadStateImpl implements _UploadState {
   const _$UploadStateImpl(
       {this.selectedUploadType = UploadEnum.free,
-      final List<PlatformFile> selectedFiles = const [],
+      final List<UploadImageRequestModel> selectedFiles = const [],
       final List<UploadCategoryResponseModel> uploadCategory = const [],
       this.selectedUploadCategory,
       this.isCategoryLoading = false,
@@ -263,10 +264,10 @@ class _$UploadStateImpl implements _UploadState {
   @override
   @JsonKey()
   final UploadEnum selectedUploadType;
-  final List<PlatformFile> _selectedFiles;
+  final List<UploadImageRequestModel> _selectedFiles;
   @override
   @JsonKey()
-  List<PlatformFile> get selectedFiles {
+  List<UploadImageRequestModel> get selectedFiles {
     if (_selectedFiles is EqualUnmodifiableListView) return _selectedFiles;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_selectedFiles);
@@ -368,7 +369,7 @@ class _$UploadStateImpl implements _UploadState {
 abstract class _UploadState implements UploadState {
   const factory _UploadState(
       {final UploadEnum selectedUploadType,
-      final List<PlatformFile> selectedFiles,
+      final List<UploadImageRequestModel> selectedFiles,
       final List<UploadCategoryResponseModel> uploadCategory,
       final UploadCategoryResponseModel? selectedUploadCategory,
       final bool isCategoryLoading,
@@ -382,7 +383,7 @@ abstract class _UploadState implements UploadState {
   @override
   UploadEnum get selectedUploadType;
   @override
-  List<PlatformFile> get selectedFiles;
+  List<UploadImageRequestModel> get selectedFiles;
   @override
   List<UploadCategoryResponseModel> get uploadCategory;
   @override

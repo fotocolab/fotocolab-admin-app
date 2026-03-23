@@ -3,5 +3,8 @@ part 'auth_state.freezed.dart';
 
 @freezed
 class AuthState with _$AuthState {
-  const factory AuthState({@Default(false) bool isLoading}) = _AuthState;
+  const factory AuthState({
+    @Default(false) bool isLoading,
+    @Default(true) bool passwordVisibility,
+  }) = _AuthState;
 }

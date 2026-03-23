@@ -85,6 +85,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   BrandTextField(
                     hintText: context.loc.password,
                     controller: passwordController,
+                    suffixIcon: BrandInkWell(
+                      onTap: () {
+                        provider.setPasswordVisibility =
+                            !provider.passwordVisibility;
+                      },
+                      child: Icon(
+                        provider.passwordVisibility
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: AppColors.white,
+                      ),
+                    ),
+                    obscureText: provider.passwordVisibility,
                     validator: (value) {
                       return Validator.password(
                         pwd: value ?? '',

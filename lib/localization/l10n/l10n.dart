@@ -626,6 +626,48 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Advanced Upload'**
   String get advanced_upload;
+
+  /// No description provided for @default_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Default Language'**
+  String get default_language;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @quote.
+  ///
+  /// In en, this message translates to:
+  /// **'Quote'**
+  String get quote;
+
+  /// No description provided for @how_many_duplicates.
+  ///
+  /// In en, this message translates to:
+  /// **'How many duplicates'**
+  String get how_many_duplicates;
+
+  /// No description provided for @duplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
+  String get duplicate;
+
+  /// No description provided for @duplicate_image_should_be_one.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate image should be one'**
+  String get duplicate_image_should_be_one;
+
+  /// No description provided for @total_images.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Images'**
+  String get total_images;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
