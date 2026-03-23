@@ -9,8 +9,8 @@ Future<Uint8List> generateInstagramPoster({
   required Uint8List imageBytes,
   required String title,
   String? subtitle,
-  double titleFontSize = 48,
-  double subtitleFontSize = 24,
+  double titleFontSize = 42,
+  double subtitleFontSize = 18,
   String fontFamily = 'Datatype',
   String? package,
 }) async {

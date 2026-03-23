@@ -288,4 +288,16 @@ class SEn extends S {
 
   @override
   String get quote => 'Quote';
+
+  @override
+  String get how_many_duplicates => 'How many duplicates';
+
+  @override
+  String get duplicate => 'Duplicate';
+
+  @override
+  String get duplicate_image_should_be_one => 'Duplicate image should be one';
+
+  @override
+  String get total_images => 'Total Images';
 }

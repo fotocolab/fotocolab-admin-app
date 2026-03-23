@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fotocolab_admin/core/model/canvas/response/image_title_response_model.dart';
 import 'package:fotocolab_admin/core/model/upload/request/upload/upload_image_request_model.dart';
+import 'package:fotocolab_admin/route/navigation_service.dart';
 import 'package:fotocolab_admin/src/feature/canvas/presentation/widget/image_title_widget.dart';
-import 'package:fotocolab_admin/src/feature/language/presentaion/widget/select_language_widget.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/provider/upload_provider.dart';
 import 'package:fotocolab_admin/util/enum/language_enum.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
@@ -27,6 +27,8 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   List<ImageTitleResponseModel> images = [];
 
   List<String> titles = [];
+
+  TextEditingController copyCountController = TextEditingController();
 
   Future<void> attachOnTap() async {
     var imgList = await FileManager.uploadMultiple();
@@ -75,6 +77,24 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
     setState(() {});
   }
 
+  void duplicateOnTap() {
+    int? count = int.tryParse(copyCountController.text);
+    if (count != null) {
+      if (count > 0 && images.length == 1) {
+        for (int i = 0; i < count - 1; i++) {
+          images.add(
+            ImageTitleResponseModel(image: images[0].image, language: .english),
+          );
+        }
+      } else {
+        NavigationService.showErrorSnackbar(
+          message: context.loc.duplicate_image_should_be_one,
+        );
+      }
+      setState(() {});
+    }
+  }
+
   Future<void> mergeOnTap() async {
     List<UploadImageRequestModel> mergedImage = [];
     for (var i in images) {
@@ -82,7 +102,6 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
         var k = await generateInstagramPoster(
           imageBytes: i.image!.bytes!,
           title: i.title.split('|||').first,
-          fontFamily: BrandFontFamily.fjalla,
           package: BrandConstansts.packageName,
         );
         var pf = PlatformFile(
@@ -167,7 +186,31 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                             ),
                           ),
                           BrandVSpace.gap16(),
-                          SelectLanguageWidget(),
+                          // SelectLanguageWidget(),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: BrandTextField(
+                                  controller: copyCountController,
+                                  hintText: context.loc.how_many_duplicates,
+                                  keyboardType: .number,
+                                ),
+                              ),
+                              BrandHSpace.gap10(),
+                              BrandButton.primary(
+                                title: context.loc.duplicate,
+                                onTap: duplicateOnTap,
+                              ),
+                            ],
+                          ),
+                          BrandVSpace.gap16(),
+                          Align(
+                            alignment: .topLeft,
+                            child: BrandText.white(
+                              data:
+                                  '${context.loc.total_images}: ${images.length}',
+                            ),
+                          ),
                         ],
                       ],
                     ),

@@ -90,5 +90,9 @@
     "advanced_upload": "Advanced Upload",
     "default_language": "Default Language",
     "language": "Language",
-    "quote": "Quote"
+    "quote": "Quote",
+    "how_many_duplicates": "How many duplicates",
+    "duplicate": "Duplicate",
+    "duplicate_image_should_be_one": "Duplicate image should be one",
+    "total_images": "Total Images"
 }
