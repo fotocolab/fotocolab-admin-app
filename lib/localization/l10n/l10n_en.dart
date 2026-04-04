@@ -306,4 +306,7 @@ class SEn extends S {
 
   @override
   String get attach_audio => 'Attch Audio';
+
+  @override
+  String get overlay => 'Overlay';
 }

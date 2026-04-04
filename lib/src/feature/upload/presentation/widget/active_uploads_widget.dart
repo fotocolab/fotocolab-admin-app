@@ -48,6 +48,8 @@ class _ActiveUploadsWidgetState extends ConsumerState<ActiveUploadsWidget> {
               image: item.image!,
               showQuotes: false,
               showDelete: false,
+              showAudio: false,
+              showOverlay: false,
               selectedLanguage: item.langauge.toLanguageEnum,
               onLanguageChanged: (langauge) {
                 onLanguageChanged(langauge, index);

@@ -96,5 +96,6 @@
     "duplicate_image_should_be_one": "Duplicate image should be one",
     "total_images": "Total Images",
     "web_not_supported": "Web not supported",
-    "attach_audio": "Attch Audio"
+    "attach_audio": "Attch Audio",
+    "overlay": "Overlay"
 }

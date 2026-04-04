@@ -680,6 +680,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Attch Audio'**
   String get attach_audio;
+
+  /// No description provided for @overlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Overlay'**
+  String get overlay;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

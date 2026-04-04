@@ -12,11 +12,15 @@ import 'package:fotocolab_design_system/design_system/design_system.dart';
 class ImageTitleWidget extends StatelessWidget {
   final Function(String? value)? onChanged;
   final String title;
-  final PlatformFile? image, audio;
-  final Function? deleteOnTap, audioOnTap, deleteAudioOnTap;
+  final PlatformFile? image, audio, overlay;
+  final Function? deleteOnTap,
+      audioOnTap,
+      deleteAudioOnTap,
+      overlayOnTap,
+      deleteOvderlayOnTap;
   final Function(LanguageEnum? langauge)? onLanguageChanged;
   final LanguageEnum selectedLanguage;
-  final bool showQuotes, showDelete, showAudio;
+  final bool showQuotes, showDelete, showAudio, showOverlay;
   const ImageTitleWidget({
     super.key,
     this.image,
@@ -28,9 +32,13 @@ class ImageTitleWidget extends StatelessWidget {
     this.showQuotes = true,
     this.showDelete = true,
     this.showAudio = true,
+    this.showOverlay = true,
     this.audioOnTap,
     this.audio,
     this.deleteAudioOnTap,
+    this.overlayOnTap,
+    this.deleteOvderlayOnTap,
+    this.overlay,
   });
 
   @override
@@ -120,6 +128,35 @@ class ImageTitleWidget extends StatelessWidget {
                             iconColor: AppColors.red,
                             onTap: () {
                               deleteAudioOnTap?.call();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
+                if (showOverlay) ...[
+                  BrandVSpace.gap10(),
+                  if (overlay == null)
+                    BrandButton.primary(
+                      title: context.loc.overlay,
+                      onTap: () {
+                        overlayOnTap?.call();
+                      },
+                    )
+                  else
+                    Row(
+                      children: [
+                        UploadingStatusTile(
+                          fileName: overlay?.name ?? '--',
+                          fileSize: overlay?.size.toMb.toStringAsFixed(2),
+                        ),
+                        BrandHSpace.gap10(),
+                        FittedBox(
+                          child: BrandIconButon(
+                            iconData: Icons.delete_forever,
+                            iconColor: AppColors.red,
+                            onTap: () {
+                              deleteOvderlayOnTap?.call();
                             },
                           ),
                         ),

@@ -130,6 +130,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
           var videoPath = await VideoManager.toVideoAndroid(
             audioPath: i.audio?.path,
             imagePath: pf.path,
+            overlay: i.overlay?.path,
           );
           if (videoPath != null) {
             var video = await File(
@@ -176,10 +177,16 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
     setState(() {});
   }
 
-  // await VideoManager.toVideoAndroid(audioPath: audio?.path);
-  // void save() async {
-  //   await GallerySaver.saveVideo(outputPath!);
-  // }
+  Future<void> overlayOnTap(int index) async {
+    var overlay = await FileManager.uploadSingle(allowedExtensions: ['mp4']);
+    images[index] = images[index].copyWith(overlay: overlay);
+    setState(() {});
+  }
+
+  void deleteOverlayOnTap(int index) {
+    images[index] = images[index].copyWith(overlay: null);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -289,6 +296,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                         image: item.image,
                         selectedLanguage: item.language,
                         audio: item.audio,
+                        overlay: item.overlay,
                         onChanged: (value) {
                           onChanged(index, value);
                         },
@@ -303,6 +311,12 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                         },
                         deleteAudioOnTap: () {
                           deleteAudioOnTap(index);
+                        },
+                        overlayOnTap: () {
+                          overlayOnTap(index);
+                        },
+                        deleteOvderlayOnTap: () {
+                          deleteOverlayOnTap(index);
                         },
                       );
                     },

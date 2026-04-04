@@ -24,11 +24,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       _controller = VideoPlayerController.file(File(widget.path!));
       _controller.addListener(() {
         isPlaying = _controller.value.isPlaying;
+        if (_controller.value.isCompleted) {
+          isPlaying = false;
+        }
       });
       _controller.initialize().then((_) {
         setState(() {});
       });
-      _controller.play();
     }
   }
 

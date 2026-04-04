@@ -13,6 +13,7 @@ class ImageTitleResponseModel with _$ImageTitleResponseModel {
     @Default('') String title,
     @Default(LanguageEnum.english) LanguageEnum language,
     @JsonKey(includeFromJson: false) PlatformFile? audio,
+    @JsonKey(includeFromJson: false) PlatformFile? overlay,
   }) = _ImageTitleResponseModel;
 
   factory ImageTitleResponseModel.fromJson(Map<String, dynamic> json) =>
