@@ -1,0 +1,4 @@
+-keep class com.google.android.gms.ads.** { *; }
+-keep class com.google.ads.** { *; }
+-keep class com.android.billingclient.** { *; }
+-keep class com.google.firebase.** { *; }

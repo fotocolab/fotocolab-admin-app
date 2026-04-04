@@ -6,7 +6,9 @@ import 'package:fotocolab_admin/route/navigation_service.dart';
 import 'package:fotocolab_admin/route/routes.dart';
 import 'package:fotocolab_design_system/design_system/theme/theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(ProviderScope(child: const MyApp()));
 }
 
