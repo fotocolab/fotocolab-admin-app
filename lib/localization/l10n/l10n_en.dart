@@ -300,4 +300,10 @@ class SEn extends S {
 
   @override
   String get total_images => 'Total Images';
+
+  @override
+  String get web_not_supported => 'Web not supported';
+
+  @override
+  String get attach_audio => 'Attch Audio';
 }

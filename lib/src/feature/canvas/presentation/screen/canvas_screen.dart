@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,9 +12,11 @@ import 'package:fotocolab_admin/util/enum/language_enum.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_admin/util/file_manager/file_manager.dart';
 import 'package:fotocolab_admin/util/image/image_manager.dart';
+import 'package:fotocolab_admin/util/video/video_manager.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
 import 'package:fotocolab_design_system/design_system/utils/utils.dart';
 import 'package:go_router/go_router.dart';
+import 'package:path_provider/path_provider.dart';
 
 class CanvasScreen extends ConsumerStatefulWidget {
   const CanvasScreen({super.key});
@@ -29,6 +33,8 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   List<String> titles = [];
 
   TextEditingController copyCountController = TextEditingController();
+
+  bool isMergeAndGoLoding = false;
 
   Future<void> attachOnTap() async {
     var imgList = await FileManager.uploadMultiple();
@@ -96,31 +102,84 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   }
 
   Future<void> mergeOnTap() async {
+    setState(() {
+      isMergeAndGoLoding = true;
+    });
     List<UploadImageRequestModel> mergedImage = [];
     for (var i in images) {
       try {
         var k = await generateInstagramPoster(
-          imageBytes: i.image!.bytes!,
+          imageBytes: await File(i.image!.path!).readAsBytes(),
           title: i.title.split('|||').first,
           package: BrandConstansts.packageName,
         );
+        var dir = await getApplicationCacheDirectory();
+
+        String path = '${dir.path}/merge_${i.image?.name}';
+
+        var newFile = await File(path).writeAsBytes(k);
+
         var pf = PlatformFile(
-          name: i.image?.name ?? 'image',
+          name: i.image?.name ?? 'image.png',
           size: k.length,
           bytes: k,
+          path: newFile.path,
         );
-        mergedImage.add(
-          UploadImageRequestModel(image: pf, langauge: i.language.value),
-        );
+
+        if (i.audio != null) {
+          var videoPath = await VideoManager.toVideoAndroid(
+            audioPath: i.audio?.path,
+            imagePath: pf.path,
+          );
+          if (videoPath != null) {
+            var video = await File(
+              videoPath,
+            ).writeAsBytes(await File(videoPath).readAsBytes());
+
+            pf = PlatformFile(
+              name: 'video.mp4',
+              size: await video.length(),
+              path: video.path,
+              bytes: await video.readAsBytes(),
+            );
+
+            mergedImage.add(
+              UploadImageRequestModel(image: pf, langauge: i.language.value),
+            );
+          }
+        } else {
+          mergedImage.add(
+            UploadImageRequestModel(image: pf, langauge: i.language.value),
+          );
+        }
       } catch (e) {
         //
       }
     }
+    setState(() {
+      isMergeAndGoLoding = false;
+    });
     provider.setSelectedFiles = mergedImage;
     if (mounted) {
       context.pop();
     }
   }
+
+  Future<void> audioOnTap(int index) async {
+    var audio = await FileManager.uploadSingle(allowedExtensions: ['mp3']);
+    images[index] = images[index].copyWith(audio: audio);
+    setState(() {});
+  }
+
+  void deleteAudioOnTap(int index) {
+    images[index] = images[index].copyWith(audio: null);
+    setState(() {});
+  }
+
+  // await VideoManager.toVideoAndroid(audioPath: audio?.path);
+  // void save() async {
+  //   await GallerySaver.saveVideo(outputPath!);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +245,6 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                             ),
                           ),
                           BrandVSpace.gap16(),
-                          // SelectLanguageWidget(),
                           Row(
                             children: [
                               Expanded(
@@ -222,12 +280,15 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                   ListView.separated(
                     shrinkWrap: true,
                     itemCount: images.length,
+                    physics: const NeverScrollableScrollPhysics(),
                     separatorBuilder: (context, index) => BrandVSpace.gap14(),
                     itemBuilder: (context, index) {
                       var item = images[index];
                       return ImageTitleWidget(
                         title: item.title,
                         image: item.image,
+                        selectedLanguage: item.language,
+                        audio: item.audio,
                         onChanged: (value) {
                           onChanged(index, value);
                         },
@@ -237,7 +298,12 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                         onLanguageChanged: (langauge) {
                           onLanguageChanged(langauge, index);
                         },
-                        selectedLanguage: item.language,
+                        audioOnTap: () {
+                          audioOnTap(index);
+                        },
+                        deleteAudioOnTap: () {
+                          deleteAudioOnTap(index);
+                        },
                       );
                     },
                   ),
@@ -245,6 +311,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                   BrandButton.primary(
                     title: context.loc.merge_and_go_back,
                     onTap: mergeOnTap,
+                    isLoading: isMergeAndGoLoding,
                     leftIcon: Icon(
                       Icons.arrow_back_sharp,
                       color: AppColors.white,

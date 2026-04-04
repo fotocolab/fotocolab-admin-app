@@ -38,30 +38,27 @@ class _ActiveUploadsWidgetState extends ConsumerState<ActiveUploadsWidget> {
               '${context.loc.active_uploads} (${provider.selectedFiles.length})',
         ),
         BrandVSpace.gap10(),
-        SizedBox(
-          height: 500,
-          width: context.screenWidth,
-          child: ListView.separated(
-            shrinkWrap: true,
-            itemCount: provider.selectedFiles.length,
-            itemBuilder: (context, index) {
-              var item = provider.selectedFiles[index];
-              return ImageTitleWidget(
-                image: item.image!,
-                showQuotes: false,
-                showDelete: false,
-                selectedLanguage: item.langauge.toLanguageEnum,
-                onLanguageChanged: (langauge) {
-                  onLanguageChanged(langauge, index);
-                },
-              );
-              // return UploadingStatusTile(
-              //   fileName: item.image!.name,
-              //   fileSize: item.image!.size.toMb.toStringAsFixed(2),
-              // );
-            },
-            separatorBuilder: (context, index) => BrandVSpace.gap10(),
-          ),
+        ListView.separated(
+          shrinkWrap: true,
+          itemCount: provider.selectedFiles.length,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            var item = provider.selectedFiles[index];
+            return ImageTitleWidget(
+              image: item.image!,
+              showQuotes: false,
+              showDelete: false,
+              selectedLanguage: item.langauge.toLanguageEnum,
+              onLanguageChanged: (langauge) {
+                onLanguageChanged(langauge, index);
+              },
+            );
+            // return UploadingStatusTile(
+            //   fileName: item.image!.name,
+            //   fileSize: item.image!.size.toMb.toStringAsFixed(2),
+            // );
+          },
+          separatorBuilder: (context, index) => BrandVSpace.gap10(),
         ),
       ],
     );

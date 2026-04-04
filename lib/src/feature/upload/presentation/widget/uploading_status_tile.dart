@@ -33,6 +33,7 @@ class UploadingStatusTile extends StatelessWidget {
                 fontColor: AppColors.grey8D,
                 data: fileName,
                 maxLines: 2,
+                overflow: .ellipsis,
               ),
             ),
             BrandHSpace.gap10(),

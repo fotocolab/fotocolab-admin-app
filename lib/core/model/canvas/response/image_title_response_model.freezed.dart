@@ -25,6 +25,8 @@ mixin _$ImageTitleResponseModel {
   PlatformFile? get image => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   LanguageEnum get language => throw _privateConstructorUsedError;
+  @JsonKey(includeFromJson: false)
+  PlatformFile? get audio => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +43,8 @@ abstract class $ImageTitleResponseModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(includeFromJson: false) PlatformFile? image,
       String title,
-      LanguageEnum language});
+      LanguageEnum language,
+      @JsonKey(includeFromJson: false) PlatformFile? audio});
 }
 
 /// @nodoc
@@ -61,6 +64,7 @@ class _$ImageTitleResponseModelCopyWithImpl<$Res,
     Object? image = freezed,
     Object? title = null,
     Object? language = null,
+    Object? audio = freezed,
   }) {
     return _then(_value.copyWith(
       image: freezed == image
@@ -75,6 +79,10 @@ class _$ImageTitleResponseModelCopyWithImpl<$Res,
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as LanguageEnum,
+      audio: freezed == audio
+          ? _value.audio
+          : audio // ignore: cast_nullable_to_non_nullable
+              as PlatformFile?,
     ) as $Val);
   }
 }
@@ -91,7 +99,8 @@ abstract class _$$ImageTitleResponseModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(includeFromJson: false) PlatformFile? image,
       String title,
-      LanguageEnum language});
+      LanguageEnum language,
+      @JsonKey(includeFromJson: false) PlatformFile? audio});
 }
 
 /// @nodoc
@@ -110,6 +119,7 @@ class __$$ImageTitleResponseModelImplCopyWithImpl<$Res>
     Object? image = freezed,
     Object? title = null,
     Object? language = null,
+    Object? audio = freezed,
   }) {
     return _then(_$ImageTitleResponseModelImpl(
       image: freezed == image
@@ -124,6 +134,10 @@ class __$$ImageTitleResponseModelImplCopyWithImpl<$Res>
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as LanguageEnum,
+      audio: freezed == audio
+          ? _value.audio
+          : audio // ignore: cast_nullable_to_non_nullable
+              as PlatformFile?,
     ));
   }
 }
@@ -134,7 +148,8 @@ class _$ImageTitleResponseModelImpl implements _ImageTitleResponseModel {
   const _$ImageTitleResponseModelImpl(
       {@JsonKey(includeFromJson: false) this.image,
       this.title = '',
-      this.language = LanguageEnum.english});
+      this.language = LanguageEnum.english,
+      @JsonKey(includeFromJson: false) this.audio});
 
   factory _$ImageTitleResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ImageTitleResponseModelImplFromJson(json);
@@ -148,10 +163,13 @@ class _$ImageTitleResponseModelImpl implements _ImageTitleResponseModel {
   @override
   @JsonKey()
   final LanguageEnum language;
+  @override
+  @JsonKey(includeFromJson: false)
+  final PlatformFile? audio;
 
   @override
   String toString() {
-    return 'ImageTitleResponseModel(image: $image, title: $title, language: $language)';
+    return 'ImageTitleResponseModel(image: $image, title: $title, language: $language, audio: $audio)';
   }
 
   @override
@@ -162,12 +180,13 @@ class _$ImageTitleResponseModelImpl implements _ImageTitleResponseModel {
             (identical(other.image, image) || other.image == image) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.language, language) ||
-                other.language == language));
+                other.language == language) &&
+            (identical(other.audio, audio) || other.audio == audio));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, image, title, language);
+  int get hashCode => Object.hash(runtimeType, image, title, language, audio);
 
   @JsonKey(ignore: true)
   @override
@@ -186,9 +205,11 @@ class _$ImageTitleResponseModelImpl implements _ImageTitleResponseModel {
 
 abstract class _ImageTitleResponseModel implements ImageTitleResponseModel {
   const factory _ImageTitleResponseModel(
-      {@JsonKey(includeFromJson: false) final PlatformFile? image,
-      final String title,
-      final LanguageEnum language}) = _$ImageTitleResponseModelImpl;
+          {@JsonKey(includeFromJson: false) final PlatformFile? image,
+          final String title,
+          final LanguageEnum language,
+          @JsonKey(includeFromJson: false) final PlatformFile? audio}) =
+      _$ImageTitleResponseModelImpl;
 
   factory _ImageTitleResponseModel.fromJson(Map<String, dynamic> json) =
       _$ImageTitleResponseModelImpl.fromJson;
@@ -200,6 +221,9 @@ abstract class _ImageTitleResponseModel implements ImageTitleResponseModel {
   String get title;
   @override
   LanguageEnum get language;
+  @override
+  @JsonKey(includeFromJson: false)
+  PlatformFile? get audio;
   @override
   @JsonKey(ignore: true)
   _$$ImageTitleResponseModelImplCopyWith<_$ImageTitleResponseModelImpl>

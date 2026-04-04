@@ -8,6 +8,12 @@ void debugPrint(Object? value) {
   }
 }
 
+void debugLog(Object? value) {
+  if (enableDebugPrint) {
+    log(value.toString());
+  }
+}
+
 Duration getBackgoundTime(DateTime pausedTime, DateTime resumedTime) {
   return resumedTime.difference(pausedTime);
 }

@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:image/image.dart' as img;
+import 'package:path_provider/path_provider.dart';
 
 abstract class FileManager {
   static Future<PlatformFile?> uploadSingle({
@@ -40,7 +44,12 @@ abstract class FileManager {
   }
 
   static Future<PlatformFile> cropToThreeFour(PlatformFile file) async {
-    final bytes = file.bytes!;
+    Uint8List bytes;
+    if (file.bytes == null) {
+      bytes = await file.xFile.readAsBytes();
+    } else {
+      bytes = file.bytes!;
+    }
     img.Image? decoded = img.decodeImage(bytes);
 
     if (decoded == null) return file;
@@ -81,7 +90,19 @@ abstract class FileManager {
     );
 
     final newBytes = img.encodeJpg(cropped);
-    var f = PlatformFile(name: 'image', size: newBytes.length, bytes: newBytes);
+
+    var dir = await getApplicationCacheDirectory();
+
+    String path = '${dir.path}_${file.name}';
+
+    var newFile = await File(path).writeAsBytes(newBytes);
+
+    var f = PlatformFile(
+      name: 'image',
+      size: newBytes.length,
+      bytes: newBytes,
+      path: newFile.path,
+    );
 
     return f;
   }

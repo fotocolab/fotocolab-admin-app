@@ -89,4 +89,6 @@ extension GetLanguage on String {
 
     return .english;
   }
+
+  bool get isVideo => split('.').last.contains('mp4');
 }

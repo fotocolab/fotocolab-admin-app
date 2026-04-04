@@ -668,6 +668,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Total Images'**
   String get total_images;
+
+  /// No description provided for @web_not_supported.
+  ///
+  /// In en, this message translates to:
+  /// **'Web not supported'**
+  String get web_not_supported;
+
+  /// No description provided for @attach_audio.
+  ///
+  /// In en, this message translates to:
+  /// **'Attch Audio'**
+  String get attach_audio;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
