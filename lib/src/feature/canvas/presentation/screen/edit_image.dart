@@ -8,6 +8,7 @@ import 'package:fotocolab_admin/src/feature/canvas/presentation/provider/canvas_
 import 'package:fotocolab_admin/src/feature/canvas/presentation/widget/edit_canvas_text_bottomsheet.dart';
 import 'package:fotocolab_admin/util/enum/transition_enum.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
+import 'package:fotocolab_admin/util/image/image_manager.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
 import 'package:go_router/go_router.dart';
 
@@ -97,12 +98,16 @@ class _EditImageState extends ConsumerState<EditImage> {
   Widget build(BuildContext context) {
     ref.watch(editImageProvider);
     provider = ref.read(editImageProvider.notifier);
+
     return BaseLayout(
       child: Column(
         crossAxisAlignment: .start,
         children: [
           ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: context.screenHeight * 0.6),
+            constraints: BoxConstraints(
+              maxHeight: context.screenHeight * 0.6,
+              maxWidth: context.screenHeight * 0.6,
+            ),
             child: Stack(
               fit: .passthrough,
               children: [
@@ -110,7 +115,7 @@ class _EditImageState extends ConsumerState<EditImage> {
                   Image.file(File(image!.image!.path!), fit: .contain),
 
                 Positioned(
-                  bottom: provider.fontPositionBottom,
+                  top: provider.fontPositionTop,
                   left: provider.fontPositionLeft,
                   child: GestureDetector(
                     onTap: () {
@@ -119,20 +124,19 @@ class _EditImageState extends ConsumerState<EditImage> {
                     onPanUpdate: (details) {
                       provider.onFontPositionChanged(details.delta);
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      child: BrandText.white(
-                        data: image?.title ?? '--',
-                        textAlign: .center,
+                    child: BrandText.white(
+                      data: wrapTextForFFmpeg(
+                        text: image?.title ?? '--',
+                        maxWidth: context.screenWidth,
                         fontSize: provider.fontSize,
-                        fontColor: provider.fontColor,
                         fontFamily: provider.selectedFont.fontFamily,
-                        fontStyle: provider.fontStyle,
-                        fontWeight: provider.fontWeight,
-                      ),
+                      ).replaceAll(r'\n', '\n'),
+                      textAlign: .center,
+                      fontSize: provider.fontSize,
+                      fontColor: provider.fontColor,
+                      fontFamily: provider.selectedFont.fontFamily,
+                      fontStyle: provider.fontStyle,
+                      fontWeight: provider.fontWeight,
                     ),
                   ),
                 ),

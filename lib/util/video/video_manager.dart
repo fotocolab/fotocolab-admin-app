@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fotocolab_admin/route/navigation_service.dart';
 import 'package:fotocolab_admin/util/enum/font_enum.dart';
 import 'package:fotocolab_admin/util/enum/transition_enum.dart';
+import 'package:fotocolab_admin/util/image/image_manager.dart';
 import 'package:fotocolab_admin/util/utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
@@ -18,16 +20,39 @@ abstract class VideoManager {
     String? overlayPath,
     required double fontSize,
     required double fromLeft,
-    required double fromBottom,
+    required double fromTop,
     required TransitionEnum transition,
     required String text,
     required Color fontColor,
     required FontEnum font,
+    required Size stackSize,
   }) async {
     if (kIsWeb) {
       NavigationService.showErrorSnackbar(message: 'Web not supported');
       return null;
     }
+
+    var mText = wrapTextForFFmpeg(
+      text: text,
+      maxWidth: stackSize.width,
+      fontSize: fontSize,
+      fontFamily: font.fontFamily,
+    ).replaceAll(r'\n', '\n');
+
+    final result = await calculateFFmpegPosition(
+      imagePath: imagePath!,
+      fontFamily: font.fontFamily,
+      stackOffset: Offset(fromLeft, fromTop),
+      text: mText,
+      fromTop: fromTop,
+      uiFontSize: fontSize,
+      stackSize: stackSize,
+      fit: BoxFit.contain,
+    );
+
+    double x = (result.x) + 40;
+    double yTop = (result.y) - 20;
+    double fSize = result.fontSize;
 
     /// Adding Text
 
@@ -45,7 +70,7 @@ abstract class VideoManager {
         "${dir.path}/video_${DateTime.now().millisecondsSinceEpoch}.mp4";
 
     final c1 =
-        '''-loop 1 -i $imagePath -vf "drawtext=fontfile=${fontFile.path}:text=$text: x='if(lt(t,2), -text_w + t*($fromLeft+text_w)/2, $fromLeft)': y=h-text_h-$fromBottom: fontsize=$fontSize: fontcolor=white: alpha='if(lt(t,1), t/1, 1)'" -t 15 -r 30 -c:v libx264 -pix_fmt yuv420p -crf 18 -preset medium $textToVideoOutputPath''';
+        '''-loop 1 -i $imagePath -vf "drawtext=fontfile=${fontFile.path}:text='$mText':x='if(lt(t,2), -tw + pow(t/2, 1.5)*($x + tw), $x)':y=$yTop:fontsize=$fSize:fontcolor=white:line_spacing=10:fix_bounds=1:alpha='if(lt(t,1),t/1, 1)'" -t 15 -r 60 -c:v libx264 -pix_fmt yuv420p -crf 18 -preset medium $textToVideoOutputPath''';
 
     final s1 = await FFmpegKit.execute(c1);
 

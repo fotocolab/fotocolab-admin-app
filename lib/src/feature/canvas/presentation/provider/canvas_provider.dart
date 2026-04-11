@@ -28,7 +28,7 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
   Color get logoBorderColor => state.logoBorderColor;
   bool get isFilledFont => state.isFilledFont;
   FontStyle get fontStyle => state.fontStyle;
-  double get fontPositionBottom => state.fontPositionBottom;
+  double get fontPositionTop => state.fontPositionBottom;
   double get fontPositionLeft => state.fontPositionLeft;
   double get fontSize => state.fontSize;
   double get fontSizeSliderValue => state.fontSizeSliderValue;
@@ -99,14 +99,9 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
     setFontColor = value;
   }
 
-  void onLogoPositionChanged(Offset value) {
-    setLogoPositionLeft = logoPositionLeft + value.dx;
-    setLogoPositionTop = logoPositionTop + value.dy;
-  }
-
   void onFontPositionChanged(Offset value) {
     setFontPositionLeft = fontPositionLeft + value.dx;
-    setFontPositionBottom = fontPositionBottom - value.dy;
+    setFontPositionBottom = fontPositionTop + value.dy;
   }
 
   void clearAllValues() {

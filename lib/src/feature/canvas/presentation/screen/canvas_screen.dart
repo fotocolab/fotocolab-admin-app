@@ -108,6 +108,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
       isMergeAndGoLoding = true;
     });
     List<UploadImageRequestModel> mergedImage = [];
+
     for (var i in images) {
       try {
         var k = await cropToAspectSmart(i.image!.path!);
@@ -128,9 +129,15 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
             fontColor: editImgProvider.fontColor,
             fontSize: editImgProvider.fontSize,
             fromLeft: editImgProvider.fontPositionLeft,
-            fromBottom: editImgProvider.fontPositionBottom,
+            fromTop: editImgProvider.fontPositionTop,
             text: i.title.split('|||').first,
             transition: editImgProvider.selectedTransition,
+            stackSize: Size(
+              // ignore: use_build_context_synchronously
+              context.screenHeight * 0.6,
+              // ignore: use_build_context_synchronously
+              context.screenHeight * 0.6,
+            ),
           );
           if (videoPath != null) {
             var video = await File(
