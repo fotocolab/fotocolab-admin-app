@@ -13,4 +13,5 @@ abstract class RouteName {
   static String createCategory = '/create_category';
   static String calendar = '/calendar';
   static String canvas = '/canvas';
+  static String editImage = '/edit_image';
 }

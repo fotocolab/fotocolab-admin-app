@@ -17,10 +17,11 @@ class ImageTitleWidget extends StatelessWidget {
       audioOnTap,
       deleteAudioOnTap,
       overlayOnTap,
-      deleteOvderlayOnTap;
+      deleteOvderlayOnTap,
+      editOnTap;
   final Function(LanguageEnum? langauge)? onLanguageChanged;
   final LanguageEnum selectedLanguage;
-  final bool showQuotes, showDelete, showAudio, showOverlay;
+  final bool showQuotes, showDelete, showAudio, showOverlay, showEdit;
   const ImageTitleWidget({
     super.key,
     this.image,
@@ -39,6 +40,8 @@ class ImageTitleWidget extends StatelessWidget {
     this.overlayOnTap,
     this.deleteOvderlayOnTap,
     this.overlay,
+    this.showEdit = false,
+    this.editOnTap,
   });
 
   @override
@@ -105,6 +108,16 @@ class ImageTitleWidget extends StatelessWidget {
                     ),
                   ],
                 ),
+                if (showEdit) ...[
+                  BrandVSpace.gap10(),
+                  BrandButton.secondary(
+                    title: context.loc.edit,
+                    bgColor: AppColors.transparent,
+                    onTap: () {
+                      editOnTap?.call();
+                    },
+                  ),
+                ],
                 if (showAudio) ...[
                   BrandVSpace.gap10(),
                   if (audio == null)

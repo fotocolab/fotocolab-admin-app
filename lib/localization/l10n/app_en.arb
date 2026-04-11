@@ -97,5 +97,14 @@
     "total_images": "Total Images",
     "web_not_supported": "Web not supported",
     "attach_audio": "Attch Audio",
-    "overlay": "Overlay"
+    "overlay": "Overlay",
+    "edit": "Edit",
+    "size": "Size",
+    "move": "Move",
+    "radius": "Radius",
+    "aa": "Aa",
+    "font_color": "Font colour",
+    "b": "Bold",
+    "i": "Italic",
+    "transition": "Transition"
 }

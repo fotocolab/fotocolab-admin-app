@@ -309,4 +309,31 @@ class SEn extends S {
 
   @override
   String get overlay => 'Overlay';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get size => 'Size';
+
+  @override
+  String get move => 'Move';
+
+  @override
+  String get radius => 'Radius';
+
+  @override
+  String get aa => 'Aa';
+
+  @override
+  String get font_color => 'Font colour';
+
+  @override
+  String get b => 'Bold';
+
+  @override
+  String get i => 'Italic';
+
+  @override
+  String get transition => 'Transition';
 }

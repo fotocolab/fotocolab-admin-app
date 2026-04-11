@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fotocolab_admin/core/model/canvas/response/image_title_response_model.dart';
 import 'package:fotocolab_admin/core/model/upload/request/upload/upload_image_request_model.dart';
 import 'package:fotocolab_admin/route/navigation_service.dart';
+import 'package:fotocolab_admin/route/route_name.dart';
+import 'package:fotocolab_admin/src/feature/canvas/presentation/provider/canvas_provider.dart';
 import 'package:fotocolab_admin/src/feature/canvas/presentation/widget/image_title_widget.dart';
 import 'package:fotocolab_admin/src/feature/upload/presentation/provider/upload_provider.dart';
 import 'package:fotocolab_admin/util/enum/language_enum.dart';
@@ -14,7 +16,6 @@ import 'package:fotocolab_admin/util/file_manager/file_manager.dart';
 import 'package:fotocolab_admin/util/image/image_manager.dart';
 import 'package:fotocolab_admin/util/video/video_manager.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
-import 'package:fotocolab_design_system/design_system/utils/utils.dart';
 import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -27,6 +28,7 @@ class CanvasScreen extends ConsumerStatefulWidget {
 
 class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   late UploadNotifierProvider provider;
+  late EditImageNotifierProvider editImgProvider;
 
   List<ImageTitleResponseModel> images = [];
 
@@ -108,36 +110,34 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
     List<UploadImageRequestModel> mergedImage = [];
     for (var i in images) {
       try {
-        var k = await generateInstagramPoster(
-          imageBytes: await File(i.image!.path!).readAsBytes(),
-          title: i.title.split('|||').first,
-          package: BrandConstansts.packageName,
-        );
+        var k = await cropToAspectSmart(i.image!.path!);
+
         var dir = await getApplicationCacheDirectory();
 
-        String path = '${dir.path}/merge_${i.image?.name}';
+        String path =
+            '${dir.path}/image_${DateTime.now().millisecondsSinceEpoch}.png';
 
         var newFile = await File(path).writeAsBytes(k);
-
-        var pf = PlatformFile(
-          name: i.image?.name ?? 'image.png',
-          size: k.length,
-          bytes: k,
-          path: newFile.path,
-        );
 
         if (i.audio != null) {
           var videoPath = await VideoManager.toVideoAndroid(
             audioPath: i.audio?.path,
-            imagePath: pf.path,
-            overlay: i.overlay?.path,
+            imagePath: newFile.path,
+            overlayPath: i.overlay?.path,
+            font: editImgProvider.selectedFont,
+            fontColor: editImgProvider.fontColor,
+            fontSize: editImgProvider.fontSize,
+            fromLeft: editImgProvider.fontPositionLeft,
+            fromBottom: editImgProvider.fontPositionBottom,
+            text: i.title.split('|||').first,
+            transition: editImgProvider.selectedTransition,
           );
           if (videoPath != null) {
             var video = await File(
               videoPath,
             ).writeAsBytes(await File(videoPath).readAsBytes());
 
-            pf = PlatformFile(
+            var pf = PlatformFile(
               name: 'video.mp4',
               size: await video.length(),
               path: video.path,
@@ -150,7 +150,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
           }
         } else {
           mergedImage.add(
-            UploadImageRequestModel(image: pf, langauge: i.language.value),
+            UploadImageRequestModel(image: i.image, langauge: i.language.value),
           );
         }
       } catch (e) {
@@ -188,10 +188,16 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
     setState(() {});
   }
 
+  void gotoEditImageScreen(int index) {
+    context.push(RouteName.editImage, extra: images[index]);
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.watch(uploadProvider);
+    ref.watch(editImageProvider);
     provider = ref.read(uploadProvider.notifier);
+    editImgProvider = ref.read(editImageProvider.notifier);
     return BaseLayout(
       appBar: BrandAppBar(),
       child: Expanded(
@@ -297,6 +303,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                         selectedLanguage: item.language,
                         audio: item.audio,
                         overlay: item.overlay,
+                        showEdit: true,
                         onChanged: (value) {
                           onChanged(index, value);
                         },
@@ -317,6 +324,9 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                         },
                         deleteOvderlayOnTap: () {
                           deleteOverlayOnTap(index);
+                        },
+                        editOnTap: () {
+                          gotoEditImageScreen(index);
                         },
                       );
                     },

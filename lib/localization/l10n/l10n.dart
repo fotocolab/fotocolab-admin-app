@@ -686,6 +686,60 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Overlay'**
   String get overlay;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @size.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get size;
+
+  /// No description provided for @move.
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get move;
+
+  /// No description provided for @radius.
+  ///
+  /// In en, this message translates to:
+  /// **'Radius'**
+  String get radius;
+
+  /// No description provided for @aa.
+  ///
+  /// In en, this message translates to:
+  /// **'Aa'**
+  String get aa;
+
+  /// No description provided for @font_color.
+  ///
+  /// In en, this message translates to:
+  /// **'Font colour'**
+  String get font_color;
+
+  /// No description provided for @b.
+  ///
+  /// In en, this message translates to:
+  /// **'Bold'**
+  String get b;
+
+  /// No description provided for @i.
+  ///
+  /// In en, this message translates to:
+  /// **'Italic'**
+  String get i;
+
+  /// No description provided for @transition.
+  ///
+  /// In en, this message translates to:
+  /// **'Transition'**
+  String get transition;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
