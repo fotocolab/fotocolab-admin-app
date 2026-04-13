@@ -32,6 +32,10 @@ mixin _$EditImageState {
   FontStyle get fontStyle => throw _privateConstructorUsedError;
   double get fontPositionBottom => throw _privateConstructorUsedError;
   double get fontPositionLeft => throw _privateConstructorUsedError;
+  double get overlayPositionTop => throw _privateConstructorUsedError;
+  double get overlayPositionLeft => throw _privateConstructorUsedError;
+  double get overlayWidth => throw _privateConstructorUsedError;
+  double get overlayHeight => throw _privateConstructorUsedError;
   double get fontSize => throw _privateConstructorUsedError;
   double get fontSizeSliderValue => throw _privateConstructorUsedError;
   FontWeight get fontWeight => throw _privateConstructorUsedError;
@@ -68,6 +72,10 @@ abstract class $EditImageStateCopyWith<$Res> {
       FontStyle fontStyle,
       double fontPositionBottom,
       double fontPositionLeft,
+      double overlayPositionTop,
+      double overlayPositionLeft,
+      double overlayWidth,
+      double overlayHeight,
       double fontSize,
       double fontSizeSliderValue,
       FontWeight fontWeight,
@@ -106,6 +114,10 @@ class _$EditImageStateCopyWithImpl<$Res, $Val extends EditImageState>
     Object? fontStyle = null,
     Object? fontPositionBottom = null,
     Object? fontPositionLeft = null,
+    Object? overlayPositionTop = null,
+    Object? overlayPositionLeft = null,
+    Object? overlayWidth = null,
+    Object? overlayHeight = null,
     Object? fontSize = null,
     Object? fontSizeSliderValue = null,
     Object? fontWeight = null,
@@ -179,6 +191,22 @@ class _$EditImageStateCopyWithImpl<$Res, $Val extends EditImageState>
           ? _value.fontPositionLeft
           : fontPositionLeft // ignore: cast_nullable_to_non_nullable
               as double,
+      overlayPositionTop: null == overlayPositionTop
+          ? _value.overlayPositionTop
+          : overlayPositionTop // ignore: cast_nullable_to_non_nullable
+              as double,
+      overlayPositionLeft: null == overlayPositionLeft
+          ? _value.overlayPositionLeft
+          : overlayPositionLeft // ignore: cast_nullable_to_non_nullable
+              as double,
+      overlayWidth: null == overlayWidth
+          ? _value.overlayWidth
+          : overlayWidth // ignore: cast_nullable_to_non_nullable
+              as double,
+      overlayHeight: null == overlayHeight
+          ? _value.overlayHeight
+          : overlayHeight // ignore: cast_nullable_to_non_nullable
+              as double,
       fontSize: null == fontSize
           ? _value.fontSize
           : fontSize // ignore: cast_nullable_to_non_nullable
@@ -236,6 +264,10 @@ abstract class _$$EditImageStateImplCopyWith<$Res>
       FontStyle fontStyle,
       double fontPositionBottom,
       double fontPositionLeft,
+      double overlayPositionTop,
+      double overlayPositionLeft,
+      double overlayWidth,
+      double overlayHeight,
       double fontSize,
       double fontSizeSliderValue,
       FontWeight fontWeight,
@@ -272,6 +304,10 @@ class __$$EditImageStateImplCopyWithImpl<$Res>
     Object? fontStyle = null,
     Object? fontPositionBottom = null,
     Object? fontPositionLeft = null,
+    Object? overlayPositionTop = null,
+    Object? overlayPositionLeft = null,
+    Object? overlayWidth = null,
+    Object? overlayHeight = null,
     Object? fontSize = null,
     Object? fontSizeSliderValue = null,
     Object? fontWeight = null,
@@ -345,6 +381,22 @@ class __$$EditImageStateImplCopyWithImpl<$Res>
           ? _value.fontPositionLeft
           : fontPositionLeft // ignore: cast_nullable_to_non_nullable
               as double,
+      overlayPositionTop: null == overlayPositionTop
+          ? _value.overlayPositionTop
+          : overlayPositionTop // ignore: cast_nullable_to_non_nullable
+              as double,
+      overlayPositionLeft: null == overlayPositionLeft
+          ? _value.overlayPositionLeft
+          : overlayPositionLeft // ignore: cast_nullable_to_non_nullable
+              as double,
+      overlayWidth: null == overlayWidth
+          ? _value.overlayWidth
+          : overlayWidth // ignore: cast_nullable_to_non_nullable
+              as double,
+      overlayHeight: null == overlayHeight
+          ? _value.overlayHeight
+          : overlayHeight // ignore: cast_nullable_to_non_nullable
+              as double,
       fontSize: null == fontSize
           ? _value.fontSize
           : fontSize // ignore: cast_nullable_to_non_nullable
@@ -397,6 +449,10 @@ class _$EditImageStateImpl implements _EditImageState {
       this.fontStyle = FontStyle.normal,
       this.fontPositionBottom = 10,
       this.fontPositionLeft = 10,
+      this.overlayPositionTop = 0,
+      this.overlayPositionLeft = 0,
+      this.overlayWidth = 100,
+      this.overlayHeight = 133.33,
       this.fontSize = 24,
       this.fontSizeSliderValue = 0.5,
       this.fontWeight = FontWeight.w500,
@@ -455,6 +511,18 @@ class _$EditImageStateImpl implements _EditImageState {
   final double fontPositionLeft;
   @override
   @JsonKey()
+  final double overlayPositionTop;
+  @override
+  @JsonKey()
+  final double overlayPositionLeft;
+  @override
+  @JsonKey()
+  final double overlayWidth;
+  @override
+  @JsonKey()
+  final double overlayHeight;
+  @override
+  @JsonKey()
   final double fontSize;
   @override
   @JsonKey()
@@ -477,7 +545,7 @@ class _$EditImageStateImpl implements _EditImageState {
 
   @override
   String toString() {
-    return 'EditImageState(logoWidth: $logoWidth, logoHeight: $logoHeight, logoPositionTop: $logoPositionTop, logoPositionLeft: $logoPositionLeft, sliderPositionWidth: $sliderPositionWidth, sliderPositionHeight: $sliderPositionHeight, radiusSlider: $radiusSlider, logoRadius: $logoRadius, borderThiknessSlider: $borderThiknessSlider, logoBorder: $logoBorder, fontColor: $fontColor, logoBorderColor: $logoBorderColor, isFilledFont: $isFilledFont, fontStyle: $fontStyle, fontPositionBottom: $fontPositionBottom, fontPositionLeft: $fontPositionLeft, fontSize: $fontSize, fontSizeSliderValue: $fontSizeSliderValue, fontWeight: $fontWeight, isBold: $isBold, isItalic: $isItalic, selectedFont: $selectedFont, selectedTransition: $selectedTransition)';
+    return 'EditImageState(logoWidth: $logoWidth, logoHeight: $logoHeight, logoPositionTop: $logoPositionTop, logoPositionLeft: $logoPositionLeft, sliderPositionWidth: $sliderPositionWidth, sliderPositionHeight: $sliderPositionHeight, radiusSlider: $radiusSlider, logoRadius: $logoRadius, borderThiknessSlider: $borderThiknessSlider, logoBorder: $logoBorder, fontColor: $fontColor, logoBorderColor: $logoBorderColor, isFilledFont: $isFilledFont, fontStyle: $fontStyle, fontPositionBottom: $fontPositionBottom, fontPositionLeft: $fontPositionLeft, overlayPositionTop: $overlayPositionTop, overlayPositionLeft: $overlayPositionLeft, overlayWidth: $overlayWidth, overlayHeight: $overlayHeight, fontSize: $fontSize, fontSizeSliderValue: $fontSizeSliderValue, fontWeight: $fontWeight, isBold: $isBold, isItalic: $isItalic, selectedFont: $selectedFont, selectedTransition: $selectedTransition)';
   }
 
   @override
@@ -517,6 +585,14 @@ class _$EditImageStateImpl implements _EditImageState {
                 other.fontPositionBottom == fontPositionBottom) &&
             (identical(other.fontPositionLeft, fontPositionLeft) ||
                 other.fontPositionLeft == fontPositionLeft) &&
+            (identical(other.overlayPositionTop, overlayPositionTop) ||
+                other.overlayPositionTop == overlayPositionTop) &&
+            (identical(other.overlayPositionLeft, overlayPositionLeft) ||
+                other.overlayPositionLeft == overlayPositionLeft) &&
+            (identical(other.overlayWidth, overlayWidth) ||
+                other.overlayWidth == overlayWidth) &&
+            (identical(other.overlayHeight, overlayHeight) ||
+                other.overlayHeight == overlayHeight) &&
             (identical(other.fontSize, fontSize) ||
                 other.fontSize == fontSize) &&
             (identical(other.fontSizeSliderValue, fontSizeSliderValue) ||
@@ -551,6 +627,10 @@ class _$EditImageStateImpl implements _EditImageState {
         fontStyle,
         fontPositionBottom,
         fontPositionLeft,
+        overlayPositionTop,
+        overlayPositionLeft,
+        overlayWidth,
+        overlayHeight,
         fontSize,
         fontSizeSliderValue,
         fontWeight,
@@ -586,6 +666,10 @@ abstract class _EditImageState implements EditImageState {
       final FontStyle fontStyle,
       final double fontPositionBottom,
       final double fontPositionLeft,
+      final double overlayPositionTop,
+      final double overlayPositionLeft,
+      final double overlayWidth,
+      final double overlayHeight,
       final double fontSize,
       final double fontSizeSliderValue,
       final FontWeight fontWeight,
@@ -626,6 +710,14 @@ abstract class _EditImageState implements EditImageState {
   double get fontPositionBottom;
   @override
   double get fontPositionLeft;
+  @override
+  double get overlayPositionTop;
+  @override
+  double get overlayPositionLeft;
+  @override
+  double get overlayWidth;
+  @override
+  double get overlayHeight;
   @override
   double get fontSize;
   @override

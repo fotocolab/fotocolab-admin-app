@@ -70,17 +70,17 @@ abstract class VideoManager {
         "${dir.path}/video_${DateTime.now().millisecondsSinceEpoch}.mp4";
 
     final c1 =
-        '''-loop 1 -i $imagePath -vf "drawtext=fontfile=${fontFile.path}:text='$mText':x='if(lt(t,2), -tw + pow(t/2, 1.5)*($x + tw), $x)':y=$yTop:fontsize=$fSize:fontcolor=white:line_spacing=10:fix_bounds=1:alpha='if(lt(t,1),t/1, 1)'" -t 15 -r 60 -c:v libx264 -pix_fmt yuv420p -crf 18 -preset medium $textToVideoOutputPath''';
+        '''-loop 1 -i $imagePath -vf "drawtext=fontfile=${fontFile.path}:text='$mText':'${transition.cmd(x, yTop)}':fontsize=$fSize:fontcolor=white:line_spacing=10:fix_bounds=1:alpha='if(lt(t,1),t/1, 1)'" -t 15 -r 60 -c:v libx264 -pix_fmt yuv420p -crf 18 -preset medium $textToVideoOutputPath''';
 
-    final s1 = await FFmpegKit.execute(c1);
+    await FFmpegKit.execute(c1);
 
-    final r1 = await s1.getReturnCode();
+    // final r1 = await s1.getReturnCode();
 
-    final output = await s1.getOutput();
+    // final output = await s1.getOutput();
 
-    debugLog(r1);
+    // debugLog(r1);
 
-    debugLog(output);
+    // debugLog(output);
 
     ///audio
 
@@ -96,13 +96,13 @@ abstract class VideoManager {
     await session.getOutput();
 
     if (ReturnCode.isSuccess(returnCode)) {
-      debugLog("✅ Video created: $outputPath");
       if (overlayPath != null) {
         final dir = await getTemporaryDirectory();
 
         final finalOutputPath =
             "${dir.path}/video_${DateTime.now().millisecondsSinceEpoch}.mp4";
 
+        /// Video
         final command =
             '''-i "$outputPath" -stream_loop -1 -i "$overlayPath" -filter_complex "[1:v]crop=in_h*3/4:in_h:(in_w-out_w)/2:0,chromakey=0x00FF00:0.3:0.1[ck]; [ck][0:v]scale2ref[ov][base]; [base][ov]overlay=shortest=1" -map 0:a? -c:v libx264 -pix_fmt yuv420p -c:a copy -shortest -y "$finalOutputPath"''';
 

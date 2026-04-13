@@ -40,6 +40,14 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
 
   TransitionEnum get selectedTransition => state.selectedTransition;
 
+  double get overlayPositionLeft => state.overlayPositionLeft;
+
+  double get overlayPositionTop => state.overlayPositionTop;
+
+  double get overlayWidth => state.overlayWidth;
+  
+  double get overlayHeight => state.overlayHeight;
+
   void radiusSliderChanged(double value) {
     setRadiusSlider = value;
     setLogoRadius = value * 100;
@@ -102,6 +110,11 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
   void onFontPositionChanged(Offset value) {
     setFontPositionLeft = fontPositionLeft + value.dx;
     setFontPositionBottom = fontPositionTop + value.dy;
+  }
+
+  void onOverlayPositionTop(Offset value) {
+    setOverlayPositionLeft = overlayPositionLeft + value.dx;
+    setOverlayPositionTop = overlayPositionTop + value.dy;
   }
 
   void clearAllValues() {
@@ -197,6 +210,14 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
 
   set setFontPositionLeft(double value) {
     state = state.copyWith(fontPositionLeft: value);
+  }
+
+  set setOverlayPositionLeft(double value) {
+    state = state.copyWith(overlayPositionLeft: value);
+  }
+
+  set setOverlayPositionTop(double value) {
+    state = state.copyWith(overlayPositionTop: value);
   }
 
   set setFontSize(double value) {

@@ -140,6 +140,25 @@ class _EditImageState extends ConsumerState<EditImage> {
                     ),
                   ),
                 ),
+                Positioned(
+                  left: provider.overlayPositionLeft,
+                  top: provider.overlayPositionTop,
+                  child: GestureDetector(
+                    onPanUpdate: (details) {
+                      provider.onOverlayPositionTop(details.delta);
+                    },
+
+                    child: RoundedContainer(
+                      width: provider.overlayWidth,
+                      height: provider.overlayHeight,
+                      color: AppColors.white.withAlpha(50),
+                      borderColor: AppColors.primary.withAlpha(100),
+                      child: Center(
+                        child: BrandText.white(data: context.loc.overlay),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
