@@ -45,8 +45,10 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
   double get overlayPositionTop => state.overlayPositionTop;
 
   double get overlayWidth => state.overlayWidth;
-  
+
   double get overlayHeight => state.overlayHeight;
+
+  double get overlaySliderValue => state.overlaySliderValue;
 
   void radiusSliderChanged(double value) {
     setRadiusSlider = value;
@@ -242,5 +244,15 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
 
   set setSelectedTransiton(TransitionEnum value) {
     state = state.copyWith(selectedTransition: value);
+  }
+
+  set setOverlaySliderValue(double value) {
+    state = state.copyWith(overlaySliderValue: value);
+  }
+
+  set setOverlaySize(double value) {
+    double w = value;
+    double h = (4 * value) / 3;
+    state = state.copyWith(overlayWidth: w, overlayHeight: h);
   }
 }

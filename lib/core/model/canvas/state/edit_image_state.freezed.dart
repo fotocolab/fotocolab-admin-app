@@ -43,6 +43,7 @@ mixin _$EditImageState {
   bool get isItalic => throw _privateConstructorUsedError;
   FontEnum get selectedFont => throw _privateConstructorUsedError;
   TransitionEnum get selectedTransition => throw _privateConstructorUsedError;
+  double get overlaySliderValue => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $EditImageStateCopyWith<EditImageState> get copyWith =>
@@ -82,7 +83,8 @@ abstract class $EditImageStateCopyWith<$Res> {
       bool isBold,
       bool isItalic,
       FontEnum selectedFont,
-      TransitionEnum selectedTransition});
+      TransitionEnum selectedTransition,
+      double overlaySliderValue});
 }
 
 /// @nodoc
@@ -125,6 +127,7 @@ class _$EditImageStateCopyWithImpl<$Res, $Val extends EditImageState>
     Object? isItalic = null,
     Object? selectedFont = null,
     Object? selectedTransition = null,
+    Object? overlaySliderValue = null,
   }) {
     return _then(_value.copyWith(
       logoWidth: null == logoWidth
@@ -235,6 +238,10 @@ class _$EditImageStateCopyWithImpl<$Res, $Val extends EditImageState>
           ? _value.selectedTransition
           : selectedTransition // ignore: cast_nullable_to_non_nullable
               as TransitionEnum,
+      overlaySliderValue: null == overlaySliderValue
+          ? _value.overlaySliderValue
+          : overlaySliderValue // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -274,7 +281,8 @@ abstract class _$$EditImageStateImplCopyWith<$Res>
       bool isBold,
       bool isItalic,
       FontEnum selectedFont,
-      TransitionEnum selectedTransition});
+      TransitionEnum selectedTransition,
+      double overlaySliderValue});
 }
 
 /// @nodoc
@@ -315,6 +323,7 @@ class __$$EditImageStateImplCopyWithImpl<$Res>
     Object? isItalic = null,
     Object? selectedFont = null,
     Object? selectedTransition = null,
+    Object? overlaySliderValue = null,
   }) {
     return _then(_$EditImageStateImpl(
       logoWidth: null == logoWidth
@@ -425,6 +434,10 @@ class __$$EditImageStateImplCopyWithImpl<$Res>
           ? _value.selectedTransition
           : selectedTransition // ignore: cast_nullable_to_non_nullable
               as TransitionEnum,
+      overlaySliderValue: null == overlaySliderValue
+          ? _value.overlaySliderValue
+          : overlaySliderValue // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -459,7 +472,8 @@ class _$EditImageStateImpl implements _EditImageState {
       this.isBold = false,
       this.isItalic = false,
       this.selectedFont = FontEnum.inter,
-      this.selectedTransition = TransitionEnum.leftToCenter});
+      this.selectedTransition = TransitionEnum.leftToCenter,
+      this.overlaySliderValue = 0.2});
 
   @override
   @JsonKey()
@@ -542,10 +556,13 @@ class _$EditImageStateImpl implements _EditImageState {
   @override
   @JsonKey()
   final TransitionEnum selectedTransition;
+  @override
+  @JsonKey()
+  final double overlaySliderValue;
 
   @override
   String toString() {
-    return 'EditImageState(logoWidth: $logoWidth, logoHeight: $logoHeight, logoPositionTop: $logoPositionTop, logoPositionLeft: $logoPositionLeft, sliderPositionWidth: $sliderPositionWidth, sliderPositionHeight: $sliderPositionHeight, radiusSlider: $radiusSlider, logoRadius: $logoRadius, borderThiknessSlider: $borderThiknessSlider, logoBorder: $logoBorder, fontColor: $fontColor, logoBorderColor: $logoBorderColor, isFilledFont: $isFilledFont, fontStyle: $fontStyle, fontPositionBottom: $fontPositionBottom, fontPositionLeft: $fontPositionLeft, overlayPositionTop: $overlayPositionTop, overlayPositionLeft: $overlayPositionLeft, overlayWidth: $overlayWidth, overlayHeight: $overlayHeight, fontSize: $fontSize, fontSizeSliderValue: $fontSizeSliderValue, fontWeight: $fontWeight, isBold: $isBold, isItalic: $isItalic, selectedFont: $selectedFont, selectedTransition: $selectedTransition)';
+    return 'EditImageState(logoWidth: $logoWidth, logoHeight: $logoHeight, logoPositionTop: $logoPositionTop, logoPositionLeft: $logoPositionLeft, sliderPositionWidth: $sliderPositionWidth, sliderPositionHeight: $sliderPositionHeight, radiusSlider: $radiusSlider, logoRadius: $logoRadius, borderThiknessSlider: $borderThiknessSlider, logoBorder: $logoBorder, fontColor: $fontColor, logoBorderColor: $logoBorderColor, isFilledFont: $isFilledFont, fontStyle: $fontStyle, fontPositionBottom: $fontPositionBottom, fontPositionLeft: $fontPositionLeft, overlayPositionTop: $overlayPositionTop, overlayPositionLeft: $overlayPositionLeft, overlayWidth: $overlayWidth, overlayHeight: $overlayHeight, fontSize: $fontSize, fontSizeSliderValue: $fontSizeSliderValue, fontWeight: $fontWeight, isBold: $isBold, isItalic: $isItalic, selectedFont: $selectedFont, selectedTransition: $selectedTransition, overlaySliderValue: $overlaySliderValue)';
   }
 
   @override
@@ -605,7 +622,9 @@ class _$EditImageStateImpl implements _EditImageState {
             (identical(other.selectedFont, selectedFont) ||
                 other.selectedFont == selectedFont) &&
             (identical(other.selectedTransition, selectedTransition) ||
-                other.selectedTransition == selectedTransition));
+                other.selectedTransition == selectedTransition) &&
+            (identical(other.overlaySliderValue, overlaySliderValue) ||
+                other.overlaySliderValue == overlaySliderValue));
   }
 
   @override
@@ -637,7 +656,8 @@ class _$EditImageStateImpl implements _EditImageState {
         isBold,
         isItalic,
         selectedFont,
-        selectedTransition
+        selectedTransition,
+        overlaySliderValue
       ]);
 
   @JsonKey(ignore: true)
@@ -676,7 +696,8 @@ abstract class _EditImageState implements EditImageState {
       final bool isBold,
       final bool isItalic,
       final FontEnum selectedFont,
-      final TransitionEnum selectedTransition}) = _$EditImageStateImpl;
+      final TransitionEnum selectedTransition,
+      final double overlaySliderValue}) = _$EditImageStateImpl;
 
   @override
   double get logoWidth;
@@ -732,6 +753,8 @@ abstract class _EditImageState implements EditImageState {
   FontEnum get selectedFont;
   @override
   TransitionEnum get selectedTransition;
+  @override
+  double get overlaySliderValue;
   @override
   @JsonKey(ignore: true)
   _$$EditImageStateImplCopyWith<_$EditImageStateImpl> get copyWith =>

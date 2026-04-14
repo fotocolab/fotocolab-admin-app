@@ -35,5 +35,6 @@ class EditImageState with _$EditImageState {
     @Default(false) bool isItalic,
     @Default(FontEnum.inter) FontEnum selectedFont,
     @Default(TransitionEnum.leftToCenter) TransitionEnum selectedTransition,
+    @Default(0.2) double overlaySliderValue,
   }) = _EditImageState;
 }

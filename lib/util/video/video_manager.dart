@@ -19,13 +19,15 @@ abstract class VideoManager {
     String? audioPath,
     String? overlayPath,
     required double fontSize,
-    required double fromLeft,
-    required double fromTop,
+    required double textfromLeft,
+    required double textfromTop,
     required TransitionEnum transition,
     required String text,
     required Color fontColor,
     required FontEnum font,
     required Size stackSize,
+    required double overlaySize,
+    required Offset overlayPosition,
   }) async {
     if (kIsWeb) {
       NavigationService.showErrorSnackbar(message: 'Web not supported');
@@ -42,17 +44,23 @@ abstract class VideoManager {
     final result = await calculateFFmpegPosition(
       imagePath: imagePath!,
       fontFamily: font.fontFamily,
-      stackOffset: Offset(fromLeft, fromTop),
+      stackOffset: Offset(textfromLeft, textfromTop),
       text: mText,
-      fromTop: fromTop,
+      fromTop: textfromTop,
       uiFontSize: fontSize,
       stackSize: stackSize,
       fit: BoxFit.contain,
     );
 
-    double x = (result.x) + 40;
-    double yTop = (result.y) - 20;
+    double tx = (result.x) + 40;
+    double ty = (result.y) - 20;
     double fSize = result.fontSize;
+
+    double ox = overlayPosition.dx;
+
+    double oy = overlayPosition.dy;
+
+    double os = overlaySize;
 
     /// Adding Text
 
@@ -70,7 +78,7 @@ abstract class VideoManager {
         "${dir.path}/video_${DateTime.now().millisecondsSinceEpoch}.mp4";
 
     final c1 =
-        '''-loop 1 -i $imagePath -vf "drawtext=fontfile=${fontFile.path}:text='$mText':'${transition.cmd(x, yTop)}':fontsize=$fSize:fontcolor=white:line_spacing=10:fix_bounds=1:alpha='if(lt(t,1),t/1, 1)'" -t 15 -r 60 -c:v libx264 -pix_fmt yuv420p -crf 18 -preset medium $textToVideoOutputPath''';
+        '''-loop 1 -i $imagePath -vf "drawtext=fontfile=${fontFile.path}:text='$mText':'${transition.cmd(tx, ty)}':fontsize=$fSize:fontcolor=white:line_spacing=10:fix_bounds=1:alpha='if(lt(t,1),t/1, 1)'" -t 15 -r 60 -c:v libx264 -pix_fmt yuv420p -crf 18 -preset medium $textToVideoOutputPath''';
 
     await FFmpegKit.execute(c1);
 
@@ -104,7 +112,7 @@ abstract class VideoManager {
 
         /// Video
         final command =
-            '''-i "$outputPath" -stream_loop -1 -i "$overlayPath" -filter_complex "[1:v]crop=in_h*3/4:in_h:(in_w-out_w)/2:0,chromakey=0x00FF00:0.3:0.1[ck]; [ck][0:v]scale2ref[ov][base]; [base][ov]overlay=shortest=1" -map 0:a? -c:v libx264 -pix_fmt yuv420p -c:a copy -shortest -y "$finalOutputPath"''';
+            '''-i "$outputPath" -stream_loop -1 -i "$overlayPath" -filter_complex "[1:v]crop=in_h*3/4:in_h:(in_w-out_w)/2:0,chromakey=0x00FF00:0.3:0.1[ck]; [ck]scale=$os:-1[ov]; [0:v][ov]overlay=$ox:$oy:shortest=1" -map 0:a? -c:v libx264 -pix_fmt yuv420p -c:a copy -shortest -y "$finalOutputPath"''';
 
         final session = await FFmpegKit.execute(command);
 

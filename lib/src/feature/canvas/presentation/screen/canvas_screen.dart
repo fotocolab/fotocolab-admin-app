@@ -128,8 +128,8 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
             font: editImgProvider.selectedFont,
             fontColor: editImgProvider.fontColor,
             fontSize: editImgProvider.fontSize,
-            fromLeft: editImgProvider.fontPositionLeft,
-            fromTop: editImgProvider.fontPositionTop,
+            textfromLeft: editImgProvider.fontPositionLeft,
+            textfromTop: editImgProvider.fontPositionTop,
             text: i.title.split('|||').first,
             transition: editImgProvider.selectedTransition,
             stackSize: Size(
@@ -137,6 +137,11 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
               context.screenHeight * 0.6,
               // ignore: use_build_context_synchronously
               context.screenHeight * 0.6,
+            ),
+            overlaySize: editImgProvider.overlayWidth,
+            overlayPosition: Offset(
+              editImgProvider.overlayPositionLeft,
+              editImgProvider.overlayPositionTop,
             ),
           );
           if (videoPath != null) {

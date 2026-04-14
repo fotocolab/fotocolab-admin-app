@@ -211,6 +211,21 @@ class _EditImageState extends ConsumerState<EditImage> {
               ),
             ),
           ),
+          BrandVSpace.gap10(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: BrandText.white(
+              data: context.loc.overlay,
+              fontWeight: .w600,
+            ),
+          ),
+          Slider(
+            value: provider.overlaySliderValue,
+            onChanged: (v) {
+              provider.setOverlaySliderValue = v;
+              provider.setOverlaySize = v * context.screenWidth;
+            },
+          ),
           BrandVSpace.gap26(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
