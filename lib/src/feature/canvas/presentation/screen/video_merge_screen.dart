@@ -13,20 +13,21 @@ import 'package:fotocolab_admin/src/feature/upload/presentation/provider/upload_
 import 'package:fotocolab_admin/util/enum/language_enum.dart';
 import 'package:fotocolab_admin/util/extension/extension.dart';
 import 'package:fotocolab_admin/util/file_manager/file_manager.dart';
+import 'package:fotocolab_admin/util/image/image_manager.dart';
 import 'package:fotocolab_admin/util/video/video_manager.dart';
 import 'package:fotocolab_design_system/design_system/design_system.dart';
 import 'package:go_router/go_router.dart';
+import 'package:path_provider/path_provider.dart';
 
-class CanvasScreen extends ConsumerStatefulWidget {
-  const CanvasScreen({super.key});
+class VideoMergeScreen extends ConsumerStatefulWidget {
+  const VideoMergeScreen({super.key});
 
   @override
-  ConsumerState<CanvasScreen> createState() => _CanvasScreenState();
+  ConsumerState<VideoMergeScreen> createState() => _VideoMergeScreenState();
 }
 
-class _CanvasScreenState extends ConsumerState<CanvasScreen> {
+class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
   late UploadNotifierProvider provider;
-
   late EditImageNotifierProvider editImgProvider;
 
   List<ImageTitleResponseModel> images = [];
@@ -37,13 +38,9 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
 
   bool isMergeAndGoLoding = false;
 
-  String? mergedVideoPath;
-
   Future<void> attachOnTap() async {
-    var imgList = await FileManager.uploadMultiple();
-    for (var i in imgList) {
-      images.add(ImageTitleResponseModel(image: i, language: .english));
-    }
+    var imgList = await FileManager.uploadSingle();
+    images.add(ImageTitleResponseModel(image: imgList, language: .english));
     setState(() {});
   }
 
@@ -86,21 +83,13 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
     setState(() {});
   }
 
-// check this and text in video after merge
   void duplicateOnTap() {
     int? count = int.tryParse(copyCountController.text);
     if (count != null) {
       if (count > 0 && images.length == 1) {
         for (int i = 0; i < count - 1; i++) {
           images.add(
-            ImageTitleResponseModel(
-              image: PlatformFile(
-                name: 'mergedVideo',
-                size: 10,
-                path: mergedVideoPath,
-              ),
-              language: .english,
-            ),
+            ImageTitleResponseModel(image: images[0].image, language: .english),
           );
         }
       } else {
@@ -116,41 +105,62 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
     setState(() {
       isMergeAndGoLoding = true;
     });
-    List<UploadImageRequestModel> mergedImage = [];
+    List<UploadImageRequestModel> mergedVideo = [];
 
     for (var i in images) {
       try {
-        var videoPath = await VideoManager.textToVideoAndroid(
-          videoPath: i.image!.path!,
-          font: editImgProvider.selectedFont,
-          fontColor: editImgProvider.fontColor,
-          fontSize: editImgProvider.fontSize,
-          textfromLeft: editImgProvider.fontPositionLeft,
-          textfromTop: editImgProvider.fontPositionTop,
-          text: i.title.split('|||').first,
-          transition: editImgProvider.selectedTransition,
-          stackSize: Size(
-            // ignore: use_build_context_synchronously
-            context.screenHeight * 0.6,
-            // ignore: use_build_context_synchronously
-            context.screenHeight * 0.6,
-          ),
-        );
+        var k = await cropToAspectSmart(i.image!.path!);
 
-        if (videoPath != null) {
-          var video = await File(
-            videoPath,
-          ).writeAsBytes(await File(videoPath).readAsBytes());
+        var dir = await getApplicationCacheDirectory();
 
-          var pf = PlatformFile(
-            name: 'video.mp4',
-            size: await video.length(),
-            path: video.path,
-            bytes: await video.readAsBytes(),
+        String path =
+            '${dir.path}/image_${DateTime.now().millisecondsSinceEpoch}.png';
+
+        var newFile = await File(path).writeAsBytes(k);
+
+        if (i.audio != null) {
+          var videoPath = await VideoManager.toVideoAndroid(
+            audioPath: i.audio?.path,
+            imagePath: newFile.path,
+            overlayPath: i.overlay?.path,
+            font: editImgProvider.selectedFont,
+            fontColor: editImgProvider.fontColor,
+            fontSize: editImgProvider.fontSize,
+            textfromLeft: editImgProvider.fontPositionLeft,
+            textfromTop: editImgProvider.fontPositionTop,
+            // text: i.title.split('|||').first,
+            transition: editImgProvider.selectedTransition,
+            stackSize: Size(
+              // ignore: use_build_context_synchronously
+              context.screenHeight * 0.6,
+              // ignore: use_build_context_synchronously
+              context.screenHeight * 0.6,
+            ),
+            overlaySize: editImgProvider.overlayWidth,
+            overlayPosition: Offset(
+              editImgProvider.overlayPositionLeft,
+              editImgProvider.overlayPositionTop,
+            ),
           );
+          if (videoPath != null) {
+            var video = await File(
+              videoPath,
+            ).writeAsBytes(await File(videoPath).readAsBytes());
 
-          mergedImage.add(
-            UploadImageRequestModel(image: pf, langauge: i.language.value),
+            var pf = PlatformFile(
+              name: 'video.mp4',
+              size: await video.length(),
+              path: video.path,
+              bytes: await video.readAsBytes(),
+            );
+
+            mergedVideo.add(
+              UploadImageRequestModel(image: pf, langauge: i.language.value),
+            );
+          }
+        } else {
+          mergedVideo.add(
+            UploadImageRequestModel(image: i.image, langauge: i.language.value),
           );
         }
       } catch (e) {
@@ -160,9 +170,9 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
     setState(() {
       isMergeAndGoLoding = false;
     });
-    provider.setSelectedFiles = mergedImage;
+    // provider.setSelectedFiles = mergedVideo;
     if (mounted) {
-      context.pop();
+      context.pop(mergedVideo.first.image?.path);
     }
   }
 
@@ -190,22 +200,6 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
 
   void gotoEditImageScreen(int index) {
     context.push(RouteName.editImage, extra: images[index]);
-  }
-
-  void gotoVideoMergeScreen() {
-    context.push(RouteName.videoMerge).then((videoPath) {
-      images.add(
-        ImageTitleResponseModel(
-          image: PlatformFile(
-            name: 'MergedVideo',
-            size: 10,
-            path: videoPath.toString(),
-          ),
-          language: .english,
-        ),
-      );
-      setState(() {});
-    });
   }
 
   @override
@@ -261,52 +255,6 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                             borderRadius: 12,
                           ),
                         ),
-                        BrandVSpace.gap10(),
-                        FittedBox(
-                          child: BrandButton.primary(
-                            title: context.loc.to_video,
-                            onTap: gotoVideoMergeScreen,
-                            borderRadius: 12,
-                          ),
-                        ),
-                        if (images.isNotEmpty) ...[
-                          BrandVSpace.gap16(),
-                          SizedBox(
-                            child: BrandTextField(
-                              maxLines: 2,
-                              hintText:
-                                  context.loc.enter_or_paste_multiple_quote,
-                              onChanged: (p0) {
-                                onMultiLineChanged(p0);
-                              },
-                            ),
-                          ),
-                          BrandVSpace.gap16(),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: BrandTextField(
-                                  controller: copyCountController,
-                                  hintText: context.loc.how_many_duplicates,
-                                  keyboardType: .number,
-                                ),
-                              ),
-                              BrandHSpace.gap10(),
-                              BrandButton.primary(
-                                title: context.loc.duplicate,
-                                onTap: duplicateOnTap,
-                              ),
-                            ],
-                          ),
-                          BrandVSpace.gap16(),
-                          Align(
-                            alignment: .topLeft,
-                            child: BrandText.white(
-                              data:
-                                  '${context.loc.total_images}: ${images.length}',
-                            ),
-                          ),
-                        ],
                       ],
                     ),
                   ),
@@ -328,6 +276,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                         audio: item.audio,
                         overlay: item.overlay,
                         showEdit: true,
+                        showLanguage: false,
                         onChanged: (value) {
                           onChanged(index, value);
                         },

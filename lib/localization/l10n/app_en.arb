@@ -106,5 +106,6 @@
     "font_color": "Font colour",
     "b": "Bold",
     "i": "Italic",
-    "transition": "Transition"
+    "transition": "Transition",
+    "to_video": "To Video"
 }

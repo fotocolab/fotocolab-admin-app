@@ -30,7 +30,7 @@ mixin _$EditImageState {
   Color get logoBorderColor => throw _privateConstructorUsedError;
   bool get isFilledFont => throw _privateConstructorUsedError;
   FontStyle get fontStyle => throw _privateConstructorUsedError;
-  double get fontPositionBottom => throw _privateConstructorUsedError;
+  double get fontPositionTop => throw _privateConstructorUsedError;
   double get fontPositionLeft => throw _privateConstructorUsedError;
   double get overlayPositionTop => throw _privateConstructorUsedError;
   double get overlayPositionLeft => throw _privateConstructorUsedError;
@@ -71,7 +71,7 @@ abstract class $EditImageStateCopyWith<$Res> {
       Color logoBorderColor,
       bool isFilledFont,
       FontStyle fontStyle,
-      double fontPositionBottom,
+      double fontPositionTop,
       double fontPositionLeft,
       double overlayPositionTop,
       double overlayPositionLeft,
@@ -114,7 +114,7 @@ class _$EditImageStateCopyWithImpl<$Res, $Val extends EditImageState>
     Object? logoBorderColor = null,
     Object? isFilledFont = null,
     Object? fontStyle = null,
-    Object? fontPositionBottom = null,
+    Object? fontPositionTop = null,
     Object? fontPositionLeft = null,
     Object? overlayPositionTop = null,
     Object? overlayPositionLeft = null,
@@ -186,9 +186,9 @@ class _$EditImageStateCopyWithImpl<$Res, $Val extends EditImageState>
           ? _value.fontStyle
           : fontStyle // ignore: cast_nullable_to_non_nullable
               as FontStyle,
-      fontPositionBottom: null == fontPositionBottom
-          ? _value.fontPositionBottom
-          : fontPositionBottom // ignore: cast_nullable_to_non_nullable
+      fontPositionTop: null == fontPositionTop
+          ? _value.fontPositionTop
+          : fontPositionTop // ignore: cast_nullable_to_non_nullable
               as double,
       fontPositionLeft: null == fontPositionLeft
           ? _value.fontPositionLeft
@@ -269,7 +269,7 @@ abstract class _$$EditImageStateImplCopyWith<$Res>
       Color logoBorderColor,
       bool isFilledFont,
       FontStyle fontStyle,
-      double fontPositionBottom,
+      double fontPositionTop,
       double fontPositionLeft,
       double overlayPositionTop,
       double overlayPositionLeft,
@@ -310,7 +310,7 @@ class __$$EditImageStateImplCopyWithImpl<$Res>
     Object? logoBorderColor = null,
     Object? isFilledFont = null,
     Object? fontStyle = null,
-    Object? fontPositionBottom = null,
+    Object? fontPositionTop = null,
     Object? fontPositionLeft = null,
     Object? overlayPositionTop = null,
     Object? overlayPositionLeft = null,
@@ -382,9 +382,9 @@ class __$$EditImageStateImplCopyWithImpl<$Res>
           ? _value.fontStyle
           : fontStyle // ignore: cast_nullable_to_non_nullable
               as FontStyle,
-      fontPositionBottom: null == fontPositionBottom
-          ? _value.fontPositionBottom
-          : fontPositionBottom // ignore: cast_nullable_to_non_nullable
+      fontPositionTop: null == fontPositionTop
+          ? _value.fontPositionTop
+          : fontPositionTop // ignore: cast_nullable_to_non_nullable
               as double,
       fontPositionLeft: null == fontPositionLeft
           ? _value.fontPositionLeft
@@ -460,7 +460,7 @@ class _$EditImageStateImpl implements _EditImageState {
       this.logoBorderColor = AppColors.transparent,
       this.isFilledFont = true,
       this.fontStyle = FontStyle.normal,
-      this.fontPositionBottom = 10,
+      this.fontPositionTop = 100,
       this.fontPositionLeft = 10,
       this.overlayPositionTop = 0,
       this.overlayPositionLeft = 0,
@@ -519,7 +519,7 @@ class _$EditImageStateImpl implements _EditImageState {
   final FontStyle fontStyle;
   @override
   @JsonKey()
-  final double fontPositionBottom;
+  final double fontPositionTop;
   @override
   @JsonKey()
   final double fontPositionLeft;
@@ -562,7 +562,7 @@ class _$EditImageStateImpl implements _EditImageState {
 
   @override
   String toString() {
-    return 'EditImageState(logoWidth: $logoWidth, logoHeight: $logoHeight, logoPositionTop: $logoPositionTop, logoPositionLeft: $logoPositionLeft, sliderPositionWidth: $sliderPositionWidth, sliderPositionHeight: $sliderPositionHeight, radiusSlider: $radiusSlider, logoRadius: $logoRadius, borderThiknessSlider: $borderThiknessSlider, logoBorder: $logoBorder, fontColor: $fontColor, logoBorderColor: $logoBorderColor, isFilledFont: $isFilledFont, fontStyle: $fontStyle, fontPositionBottom: $fontPositionBottom, fontPositionLeft: $fontPositionLeft, overlayPositionTop: $overlayPositionTop, overlayPositionLeft: $overlayPositionLeft, overlayWidth: $overlayWidth, overlayHeight: $overlayHeight, fontSize: $fontSize, fontSizeSliderValue: $fontSizeSliderValue, fontWeight: $fontWeight, isBold: $isBold, isItalic: $isItalic, selectedFont: $selectedFont, selectedTransition: $selectedTransition, overlaySliderValue: $overlaySliderValue)';
+    return 'EditImageState(logoWidth: $logoWidth, logoHeight: $logoHeight, logoPositionTop: $logoPositionTop, logoPositionLeft: $logoPositionLeft, sliderPositionWidth: $sliderPositionWidth, sliderPositionHeight: $sliderPositionHeight, radiusSlider: $radiusSlider, logoRadius: $logoRadius, borderThiknessSlider: $borderThiknessSlider, logoBorder: $logoBorder, fontColor: $fontColor, logoBorderColor: $logoBorderColor, isFilledFont: $isFilledFont, fontStyle: $fontStyle, fontPositionTop: $fontPositionTop, fontPositionLeft: $fontPositionLeft, overlayPositionTop: $overlayPositionTop, overlayPositionLeft: $overlayPositionLeft, overlayWidth: $overlayWidth, overlayHeight: $overlayHeight, fontSize: $fontSize, fontSizeSliderValue: $fontSizeSliderValue, fontWeight: $fontWeight, isBold: $isBold, isItalic: $isItalic, selectedFont: $selectedFont, selectedTransition: $selectedTransition, overlaySliderValue: $overlaySliderValue)';
   }
 
   @override
@@ -598,8 +598,8 @@ class _$EditImageStateImpl implements _EditImageState {
                 other.isFilledFont == isFilledFont) &&
             (identical(other.fontStyle, fontStyle) ||
                 other.fontStyle == fontStyle) &&
-            (identical(other.fontPositionBottom, fontPositionBottom) ||
-                other.fontPositionBottom == fontPositionBottom) &&
+            (identical(other.fontPositionTop, fontPositionTop) ||
+                other.fontPositionTop == fontPositionTop) &&
             (identical(other.fontPositionLeft, fontPositionLeft) ||
                 other.fontPositionLeft == fontPositionLeft) &&
             (identical(other.overlayPositionTop, overlayPositionTop) ||
@@ -644,7 +644,7 @@ class _$EditImageStateImpl implements _EditImageState {
         logoBorderColor,
         isFilledFont,
         fontStyle,
-        fontPositionBottom,
+        fontPositionTop,
         fontPositionLeft,
         overlayPositionTop,
         overlayPositionLeft,
@@ -684,7 +684,7 @@ abstract class _EditImageState implements EditImageState {
       final Color logoBorderColor,
       final bool isFilledFont,
       final FontStyle fontStyle,
-      final double fontPositionBottom,
+      final double fontPositionTop,
       final double fontPositionLeft,
       final double overlayPositionTop,
       final double overlayPositionLeft,
@@ -728,7 +728,7 @@ abstract class _EditImageState implements EditImageState {
   @override
   FontStyle get fontStyle;
   @override
-  double get fontPositionBottom;
+  double get fontPositionTop;
   @override
   double get fontPositionLeft;
   @override

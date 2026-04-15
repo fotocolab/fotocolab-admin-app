@@ -21,7 +21,12 @@ class ImageTitleWidget extends StatelessWidget {
       editOnTap;
   final Function(LanguageEnum? langauge)? onLanguageChanged;
   final LanguageEnum selectedLanguage;
-  final bool showQuotes, showDelete, showAudio, showOverlay, showEdit;
+  final bool showQuotes,
+      showDelete,
+      showAudio,
+      showOverlay,
+      showEdit,
+      showLanguage;
   const ImageTitleWidget({
     super.key,
     this.image,
@@ -42,6 +47,7 @@ class ImageTitleWidget extends StatelessWidget {
     this.overlay,
     this.showEdit = false,
     this.editOnTap,
+    this.showLanguage = true,
   });
 
   @override
@@ -99,13 +105,14 @@ class ImageTitleWidget extends StatelessWidget {
                       ),
                       BrandHSpace.gap10(),
                     ],
-                    Expanded(
-                      child: SelectLanguageWidget(
-                        label: context.loc.language,
-                        onChanged: onLanguageChanged,
-                        initialSelection: selectedLanguage,
+                    if (showLanguage)
+                      Expanded(
+                        child: SelectLanguageWidget(
+                          label: context.loc.language,
+                          onChanged: onLanguageChanged,
+                          initialSelection: selectedLanguage,
+                        ),
                       ),
-                    ),
                   ],
                 ),
                 if (showEdit) ...[

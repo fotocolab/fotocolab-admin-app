@@ -740,6 +740,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Transition'**
   String get transition;
+
+  /// No description provided for @to_video.
+  ///
+  /// In en, this message translates to:
+  /// **'To Video'**
+  String get to_video;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

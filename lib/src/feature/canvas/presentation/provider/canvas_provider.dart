@@ -28,7 +28,7 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
   Color get logoBorderColor => state.logoBorderColor;
   bool get isFilledFont => state.isFilledFont;
   FontStyle get fontStyle => state.fontStyle;
-  double get fontPositionTop => state.fontPositionBottom;
+  double get fontPositionTop => state.fontPositionTop;
   double get fontPositionLeft => state.fontPositionLeft;
   double get fontSize => state.fontSize;
   double get fontSizeSliderValue => state.fontSizeSliderValue;
@@ -111,7 +111,7 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
 
   void onFontPositionChanged(Offset value) {
     setFontPositionLeft = fontPositionLeft + value.dx;
-    setFontPositionBottom = fontPositionTop + value.dy;
+    setFontPositionTop = fontPositionTop + value.dy;
   }
 
   void onOverlayPositionTop(Offset value) {
@@ -126,7 +126,7 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
       borderThiknessSlider: 0,
       fontColor: AppColors.green34,
       selectedFont: .inter,
-      fontPositionBottom: 10,
+      fontPositionTop: 100,
       fontPositionLeft: 10,
       fontSize: 12,
       fontSizeSliderValue: 0.5,
@@ -206,8 +206,8 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
     state = state.copyWith(selectedFont: value);
   }
 
-  set setFontPositionBottom(double value) {
-    state = state.copyWith(fontPositionBottom: value);
+  set setFontPositionTop(double value) {
+    state = state.copyWith(fontPositionTop: value);
   }
 
   set setFontPositionLeft(double value) {

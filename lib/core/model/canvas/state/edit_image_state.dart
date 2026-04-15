@@ -22,7 +22,7 @@ class EditImageState with _$EditImageState {
     @Default(AppColors.transparent) Color logoBorderColor,
     @Default(true) bool isFilledFont,
     @Default(FontStyle.normal) FontStyle fontStyle,
-    @Default(10) double fontPositionBottom,
+    @Default(100) double fontPositionTop,
     @Default(10) double fontPositionLeft,
     @Default(0) double overlayPositionTop,
     @Default(0) double overlayPositionLeft,

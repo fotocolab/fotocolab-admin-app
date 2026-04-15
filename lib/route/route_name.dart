@@ -14,4 +14,5 @@ abstract class RouteName {
   static String calendar = '/calendar';
   static String canvas = '/canvas';
   static String editImage = '/edit_image';
+  static String videoMerge = '/video_merge';
 }

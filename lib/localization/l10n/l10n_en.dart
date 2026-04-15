@@ -336,4 +336,7 @@ class SEn extends S {
 
   @override
   String get transition => 'Transition';
+
+  @override
+  String get to_video => 'To Video';
 }
