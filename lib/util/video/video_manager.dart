@@ -22,39 +22,17 @@ abstract class VideoManager {
     required double textfromLeft,
     required double textfromTop,
     required TransitionEnum transition,
-    required String text,
     required Color fontColor,
     required FontEnum font,
     required Size stackSize,
     required double overlaySize,
     required Offset overlayPosition,
+    // required String text,
   }) async {
     if (kIsWeb) {
       NavigationService.showErrorSnackbar(message: 'Web not supported');
       return null;
     }
-
-    var mText = wrapTextForFFmpeg(
-      text: text,
-      maxWidth: stackSize.width,
-      fontSize: fontSize,
-      fontFamily: font.fontFamily,
-    ).replaceAll(r'\n', '\n');
-
-    final result = await calculateFFmpegPosition(
-      imagePath: imagePath!,
-      fontFamily: font.fontFamily,
-      stackOffset: Offset(textfromLeft, textfromTop),
-      text: mText,
-      fromTop: textfromTop,
-      uiFontSize: fontSize,
-      stackSize: stackSize,
-      fit: BoxFit.contain,
-    );
-
-    double tx = (result.x) + 40;
-    double ty = (result.y) - 20;
-    double fSize = result.fontSize;
 
     double ox = overlayPosition.dx;
 
@@ -62,41 +40,13 @@ abstract class VideoManager {
 
     double os = overlaySize;
 
-    /// Adding Text
-
     final dir = await getTemporaryDirectory();
-
-    var loadedFont = await rootBundle.load(font.path);
-
-    String fontLocalPath = '${dir.path}/font.ttf';
-
-    final fontFile = await File(
-      fontLocalPath,
-    ).writeAsBytes(loadedFont.buffer.asUint8List());
-
-    final textToVideoOutputPath =
-        "${dir.path}/video_${DateTime.now().millisecondsSinceEpoch}.mp4";
-
-    final c1 =
-        '''-loop 1 -i $imagePath -vf "drawtext=fontfile=${fontFile.path}:text='$mText':'${transition.cmd(tx, ty)}':fontsize=$fSize:fontcolor=white:line_spacing=10:fix_bounds=1:alpha='if(lt(t,1),t/1, 1)'" -t 15 -r 60 -c:v libx264 -pix_fmt yuv420p -crf 18 -preset medium $textToVideoOutputPath''';
-
-    await FFmpegKit.execute(c1);
-
-    // final r1 = await s1.getReturnCode();
-
-    // final output = await s1.getOutput();
-
-    // debugLog(r1);
-
-    // debugLog(output);
-
-    ///audio
 
     final outputPath =
         "${dir.path}/video_${DateTime.now().millisecondsSinceEpoch}.mp4";
 
     final command =
-        '-i "$textToVideoOutputPath" -stream_loop -1 -i "$audioPath" -t 15 -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2"  -c:v libx264 -pix_fmt yuv420p -c:a aac -shortest -y "$outputPath"';
+        '-loop 1 -i "$imagePath" -stream_loop -1 -i "$audioPath" -t 15 -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2"  -c:v libx264 -pix_fmt yuv420p -c:a aac -shortest -y "$outputPath"';
     final session = await FFmpegKit.execute(command);
 
     final returnCode = await session.getReturnCode();
@@ -114,15 +64,7 @@ abstract class VideoManager {
         final command =
             '''-i "$outputPath" -stream_loop -1 -i "$overlayPath" -filter_complex "[1:v]crop=in_h*3/4:in_h:(in_w-out_w)/2:0,chromakey=0x00FF00:0.3:0.1[ck]; [ck]scale=$os:-1[ov]; [0:v][ov]overlay=$ox:$oy:shortest=1" -map 0:a? -c:v libx264 -pix_fmt yuv420p -c:a copy -shortest -y "$finalOutputPath"''';
 
-        final session = await FFmpegKit.execute(command);
-
-        final returnCode = await session.getReturnCode();
-
-        final output = await session.getOutput();
-
-        debugLog(returnCode);
-
-        debugLog(output);
+        await FFmpegKit.execute(command);
 
         return finalOutputPath;
       } else {
@@ -132,5 +74,63 @@ abstract class VideoManager {
       debugLog("❌ Failed");
     }
     return null;
+  }
+
+  static Future<String?> textToVideoAndroid({
+    required String text,
+    required String videoPath,
+    required double fontSize,
+    required double textfromLeft,
+    required double textfromTop,
+    required TransitionEnum transition,
+    required Color fontColor,
+    required FontEnum font,
+    required Size stackSize,
+  }) async {
+    var mText = wrapTextForFFmpeg(
+      text: text,
+      maxWidth: stackSize.width,
+      fontSize: fontSize,
+      fontFamily: font.fontFamily,
+    ).replaceAll(r'\n', '\n');
+
+    final result = await calculateFFmpegPosition(
+      videoPath: videoPath,
+      fontFamily: font.fontFamily,
+      textOffset: Offset(textfromLeft, textfromTop),
+      text: mText,
+      fromTop: textfromTop,
+      uiFontSize: fontSize,
+      stackSize: stackSize,
+      fit: BoxFit.contain,
+    );
+
+    double tx = (result.x) + 40;
+
+    double ty = (result.y) - 20;
+
+    double fSize = result.fontSize;
+
+    /// Adding Text
+
+    final dir = await getTemporaryDirectory();
+
+    var loadedFont = await rootBundle.load(font.path);
+
+    String fontLocalPath = '${dir.path}/font.ttf';
+
+    final fontFile = await File(
+      fontLocalPath,
+    ).writeAsBytes(loadedFont.buffer.asUint8List());
+
+    final textToVideoOutputPath =
+        "${dir.path}/video_${DateTime.now().millisecondsSinceEpoch}.mp4";
+
+    final c1 =
+        '''-i $videoPath -vf "drawtext=fontfile=${fontFile.path}:text='$mText':'${transition.cmd(tx, ty)}':fontsize=$fSize:fontcolor=white:line_spacing=10:fix_bounds=1:alpha='if(lt(t,1),t/1, 1)'" -t 15 -r 60 -c:v libx264 -pix_fmt yuv420p -crf 18 -preset medium $textToVideoOutputPath''';
+
+    await FFmpegKit.execute(c1);
+
+    return textToVideoOutputPath;
   }
 }

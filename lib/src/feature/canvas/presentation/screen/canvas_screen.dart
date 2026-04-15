@@ -130,7 +130,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
             fontSize: editImgProvider.fontSize,
             textfromLeft: editImgProvider.fontPositionLeft,
             textfromTop: editImgProvider.fontPositionTop,
-            text: i.title.split('|||').first,
+            // text: i.title.split('|||').first,
             transition: editImgProvider.selectedTransition,
             stackSize: Size(
               // ignore: use_build_context_synchronously

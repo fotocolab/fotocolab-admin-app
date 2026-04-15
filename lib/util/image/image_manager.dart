@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:fotocolab_design_system/design_system/utils/utils.dart';
 import 'package:image/image.dart' as img;
+import 'package:video_player/video_player.dart';
 
 /// Crops image to nearest 3:4 or 9:16 from center.
 /// Returns Uint8List (PNG, no quality loss).
@@ -93,10 +93,10 @@ class TextMetrics {
 }
 
 Future<FFmpegTextPosition> calculateFFmpegPosition({
-  required String imagePath,
+  required String videoPath,
   required Size stackSize,
   required BoxFit fit,
-  required Offset stackOffset, // position of text in Stack
+  required Offset textOffset, // position of text in Stack
   required String text,
   required double uiFontSize,
   required String fontFamily,
@@ -104,72 +104,104 @@ Future<FFmpegTextPosition> calculateFFmpegPosition({
   double? fromBottom,
 }) async {
   // Step 1: Get original image size
-  final file = File(imagePath);
-  final bytes = await file.readAsBytes();
+  final file = File(videoPath);
 
-  final codec = await ui.instantiateImageCodec(bytes);
-  final frame = await codec.getNextFrame();
-  final image = frame.image;
+  var controller = VideoPlayerController.file(file);
 
-  final originalSize = Size(image.width.toDouble(), image.height.toDouble());
+  await controller.initialize();
 
-  // Step 2: Calculate rendered image size inside Stack
-  final fitted = applyBoxFit(fit, originalSize, stackSize);
+  var width = controller.value.size.width;
+
+  var height = controller.value.size.height;
+
+  final videoSize = Size(width, height);
+
+  final fitted = applyBoxFit(fit, videoSize, stackSize);
   final renderSize = fitted.destination;
 
   final dx = (stackSize.width - renderSize.width) / 2;
   final dy = (stackSize.height - renderSize.height) / 2;
 
-  final imageRect = Rect.fromLTWH(dx, dy, renderSize.width, renderSize.height);
+  final rect = Rect.fromLTWH(dx, dy, renderSize.width, renderSize.height);
 
-  // Step 3: Resolve vertical position (top/bottom)
-  double finalTop;
+  final adjustedX = (textOffset.dx - rect.left).clamp(0.0, rect.width);
+  final adjustedY = (textOffset.dy - rect.top).clamp(0.0, rect.height);
 
-  if (fromTop != null) {
-    finalTop = fromTop;
-  } else if (fromBottom != null) {
-    finalTop = stackSize.height - fromBottom;
-  } else {
-    throw Exception("Provide either fromTop or fromBottom");
-  }
+  // Step 3: Convert to relative
+  final relativeX = adjustedX / rect.width;
+  final relativeY = adjustedY / rect.height;
 
-  // Override stackOffset Y if using top/bottom logic
-  final effectiveOffset = Offset(stackOffset.dx, finalTop);
+  final ffmpegX = relativeX * videoSize.width;
+  final ffmpegY = relativeY * videoSize.height;
 
-  // Step 4: Measure text in Flutter
+  final scale = videoSize.width / rect.width;
   final metrics = measureTextAdvanced(text, uiFontSize, fontFamily);
-  // Step 5: Calculate scale factor (Stack → Image)
-  final scale = originalSize.width / imageRect.width;
 
-  // Step 6: Convert stack position → image space
-  final adjustedX = (effectiveOffset.dx - imageRect.left).clamp(
-    0.0,
-    imageRect.width,
-  );
-
-  final adjustedY = (effectiveOffset.dy - imageRect.top).clamp(
-    0.0,
-    imageRect.height,
-  );
-
-  // Step 7: Convert to relative position
-  final relativeX = adjustedX / imageRect.width;
-  final relativeY = adjustedY / imageRect.height;
-
-  // Step 8: Convert to FFmpeg pixel space
-  final ffmpegLeft = relativeX * originalSize.width;
-  final ffmpegTop = relativeY * originalSize.height;
-  final scaledAscent = metrics.ascent * scale;
-
-  final ffmpegTopCorrected = ffmpegTop + scaledAscent;
-  
-  final ffmpegFontSize = uiFontSize * scale;
+  final ffmpegYCorrected = ffmpegY + (metrics.ascent * scale);
 
   return FFmpegTextPosition(
-    x: ffmpegLeft,
-    y: ffmpegTopCorrected,
-    fontSize: ffmpegFontSize,
+    x: ffmpegX,
+    y: ffmpegYCorrected,
+    fontSize: uiFontSize * scale,
   );
+  // );
+  // // Step 2: Calculate rendered image size inside Stack
+  // final fitted = applyBoxFit(fit, originalSize, stackSize);
+
+  // final renderSize = fitted.destination;
+
+  // final dx = (stackSize.width - renderSize.width) / 2;
+  // final dy = (stackSize.height - renderSize.height) / 2;
+
+  // final imageRect = Rect.fromLTWH(dx, dy, renderSize.width, renderSize.height);
+
+  // // Step 3: Resolve vertical position (top/bottom)
+  // double finalTop;
+
+  // if (fromTop != null) {
+  //   finalTop = fromTop;
+  // } else if (fromBottom != null) {
+  //   finalTop = stackSize.height - fromBottom;
+  // } else {
+  //   throw Exception("Provide either fromTop or fromBottom");
+  // }
+
+  // // Override stackOffset Y if using top/bottom logic
+  // final effectiveOffset = Offset(textOffset.dx, finalTop);
+
+  // // Step 4: Measure text in Flutter
+  // // Step 5: Calculate scale factor (Stack → Image)
+  // final scale = originalSize.width / imageRect.width;
+
+  // // Step 6: Convert stack position → image space
+  // final adjustedX = (effectiveOffset.dx - imageRect.left).clamp(
+  //   0.0,
+  //   imageRect.width,
+  // );
+
+  // final adjustedY = (effectiveOffset.dy - imageRect.top).clamp(
+  //   0.0,
+  //   imageRect.height,
+  // );
+
+  // // Step 7: Convert to relative position
+  // final relativeX = adjustedX / imageRect.width;
+  // final relativeY = adjustedY / imageRect.height;
+
+  // // Step 8: Convert to FFmpeg pixel space
+  // final ffmpegLeft = relativeX * originalSize.width;
+  // final ffmpegTop = relativeY * originalSize.height;
+  // final scaledAscent = metrics.ascent * scale;
+
+  // final ffmpegTopCorrected = ffmpegTop + scaledAscent;
+
+  // final ffmpegFontSize = uiFontSize * scale;
+
+  // return FFmpegTextPosition(
+  //   x: ffmpegLeft,
+  //   y: ffmpegTopCorrected,
+  //   fontSize: ffmpegFontSize,
+  // );
 }
 
 TextMetrics measureTextAdvanced(
