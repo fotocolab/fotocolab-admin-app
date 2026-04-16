@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:ffmpeg_kit_flutter_new/ffprobe_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:fotocolab_design_system/design_system/utils/utils.dart';
 import 'package:image/image.dart' as img;
-import 'package:video_player/video_player.dart';
 
 /// Crops image to nearest 3:4 or 9:16 from center.
 /// Returns Uint8List (PNG, no quality loss).
@@ -104,15 +104,24 @@ Future<FFmpegTextPosition> calculateFFmpegPosition({
   double? fromBottom,
 }) async {
   // Step 1: Get original image size
-  final file = File(videoPath);
+  // final file = File(videoPath);
 
-  var controller = VideoPlayerController.file(file);
+  // var controller = VideoPlayerController.file(file);
 
-  await controller.initialize();
+  // await controller.initialize();
 
-  var width = controller.value.size.width;
+  // var width = controller.value.size.width;
 
-  var height = controller.value.size.height;
+  // var height = controller.value.size.height;
+
+  final session = await FFprobeKit.execute(
+    '-v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$videoPath"',
+  );
+
+  final output = await session.getOutput();
+  final parts = output!.trim().split(',');
+  final width = double.parse(parts[0]);
+  final height = double.parse(parts[1]);
 
   final videoSize = Size(width, height);
 

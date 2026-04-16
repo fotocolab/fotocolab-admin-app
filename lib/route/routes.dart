@@ -22,7 +22,7 @@ final GoRouter routerConfig = GoRouter(
   navigatorKey: NavigationService.navigatorKey,
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', builder: (context, state) => const VideoMergeScreen()),
+    GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
 
     GoRoute(
       path: RouteName.error,

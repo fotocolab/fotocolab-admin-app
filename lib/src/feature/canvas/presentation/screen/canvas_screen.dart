@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fotocolab_admin/core/model/canvas/response/image_title_response_model.dart';
 import 'package:fotocolab_admin/core/model/upload/request/upload/upload_image_request_model.dart';
@@ -34,6 +35,8 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   List<String> titles = [];
 
   TextEditingController copyCountController = TextEditingController();
+
+  TextEditingController quoteController = TextEditingController();
 
   bool isMergeAndGoLoding = false;
 
@@ -86,7 +89,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
     setState(() {});
   }
 
-// check this and text in video after merge
+  // check this and text in video after merge
   void duplicateOnTap() {
     int? count = int.tryParse(copyCountController.text);
     if (count != null) {
@@ -95,7 +98,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
           images.add(
             ImageTitleResponseModel(
               image: PlatformFile(
-                name: 'mergedVideo',
+                name: 'mergedVideo.mp4',
                 size: 10,
                 path: mergedVideoPath,
               ),
@@ -138,9 +141,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
         );
 
         if (videoPath != null) {
-          var video = await File(
-            videoPath,
-          ).writeAsBytes(await File(videoPath).readAsBytes());
+          var video = File(videoPath);
 
           var pf = PlatformFile(
             name: 'video.mp4',
@@ -193,19 +194,39 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   }
 
   void gotoVideoMergeScreen() {
-    context.push(RouteName.videoMerge).then((videoPath) {
-      images.add(
-        ImageTitleResponseModel(
-          image: PlatformFile(
-            name: 'MergedVideo',
-            size: 10,
-            path: videoPath.toString(),
+    context.push(RouteName.videoMerge).then((videoPath) async {
+      mergedVideoPath = videoPath?.toString();
+      if (mergedVideoPath != null) {
+        images.add(
+          ImageTitleResponseModel(
+            image: PlatformFile(
+              name: 'fotocolab_video.mp4',
+              size: (await File(mergedVideoPath!).readAsBytes()).lengthInBytes,
+              path: videoPath.toString(),
+            ),
+            language: .english,
           ),
-          language: .english,
-        ),
-      );
+        );
+      }
       setState(() {});
     });
+  }
+
+  void copyFromClipBoard() async {
+    final data = await Clipboard.getData(Clipboard.kTextPlain);
+    onMultiLineChanged(data?.text);
+    quoteController.text = data?.text ?? '';
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  void clearQuote() {
+    quoteController.text = '';
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -273,12 +294,29 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                           BrandVSpace.gap16(),
                           SizedBox(
                             child: BrandTextField(
+                              controller: quoteController,
                               maxLines: 2,
                               hintText:
                                   context.loc.enter_or_paste_multiple_quote,
                               onChanged: (p0) {
                                 onMultiLineChanged(p0);
+                                quoteController.text = p0;
                               },
+                              suffixIcon: quoteController.text.isEmpty
+                                  ? BrandInkWell(
+                                      onTap: copyFromClipBoard,
+                                      child: Icon(
+                                        Icons.paste_outlined,
+                                        color: AppColors.white,
+                                      ),
+                                    )
+                                  : BrandInkWell(
+                                      onTap: clearQuote,
+                                      child: Icon(
+                                        Icons.clear,
+                                        color: AppColors.white,
+                                      ),
+                                    ),
                             ),
                           ),
                           BrandVSpace.gap16(),
@@ -327,7 +365,9 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                         selectedLanguage: item.language,
                         audio: item.audio,
                         overlay: item.overlay,
-                        showEdit: true,
+                        showEdit: false,
+                        showAudio: false,
+                        showOverlay: false,
                         onChanged: (value) {
                           onChanged(index, value);
                         },

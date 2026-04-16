@@ -170,7 +170,6 @@ class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
     setState(() {
       isMergeAndGoLoding = false;
     });
-    // provider.setSelectedFiles = mergedVideo;
     if (mounted) {
       context.pop(mergedVideo.first.image?.path);
     }
@@ -216,6 +215,7 @@ class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                if(images.isEmpty)
                 RoundedContainer(
                   width: context.screenWidth,
                   color: AppColors.primary.withAlpha(30),
