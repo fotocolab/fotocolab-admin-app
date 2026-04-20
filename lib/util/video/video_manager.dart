@@ -1,33 +1,27 @@
 import 'dart:io';
-
+import 'dart:ui' as ui;
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fotocolab_admin/route/navigation_service.dart';
+import 'package:fotocolab_admin/src/feature/canvas/presentation/screen/render_screen.dart';
 import 'package:fotocolab_admin/util/enum/font_enum.dart';
-import 'package:fotocolab_admin/util/enum/transition_enum.dart';
+import 'package:fotocolab_admin/util/enum/language_enum.dart';
 import 'package:fotocolab_admin/util/image/image_manager.dart';
 import 'package:fotocolab_admin/util/utils.dart';
+import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 
 abstract class VideoManager {
-  static Future<String?> toVideoAndroid({
+  static Future<String?> applyGreenScreen({
     String? imagePath,
     String? audioPath,
     String? overlayPath,
-    required double fontSize,
-    required double textfromLeft,
-    required double textfromTop,
-    required TransitionEnum transition,
-    required Color fontColor,
-    required FontEnum font,
-    required Size stackSize,
     required double overlaySize,
     required Offset overlayPosition,
-    // required String text,
   }) async {
     if (kIsWeb) {
       NavigationService.showErrorSnackbar(message: 'Web not supported');
@@ -76,17 +70,49 @@ abstract class VideoManager {
     return null;
   }
 
-  static Future<String?> textToVideoAndroid({
+  static Future<String?> addTextToVideoAndroid({
+    required BuildContext context,
     required String text,
-    required String videoPath,
+    required LanguageEnum language,
+    required String inputVideoPath,
+    required Size stackSize,
     required double fontSize,
     required double textfromLeft,
     required double textfromTop,
-    required TransitionEnum transition,
-    required Color fontColor,
-    required FontEnum font,
-    required Size stackSize,
+    int frameCount = 10,
   }) async {
+    FontEnum font = .inter;
+
+    if (language == .hindi) {
+      font = .hindi;
+    } else if (language == .assamese) {
+      font = .assamese;
+    } else if (language == .bengali) {
+      font = .bengali;
+    } else if (language == .bodo) {
+      font = .bodo;
+    } else if (language == .gujarati) {
+      font = .gujarati;
+    } else if (language == .kannada) {
+      font = .kannada;
+    } else if (language == .malayalam) {
+      font = .malayalam;
+    } else if (language == .marathi) {
+      font = .marathi;
+    } else if (language == .nepali) {
+      font = .nepali;
+    } else if (language == .odia) {
+      font = .odia;
+    } else if (language == .punjabi) {
+      font = .punjabi;
+    } else if (language == .tamil) {
+      font = .tamil;
+    } else if (language == .telugu) {
+      font = .telugu;
+    } else if (language == .urdu) {
+      font = .urdu;
+    }
+
     var mText = wrapTextForFFmpeg(
       text: text,
       maxWidth: stackSize.width,
@@ -94,43 +120,89 @@ abstract class VideoManager {
       fontFamily: font.fontFamily,
     ).replaceAll(r'\n', '\n');
 
-    final result = await calculateFFmpegPosition(
-      videoPath: videoPath,
-      fontFamily: font.fontFamily,
-      textOffset: Offset(textfromLeft, textfromTop),
-      text: mText,
-      fromTop: textfromTop,
-      uiFontSize: fontSize,
-      stackSize: stackSize,
-      fit: BoxFit.contain,
-    );
+    // final result = await calculateFFmpegPosition(
+    //   videoPath: inputVideoPath,
+    //   fontFamily: font.fontFamily,
+    //   textOffset: Offset(textfromLeft, textfromTop),
+    //   text: mText,
+    //   fromTop: textfromTop,
+    //   uiFontSize: fontSize,
+    //   stackSize: stackSize,
+    //   fit: BoxFit.contain,
+    // );
 
-    double tx = (result.x) + 40;
+    // double tx = (result.x);
 
-    double ty = (result.y) - 20;
+    // double ty = (result.y);
 
-    double fSize = result.fontSize;
-
-    /// Adding Text
+    final GlobalKey<RenderScreenState> key = GlobalKey<RenderScreenState>();
 
     final dir = await getTemporaryDirectory();
 
-    var loadedFont = await rootBundle.load(font.path);
+    final frameDir = Directory('${dir.path}/frames');
 
-    String fontLocalPath = '${dir.path}/font.ttf';
+    if (!frameDir.existsSync()) frameDir.createSync(recursive: true);
 
-    final fontFile = await File(
-      fontLocalPath,
-    ).writeAsBytes(loadedFont.buffer.asUint8List());
+    final outputPath =
+        '${dir.path}/video_${DateTime.now().microsecondsSinceEpoch}.mp4';
 
-    final textToVideoOutputPath =
-        "${dir.path}/video_${DateTime.now().millisecondsSinceEpoch}.mp4";
+    double progress = 0.0;
 
-    final c1 =
-        '''-i $videoPath -vf "drawtext=fontfile=${fontFile.path}:text='$mText':'${transition.cmd(tx, ty)}':fontsize=$fSize:fontcolor=white:line_spacing=10:fix_bounds=1:alpha='if(lt(t,1),t/1, 1)'" -t 15 -r 60 -c:v libx264 -pix_fmt yuv420p -crf 18 -preset medium $textToVideoOutputPath''';
+    Navigator.push(
+      // ignore: use_build_context_synchronously
+      context,
+      MaterialPageRoute(
+        builder: (_) => RenderScreen(
+          key: key,
+          text: mText,
+          fontFamily: font.fontFamily,
+          progress: progress,
+          left: textfromLeft,
+          top: textfromTop,
+          fontSize: fontSize,
+        ),
+      ),
+    );
 
-    await FFmpegKit.execute(c1);
+    await Future.delayed(const Duration(milliseconds: 500));
 
-    return textToVideoOutputPath;
+    for (int i = 0; i < frameCount; i++) {
+      progress = i / frameCount;
+
+      key.currentState?.setProgress(progress);
+
+      await WidgetsBinding.instance.endOfFrame;
+
+      final state = key.currentState as RenderScreenState;
+
+      final boundary =
+          state.repaintKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
+
+      final image = await boundary.toImage(pixelRatio: 1);
+
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
+      final file = File(
+        '${frameDir.path}/frame_${i.toString().padLeft(4, '0')}.png',
+      );
+
+      await file.writeAsBytes(byteData!.buffer.asUint8List());
+    }
+
+    if (context.mounted) {
+      context.pop();
+    }
+
+    final cmd =
+        '-i $inputVideoPath -framerate 25 -i ${frameDir.path}/frame_%04d.png -filter_complex "[1:v]scale=iw:ih,format=rgba[txt];[0:v][txt]overlay=0:0" -c:v libx264 -pix_fmt yuv420p -crf 18 -preset medium $outputPath';
+
+    var session = await FFmpegKit.execute(cmd);
+    var o = await session.getAllLogs();
+    for (var i in o) {
+      debugLog(i.getMessage());
+    }
+
+    return outputPath;
   }
 }

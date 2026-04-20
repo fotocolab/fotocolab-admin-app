@@ -339,4 +339,10 @@ class SEn extends S {
 
   @override
   String get to_video => 'To Video';
+
+  @override
+  String get initialize => 'Initialize';
+
+  @override
+  String get play => 'Play';
 }

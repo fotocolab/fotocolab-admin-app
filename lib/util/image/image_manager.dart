@@ -103,56 +103,46 @@ Future<FFmpegTextPosition> calculateFFmpegPosition({
   double? fromTop,
   double? fromBottom,
 }) async {
-  // Step 1: Get original image size
-  // final file = File(videoPath);
-
-  // var controller = VideoPlayerController.file(file);
-
-  // await controller.initialize();
-
-  // var width = controller.value.size.width;
-
-  // var height = controller.value.size.height;
-
   final session = await FFprobeKit.execute(
     '-v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$videoPath"',
   );
 
   final output = await session.getOutput();
   final parts = output!.trim().split(',');
-  final width = double.parse(parts[0]);
-  final height = double.parse(parts[1]);
+  final videoWidth = double.parse(parts[0]);
+  final videoHeight = double.parse(parts[1]);
 
-  final videoSize = Size(width, height);
+  final scaleX = videoWidth / stackSize.width;
+  final scaleY = videoHeight / stackSize.height;
 
-  final fitted = applyBoxFit(fit, videoSize, stackSize);
-  final renderSize = fitted.destination;
+  // final ffmpegX = textOffset.dx * scaleX;
+  // final ffmpegY = textOffset.dy * scaleY;
+  final ffmpegX = (textOffset.dx * 3 * scaleX).round().toDouble();
+  final ffmpegY = (textOffset.dy * 3 * scaleY).round().toDouble();
+  // final fitted = applyBoxFit(fit, videoSize, stackSize);
+  // final renderSize = fitted.destination;
 
-  final dx = (stackSize.width - renderSize.width) / 2;
-  final dy = (stackSize.height - renderSize.height) / 2;
+  // final dx = (stackSize.width - renderSize.width) / 2;
+  // final dy = (stackSize.height - renderSize.height) / 2;
 
-  final rect = Rect.fromLTWH(dx, dy, renderSize.width, renderSize.height);
+  // final rect = Rect.fromLTWH(dx, dy, renderSize.width, renderSize.height);
 
-  final adjustedX = (textOffset.dx - rect.left).clamp(0.0, rect.width);
-  final adjustedY = (textOffset.dy - rect.top).clamp(0.0, rect.height);
+  // final adjustedX = (textOffset.dx - rect.left).clamp(0.0, rect.width);
+  // final adjustedY = (textOffset.dy - rect.top).clamp(0.0, rect.height);
 
-  // Step 3: Convert to relative
-  final relativeX = adjustedX / rect.width;
-  final relativeY = adjustedY / rect.height;
+  // // Step 3: Convert to relative
+  // final relativeX = adjustedX / rect.width;
+  // final relativeY = adjustedY / rect.height;
 
-  final ffmpegX = relativeX * videoSize.width;
-  final ffmpegY = relativeY * videoSize.height;
+  // final ffmpegX = relativeX * videoSize.width;
+  // final ffmpegY = relativeY * videoSize.height;
 
-  final scale = videoSize.width / rect.width;
-  final metrics = measureTextAdvanced(text, uiFontSize, fontFamily);
+  // final scale = videoSize.width / rect.width;
+  // final metrics = measureTextAdvanced(text, uiFontSize, fontFamily);
 
-  final ffmpegYCorrected = ffmpegY + (metrics.ascent * scale);
+  // final ffmpegYCorrected = ffmpegY + (metrics.ascent * scale);
 
-  return FFmpegTextPosition(
-    x: ffmpegX,
-    y: ffmpegYCorrected,
-    fontSize: uiFontSize * scale,
-  );
+  return FFmpegTextPosition(x: ffmpegX, y: ffmpegY, fontSize: uiFontSize);
   // );
   // // Step 2: Calculate rendered image size inside Stack
   // final fitted = applyBoxFit(fit, originalSize, stackSize);
@@ -257,24 +247,20 @@ String wrapTextForFFmpeg({
     final tp = TextPainter(
       text: TextSpan(text: testLine, style: textStyle),
       textDirection: TextDirection.ltr,
-      maxLines: 1, // 🔥 important
+      maxLines: 1,
     )..layout(maxWidth: double.infinity);
 
-    // 🔥 use width check ONLY (not didExceedMaxLines)
     if (tp.width > maxWidth) {
-      // push previous line
       if (currentLine.isNotEmpty) {
         lines.add(currentLine);
       }
 
-      // start new line
       currentLine = word;
     } else {
       currentLine = testLine;
     }
   }
 
-  // add last line
   if (currentLine.isNotEmpty) {
     lines.add(currentLine);
   }

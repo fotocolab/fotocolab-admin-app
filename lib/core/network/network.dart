@@ -816,4 +816,20 @@ abstract class NetworkClient {
 
     return null;
   }
+
+  static Future<void> pingUrl() async {
+    final url = Uri.parse('https://fotocolab-backend.onrender.com/');
+
+    try {
+      final response = await http.get(url).timeout(Duration(seconds: 5));
+
+      if (response.statusCode == 200) {
+        // print('Server is reachable');
+      } else {
+        // print('Server responded with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      // print('Error reaching server: $e');
+    }
+  }
 }

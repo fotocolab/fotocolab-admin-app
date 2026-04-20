@@ -40,8 +40,10 @@ class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
 
   Future<void> attachOnTap() async {
     var imgList = await FileManager.uploadSingle();
-    images.add(ImageTitleResponseModel(image: imgList, language: .english));
-    setState(() {});
+    if (imgList != null) {
+      images.add(ImageTitleResponseModel(image: imgList, language: .english));
+      setState(() {});
+    }
   }
 
   void onChanged(int index, String? value) {
@@ -119,23 +121,10 @@ class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
         var newFile = await File(path).writeAsBytes(k);
 
         if (i.audio != null) {
-          var videoPath = await VideoManager.toVideoAndroid(
+          var videoPath = await VideoManager.applyGreenScreen(
             audioPath: i.audio?.path,
             imagePath: newFile.path,
             overlayPath: i.overlay?.path,
-            font: editImgProvider.selectedFont,
-            fontColor: editImgProvider.fontColor,
-            fontSize: editImgProvider.fontSize,
-            textfromLeft: editImgProvider.fontPositionLeft,
-            textfromTop: editImgProvider.fontPositionTop,
-            // text: i.title.split('|||').first,
-            transition: editImgProvider.selectedTransition,
-            stackSize: Size(
-              // ignore: use_build_context_synchronously
-              context.screenHeight * 0.6,
-              // ignore: use_build_context_synchronously
-              context.screenHeight * 0.6,
-            ),
             overlaySize: editImgProvider.overlayWidth,
             overlayPosition: Offset(
               editImgProvider.overlayPositionLeft,
@@ -215,50 +204,50 @@ class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                if(images.isEmpty)
-                RoundedContainer(
-                  width: context.screenWidth,
-                  color: AppColors.primary.withAlpha(30),
-                  borderColor: AppColors.primary.withAlpha(55),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 26,
-                    ),
-                    child: Column(
-                      children: [
-                        RoundedContainer(
-                          color: AppColors.primary.withAlpha(80),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.add_a_photo_outlined,
-                              color: AppColors.primary,
+                if (images.isEmpty)
+                  RoundedContainer(
+                    width: context.screenWidth,
+                    color: AppColors.primary.withAlpha(30),
+                    borderColor: AppColors.primary.withAlpha(55),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 26,
+                      ),
+                      child: Column(
+                        children: [
+                          RoundedContainer(
+                            color: AppColors.primary.withAlpha(80),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.add_a_photo_outlined,
+                                color: AppColors.primary,
+                              ),
                             ),
                           ),
-                        ),
-                        BrandVSpace.gap16(),
-                        BrandText.white(
-                          data: context.loc.add_images,
-                          fontWeight: .w700,
-                        ),
-                        BrandText.grey(
-                          data: context.loc.tap_to_select_photos,
-                          fontColor: AppColors.greyA3,
-                          fontSize: BrandFontSize.size14,
-                        ),
-                        BrandVSpace.gap10(),
-                        FittedBox(
-                          child: BrandButton.primary(
-                            title: context.loc.select_photos,
-                            onTap: attachOnTap,
-                            borderRadius: 12,
+                          BrandVSpace.gap16(),
+                          BrandText.white(
+                            data: context.loc.add_images,
+                            fontWeight: .w700,
                           ),
-                        ),
-                      ],
+                          BrandText.grey(
+                            data: context.loc.tap_to_select_photos,
+                            fontColor: AppColors.greyA3,
+                            fontSize: BrandFontSize.size14,
+                          ),
+                          BrandVSpace.gap10(),
+                          FittedBox(
+                            child: BrandButton.primary(
+                              title: context.loc.select_photos,
+                              onTap: attachOnTap,
+                              borderRadius: 12,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
                 BrandVSpace.gap10(),
 
                 if (images.isNotEmpty) ...[

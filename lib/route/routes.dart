@@ -7,6 +7,7 @@ import 'package:fotocolab_admin/src/feature/calendar/presentation/screen/calenda
 import 'package:fotocolab_admin/src/feature/canvas/presentation/screen/canvas_screen.dart';
 import 'package:fotocolab_admin/src/feature/canvas/presentation/screen/edit_image.dart';
 import 'package:fotocolab_admin/src/feature/canvas/presentation/screen/video_merge_screen.dart';
+import 'package:fotocolab_admin/src/feature/canvas/presentation/screen/video_player_screen.dart';
 import 'package:fotocolab_admin/src/feature/error/presentation/screen/error_screen.dart';
 import 'package:fotocolab_admin/src/feature/home/presentation/screen/home_screen.dart';
 import 'package:fotocolab_admin/src/feature/profile/presentation/screen/profile_screen.dart';
@@ -80,9 +81,14 @@ final GoRouter routerConfig = GoRouter(
       path: RouteName.editImage,
       builder: (context, state) => EditImage(routeArgs: state.extra),
     ),
+
     GoRoute(
       path: RouteName.videoMerge,
       builder: (context, state) => VideoMergeScreen(),
+    ),
+    GoRoute(
+      path: RouteName.videoPlayer,
+      builder: (context, state) => VideoPlayerScreen(),
     ),
   ],
 );

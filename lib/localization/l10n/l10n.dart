@@ -746,6 +746,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'To Video'**
   String get to_video;
+
+  /// No description provided for @initialize.
+  ///
+  /// In en, this message translates to:
+  /// **'Initialize'**
+  String get initialize;
+
+  /// No description provided for @play.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get play;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

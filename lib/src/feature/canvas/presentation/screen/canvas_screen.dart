@@ -123,22 +123,39 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
 
     for (var i in images) {
       try {
-        var videoPath = await VideoManager.textToVideoAndroid(
-          videoPath: i.image!.path!,
-          font: editImgProvider.selectedFont,
-          fontColor: editImgProvider.fontColor,
+        var videoPath = await VideoManager.addTextToVideoAndroid(
+          context: context,
+          text: i.title.split('|||').first,
+          language: i.language,
+          inputVideoPath: i.image!.path!,
+          frameCount: 50,
           fontSize: editImgProvider.fontSize,
           textfromLeft: editImgProvider.fontPositionLeft,
           textfromTop: editImgProvider.fontPositionTop,
-          text: i.title.split('|||').first,
-          transition: editImgProvider.selectedTransition,
           stackSize: Size(
             // ignore: use_build_context_synchronously
-            context.screenHeight * 0.6,
+            context.screenWidth,
             // ignore: use_build_context_synchronously
-            context.screenHeight * 0.6,
+            context.screenWidth,
           ),
         );
+        // var videoPath = await VideoManager.addTextToVideoAndroid(
+        //   videoPath: i.image!.path!,
+        //   // font: editImgProvider.selectedFont,
+        //   fontColor: editImgProvider.fontColor,
+        //   fontSize: editImgProvider.fontSize,
+        // textfromLeft: editImgProvider.fontPositionLeft,
+        // textfromTop: editImgProvider.fontPositionTop,
+        //   text: i.title.split('|||').first,
+        //   transition: editImgProvider.selectedTransition,
+        //   language: i.language,
+        //   stackSize: Size(
+        //     // ignore: use_build_context_synchronously
+        //     context.screenHeight * 0.6,
+        //     // ignore: use_build_context_synchronously
+        //     context.screenHeight * 0.6,
+        //   ),
+        // );
 
         if (videoPath != null) {
           var video = File(videoPath);
@@ -158,9 +175,12 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
         //
       }
     }
-    setState(() {
-      isMergeAndGoLoding = false;
-    });
+
+    if (mounted) {
+      setState(() {
+        isMergeAndGoLoding = false;
+      });
+    }
     provider.setSelectedFiles = mergedImage;
     if (mounted) {
       context.pop();

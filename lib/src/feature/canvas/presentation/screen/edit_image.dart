@@ -124,19 +124,22 @@ class _EditImageState extends ConsumerState<EditImage> {
                     onPanUpdate: (details) {
                       provider.onFontPositionChanged(details.delta);
                     },
-                    child: BrandText.white(
-                      data: wrapTextForFFmpeg(
-                        text: image?.title ?? '--',
-                        maxWidth: context.screenWidth,
+                    child: SizedBox(
+                      // width: context.screenWidth * 0.8,
+                      child: BrandText.white(
+                        data: wrapTextForFFmpeg(
+                          text: image?.title ?? '--',
+                          maxWidth: context.screenWidth,
+                          fontSize: provider.fontSize,
+                          fontFamily: provider.selectedFont.fontFamily,
+                        ).replaceAll(r'\n', '\n'),
+                        textAlign: .center,
                         fontSize: provider.fontSize,
+                        fontColor: provider.fontColor,
                         fontFamily: provider.selectedFont.fontFamily,
-                      ).replaceAll(r'\n', '\n'),
-                      textAlign: .center,
-                      fontSize: provider.fontSize,
-                      fontColor: provider.fontColor,
-                      fontFamily: provider.selectedFont.fontFamily,
-                      fontStyle: provider.fontStyle,
-                      fontWeight: provider.fontWeight,
+                        fontStyle: provider.fontStyle,
+                        fontWeight: provider.fontWeight,
+                      ),
                     ),
                   ),
                 ),

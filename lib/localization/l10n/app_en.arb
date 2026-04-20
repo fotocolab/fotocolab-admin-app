@@ -107,5 +107,7 @@
     "b": "Bold",
     "i": "Italic",
     "transition": "Transition",
-    "to_video": "To Video"
+    "to_video": "To Video",
+    "initialize": "Initialize",
+    "play": "Play"
 }

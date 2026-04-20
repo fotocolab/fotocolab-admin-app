@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fotocolab_admin/core/network/network.dart';
 import 'package:fotocolab_admin/route/route_name.dart';
 import 'package:fotocolab_admin/src/feature/profile/presentation/provider/profile_provider.dart';
 import 'package:fotocolab_admin/util/assets/assets.dart';
@@ -31,6 +33,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         gotoLoginScreen();
       }
     }
+    if (kDebugMode) {
+      pingDevServer();
+    }
   }
 
   void gotoLoginScreen() {
@@ -39,6 +44,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   void gotoHomeScreen() {
     context.go(RouteName.home);
+  }
+
+  void pingDevServer() {
+    Future.delayed(const Duration(seconds: 5), () {
+      NetworkClient.pingUrl();
+      // pingDevServer();
+    });
   }
 
   @override

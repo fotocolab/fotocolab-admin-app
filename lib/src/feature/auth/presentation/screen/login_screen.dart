@@ -53,6 +53,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
+                  BrandVSpace.gap60(),
                   Container(
                     constraints: BoxConstraints(maxWidth: 100),
                     child: Image.asset(Assets.logo),

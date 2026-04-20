@@ -15,4 +15,5 @@ abstract class RouteName {
   static String canvas = '/canvas';
   static String editImage = '/edit_image';
   static String videoMerge = '/video_merge';
+  static String videoPlayer = '/video_player';
 }
