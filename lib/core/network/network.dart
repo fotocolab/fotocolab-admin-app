@@ -818,7 +818,7 @@ abstract class NetworkClient {
   }
 
   static Future<void> pingUrl() async {
-    final url = Uri.parse('https://fotocolab-backend.onrender.com/');
+    final url = Uri.parse(pinUrl);
 
     try {
       final response = await http.get(url).timeout(Duration(seconds: 5));

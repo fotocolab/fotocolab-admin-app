@@ -2,6 +2,7 @@
 // Created By Suresh M, 08/12/2025
 
 const String appDomain = String.fromEnvironment('BASE_URL');
+const String pinUrl = String.fromEnvironment('PING_URL');
 const String env = String.fromEnvironment('ENV');
 const String helpEmail = String.fromEnvironment('HELP_EMAIL');
 const String encryptKey = String.fromEnvironment('ENCRYPT_KEY');

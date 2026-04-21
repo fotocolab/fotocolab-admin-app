@@ -92,8 +92,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       ),
               ],
             )
-          : SizedBox(
-              child: BrandTextButton(title: context.loc.play, onTap: init),
+          : Expanded(
+              child: Center(
+                child: SizedBox(
+                  child: BrandTextButton(title: context.loc.play, onTap: init),
+                ),
+              ),
             ),
     );
   }

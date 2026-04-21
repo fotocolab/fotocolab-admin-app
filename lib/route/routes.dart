@@ -86,9 +86,10 @@ final GoRouter routerConfig = GoRouter(
       path: RouteName.videoMerge,
       builder: (context, state) => VideoMergeScreen(),
     ),
+    
     GoRoute(
       path: RouteName.videoPlayer,
-      builder: (context, state) => VideoPlayerScreen(),
+      builder: (context, state) => VideoPlayerScreen(routeArgs: state.extra),
     ),
   ],
 );

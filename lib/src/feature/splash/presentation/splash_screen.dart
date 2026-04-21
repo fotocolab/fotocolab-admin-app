@@ -49,7 +49,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void pingDevServer() {
     Future.delayed(const Duration(seconds: 5), () {
       NetworkClient.pingUrl();
-      // pingDevServer();
+      pingDevServer();
     });
   }
 
