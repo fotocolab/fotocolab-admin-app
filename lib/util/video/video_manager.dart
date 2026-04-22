@@ -9,6 +9,7 @@ import 'package:fotocolab_admin/route/navigation_service.dart';
 import 'package:fotocolab_admin/src/feature/canvas/presentation/screen/render_screen.dart';
 import 'package:fotocolab_admin/util/enum/font_enum.dart';
 import 'package:fotocolab_admin/util/enum/language_enum.dart';
+import 'package:fotocolab_admin/util/enum/transition_enum.dart';
 import 'package:fotocolab_admin/util/image/image_manager.dart';
 import 'package:fotocolab_admin/util/utils.dart';
 import 'package:go_router/go_router.dart';
@@ -79,7 +80,8 @@ abstract class VideoManager {
     required double fontSize,
     required double textfromLeft,
     required double textfromTop,
-    int frameCount = 10,
+    required TransitionEnum transition,
+    int frameCount = 50,
   }) async {
     FontEnum font = .inter;
 
@@ -160,6 +162,7 @@ abstract class VideoManager {
           left: textfromLeft,
           top: textfromTop,
           fontSize: fontSize,
+          transition: transition,
         ),
       ),
     );

@@ -132,6 +132,8 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
           fontSize: editImgProvider.fontSize,
           textfromLeft: editImgProvider.fontPositionLeft,
           textfromTop: editImgProvider.fontPositionTop,
+          transition: editImgProvider.selectedTransition,
+
           stackSize: Size(
             // ignore: use_build_context_synchronously
             context.screenWidth,
@@ -147,7 +149,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
         // textfromLeft: editImgProvider.fontPositionLeft,
         // textfromTop: editImgProvider.fontPositionTop,
         //   text: i.title.split('|||').first,
-        //   transition: editImgProvider.selectedTransition,
+          // transition: editImgProvider.selectedTransition,
         //   language: i.language,
         //   stackSize: Size(
         //     // ignore: use_build_context_synchronously
