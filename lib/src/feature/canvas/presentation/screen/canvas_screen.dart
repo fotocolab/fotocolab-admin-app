@@ -30,7 +30,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
 
   late EditImageNotifierProvider editImgProvider;
 
-  List<ImageTitleResponseModel> images = [];
+  List<ImageTitleResponseModel> assetImages = [];
 
   List<String> titles = [];
 
@@ -45,14 +45,14 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   Future<void> attachOnTap() async {
     var imgList = await FileManager.uploadMultiple();
     for (var i in imgList) {
-      images.add(ImageTitleResponseModel(image: i, language: .english));
+      assetImages.add(ImageTitleResponseModel(image: i, language: .english));
     }
     setState(() {});
   }
 
   void onChanged(int index, String? value) {
-    images[index] = images[index].copyWith(
-      image: images[index].image,
+    assetImages[index] = assetImages[index].copyWith(
+      image: assetImages[index].image,
       title: value ?? '',
     );
   }
@@ -64,13 +64,13 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
 
     int length = list.length;
 
-    if (images.length < length) {
-      length = images.length;
+    if (assetImages.length < length) {
+      length = assetImages.length;
     }
 
     for (int i = 0; i < length; i++) {
-      images[i] = images[i].copyWith(
-        image: images[i].image,
+      assetImages[i] = assetImages[i].copyWith(
+        image: assetImages[i].image,
         title: list[i].split('|||').first,
         language: list[i].split('|||').last.trim().toLowerCase().toLanguageEnum,
       );
@@ -80,12 +80,14 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   }
 
   void deleteOnTap(int index) {
-    images.removeAt(index);
+    assetImages.removeAt(index);
     setState(() {});
   }
 
   void onLanguageChanged(LanguageEnum? langauge, int index) {
-    images[index] = images[index].copyWith(language: langauge ?? .english);
+    assetImages[index] = assetImages[index].copyWith(
+      language: langauge ?? .english,
+    );
     setState(() {});
   }
 
@@ -93,9 +95,9 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   void duplicateOnTap() {
     int? count = int.tryParse(copyCountController.text);
     if (count != null) {
-      if (count > 0 && images.length == 1) {
+      if (count > 0 && assetImages.length == 1) {
         for (int i = 0; i < count - 1; i++) {
-          images.add(
+          assetImages.add(
             ImageTitleResponseModel(
               image: PlatformFile(
                 name: 'mergedVideo.mp4',
@@ -121,43 +123,21 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
     });
     List<UploadImageRequestModel> mergedImage = [];
 
-    for (var i in images) {
+    for (var i in assetImages) {
       try {
         var videoPath = await VideoManager.addTextToVideoAndroid(
           context: context,
           text: i.title.split('|||').first,
           language: i.language,
           inputVideoPath: i.image!.path!,
-          frameCount: 50,
+          frameCount: 10,
           fontSize: editImgProvider.fontSize,
           textfromLeft: editImgProvider.fontPositionLeft,
           textfromTop: editImgProvider.fontPositionTop,
           transition: editImgProvider.selectedTransition,
-
-          stackSize: Size(
-            // ignore: use_build_context_synchronously
-            context.screenWidth,
-            // ignore: use_build_context_synchronously
-            context.screenWidth,
-          ),
+          fontColor: editImgProvider.fontColor,
+          stackSize: Size(context.screenWidth, context.screenWidth),
         );
-        // var videoPath = await VideoManager.addTextToVideoAndroid(
-        //   videoPath: i.image!.path!,
-        //   // font: editImgProvider.selectedFont,
-        //   fontColor: editImgProvider.fontColor,
-        //   fontSize: editImgProvider.fontSize,
-        // textfromLeft: editImgProvider.fontPositionLeft,
-        // textfromTop: editImgProvider.fontPositionTop,
-        //   text: i.title.split('|||').first,
-          // transition: editImgProvider.selectedTransition,
-        //   language: i.language,
-        //   stackSize: Size(
-        //     // ignore: use_build_context_synchronously
-        //     context.screenHeight * 0.6,
-        //     // ignore: use_build_context_synchronously
-        //     context.screenHeight * 0.6,
-        //   ),
-        // );
 
         if (videoPath != null) {
           var video = File(videoPath);
@@ -191,35 +171,35 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
 
   Future<void> audioOnTap(int index) async {
     var audio = await FileManager.uploadSingle(allowedExtensions: ['mp3']);
-    images[index] = images[index].copyWith(audio: audio);
+    assetImages[index] = assetImages[index].copyWith(audio: audio);
     setState(() {});
   }
 
   void deleteAudioOnTap(int index) {
-    images[index] = images[index].copyWith(audio: null);
+    assetImages[index] = assetImages[index].copyWith(audio: null);
     setState(() {});
   }
 
   Future<void> overlayOnTap(int index) async {
     var overlay = await FileManager.uploadSingle(allowedExtensions: ['mp4']);
-    images[index] = images[index].copyWith(overlay: overlay);
+    assetImages[index] = assetImages[index].copyWith(overlay: overlay);
     setState(() {});
   }
 
   void deleteOverlayOnTap(int index) {
-    images[index] = images[index].copyWith(overlay: null);
+    assetImages[index] = assetImages[index].copyWith(overlay: null);
     setState(() {});
   }
 
   void gotoEditImageScreen(int index) {
-    context.push(RouteName.editImage, extra: images[index]);
+    context.push(RouteName.editImage, extra: assetImages[index]);
   }
 
   void gotoVideoMergeScreen() {
     context.push(RouteName.videoMerge).then((videoPath) async {
       mergedVideoPath = videoPath?.toString();
       if (mergedVideoPath != null) {
-        images.add(
+        assetImages.add(
           ImageTitleResponseModel(
             image: PlatformFile(
               name: 'fotocolab_video.mp4',
@@ -312,7 +292,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                             borderRadius: 12,
                           ),
                         ),
-                        if (images.isNotEmpty) ...[
+                        if (assetImages.isNotEmpty) ...[
                           BrandVSpace.gap16(),
                           SizedBox(
                             child: BrandTextField(
@@ -363,7 +343,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                             alignment: .topLeft,
                             child: BrandText.white(
                               data:
-                                  '${context.loc.total_images}: ${images.length}',
+                                  '${context.loc.total_images}: ${assetImages.length}',
                             ),
                           ),
                         ],
@@ -373,14 +353,14 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
                 ),
                 BrandVSpace.gap10(),
 
-                if (images.isNotEmpty) ...[
+                if (assetImages.isNotEmpty) ...[
                   ListView.separated(
                     shrinkWrap: true,
-                    itemCount: images.length,
+                    itemCount: assetImages.length,
                     physics: const NeverScrollableScrollPhysics(),
                     separatorBuilder: (context, index) => BrandVSpace.gap14(),
                     itemBuilder: (context, index) {
-                      var item = images[index];
+                      var item = assetImages[index];
                       return ImageTitleWidget(
                         title: item.title,
                         image: item.image,

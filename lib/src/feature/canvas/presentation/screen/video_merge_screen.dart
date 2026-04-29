@@ -28,6 +28,7 @@ class VideoMergeScreen extends ConsumerStatefulWidget {
 
 class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
   late UploadNotifierProvider provider;
+
   late EditImageNotifierProvider editImgProvider;
 
   List<ImageTitleResponseModel> images = [];
@@ -111,14 +112,14 @@ class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
 
     for (var i in images) {
       try {
-        var k = await cropToAspectSmart(i.image!.path!);
+        var croppedImage = await ImageManager.cropToAspectSmart(i.image!.path!);
 
         var dir = await getApplicationCacheDirectory();
 
         String path =
             '${dir.path}/image_${DateTime.now().millisecondsSinceEpoch}.png';
 
-        var newFile = await File(path).writeAsBytes(k);
+        var newFile = await File(path).writeAsBytes(croppedImage);
 
         if (i.audio != null) {
           var videoPath = await VideoManager.applyGreenScreen(
@@ -137,7 +138,7 @@ class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
             ).writeAsBytes(await File(videoPath).readAsBytes());
 
             var pf = PlatformFile(
-              name: 'video.mp4',
+              name: 'fotocolab_video.mp4',
               size: await video.length(),
               path: video.path,
               bytes: await video.readAsBytes(),
@@ -188,6 +189,15 @@ class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
 
   void gotoEditImageScreen(int index) {
     context.push(RouteName.editImage, extra: images[index]);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      images = [];
+      setState(() {});
+    });
   }
 
   @override

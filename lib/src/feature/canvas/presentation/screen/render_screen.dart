@@ -10,6 +10,7 @@ class RenderScreen extends StatefulWidget {
   final String fontFamily;
   final double progress, left, top, fontSize;
   final TransitionEnum transition;
+  final Color? fontColor;
   const RenderScreen({
     super.key,
     required this.text,
@@ -19,6 +20,7 @@ class RenderScreen extends StatefulWidget {
     required this.top,
     required this.fontSize,
     required this.transition,
+    this.fontColor,
   });
 
   @override
@@ -55,7 +57,7 @@ class RenderScreenState extends State<RenderScreen> {
   }
 
   (double, double) getAnimatedLeftToCenter() {
-    final textWidth = measureTextAdvanced(
+    final textWidth = ImageManager.measureTextAdvanced(
       widget.text,
       widget.fontSize,
       widget.fontFamily,
@@ -83,7 +85,7 @@ class RenderScreenState extends State<RenderScreen> {
   }
 
   (double, double) getAnimatedTopToCenter() {
-    final textHeight = measureTextAdvanced(
+    final textHeight = ImageManager.measureTextAdvanced(
       widget.text,
       widget.fontSize,
       widget.fontFamily,
@@ -140,32 +142,35 @@ class RenderScreenState extends State<RenderScreen> {
                   child: Stack(
                     children: [
                       Positioned(
-                        left: getleftAndTop().$1,
-                        top: getleftAndTop().$2,
-                        child: ClipRect(
-                          child: Align(
-                            alignment: .centerLeft,
-                            widthFactor: _progress,
-                            child: Text(
-                              widget.text,
-                              style: TextStyle(
-                                fontSize: widget.fontSize,
-                                color: Colors.white,
-                                fontFamily: widget.fontFamily,
-                                package: BrandConstansts.packageName,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.black.withValues(alpha: 0.35),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 1),
-                                  ),
-                                  Shadow(
-                                    color: Colors.black.withValues(alpha: 0.15),
-                                    blurRadius: 8,
-                                  ),
-                                ],
-                              ),
-                            ),
+                        left: getleftAndTop().$1.roundToDouble(),
+                        top: getleftAndTop().$2.roundToDouble(),
+                        child: Text(
+                          widget.text,
+                          style: TextStyle(
+                            fontSize: widget.fontSize,
+                            fontFamily: widget.fontFamily,
+                            package: BrandConstansts.packageName,
+                            height: 1,
+                            fontWeight: .w500,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 0.5
+                              ..color = Colors.black,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: getleftAndTop().$1.roundToDouble(),
+                        top: getleftAndTop().$2.roundToDouble(),
+                        child: Text(
+                          widget.text,
+                          style: TextStyle(
+                            fontSize: widget.fontSize,
+                            color: widget.fontColor ?? Colors.white,
+                            fontFamily: widget.fontFamily,
+                            package: BrandConstansts.packageName,
+                            height: 1,
+                            fontWeight: .w500,
                           ),
                         ),
                       ),

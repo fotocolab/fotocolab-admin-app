@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
@@ -81,7 +83,8 @@ abstract class VideoManager {
     required double textfromLeft,
     required double textfromTop,
     required TransitionEnum transition,
-    int frameCount = 50,
+    int frameCount = 10,
+    Color? fontColor,
   }) async {
     FontEnum font = .inter;
 
@@ -115,27 +118,12 @@ abstract class VideoManager {
       font = .urdu;
     }
 
-    var mText = wrapTextForFFmpeg(
+    var mText = ImageManager.wrapTextForFFmpeg(
       text: text,
       maxWidth: stackSize.width,
       fontSize: fontSize,
       fontFamily: font.fontFamily,
     ).replaceAll(r'\n', '\n');
-
-    // final result = await calculateFFmpegPosition(
-    //   videoPath: inputVideoPath,
-    //   fontFamily: font.fontFamily,
-    //   textOffset: Offset(textfromLeft, textfromTop),
-    //   text: mText,
-    //   fromTop: textfromTop,
-    //   uiFontSize: fontSize,
-    //   stackSize: stackSize,
-    //   fit: BoxFit.contain,
-    // );
-
-    // double tx = (result.x);
-
-    // double ty = (result.y);
 
     final GlobalKey<RenderScreenState> key = GlobalKey<RenderScreenState>();
 
@@ -143,7 +131,11 @@ abstract class VideoManager {
 
     final frameDir = Directory('${dir.path}/frames');
 
-    if (!frameDir.existsSync()) frameDir.createSync(recursive: true);
+    if (frameDir.existsSync()) {
+      frameDir.deleteSync(recursive: true);
+    }
+
+    frameDir.createSync(recursive: true);
 
     final outputPath =
         '${dir.path}/video_${DateTime.now().microsecondsSinceEpoch}.mp4';
@@ -151,7 +143,6 @@ abstract class VideoManager {
     double progress = 0.0;
 
     Navigator.push(
-      // ignore: use_build_context_synchronously
       context,
       MaterialPageRoute(
         builder: (_) => RenderScreen(
@@ -163,18 +154,21 @@ abstract class VideoManager {
           top: textfromTop,
           fontSize: fontSize,
           transition: transition,
+          fontColor: fontColor,
         ),
       ),
     );
 
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 100));
 
     for (int i = 0; i < frameCount; i++) {
-      progress = i / frameCount;
+      progress = i / (frameCount - 1);
 
       key.currentState?.setProgress(progress);
 
+      await Future.delayed(Duration.zero);
       await WidgetsBinding.instance.endOfFrame;
+      await Future.delayed(const Duration(milliseconds: 50));
 
       final state = key.currentState as RenderScreenState;
 
@@ -182,14 +176,13 @@ abstract class VideoManager {
           state.repaintKey.currentContext!.findRenderObject()
               as RenderRepaintBoundary;
 
-      final image = await boundary.toImage(pixelRatio: 1);
+      final image = await boundary.toImage(pixelRatio: 2.75);
 
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 
       final file = File(
         '${frameDir.path}/frame_${i.toString().padLeft(4, '0')}.png',
       );
-
       await file.writeAsBytes(byteData!.buffer.asUint8List());
     }
 
@@ -197,11 +190,16 @@ abstract class VideoManager {
       context.pop();
     }
 
+    double fW = (await ImageManager.getVideoSize(inputVideoPath)).width;
+    double fh = (await ImageManager.getVideoSize(inputVideoPath)).height;
+
     final cmd =
-        '-i $inputVideoPath -framerate 25 -i ${frameDir.path}/frame_%04d.png -filter_complex "[1:v]scale=iw:ih,format=rgba[txt];[0:v][txt]overlay=0:0" -c:v libx264 -pix_fmt yuv420p -crf 18 -preset medium $outputPath';
+        '''-i $inputVideoPath -framerate 25 -i ${frameDir.path}/frame_%04d.png -filter_complex "[1:v]scale=$fW:$fh:flags=lanczos[fg];[0:v][fg]overlay=0:0:format=auto,gblur=sigma=0.3,unsharp=5:5:1.2:5:5:0.0" -c:v libx264 -pix_fmt yuv420p -crf 12 -preset slow -x264-params aq-mode=3:aq-strength=1.0:deblock=0,0 $outputPath''';
 
     var session = await FFmpegKit.execute(cmd);
+
     var o = await session.getAllLogs();
+
     for (var i in o) {
       debugLog(i.getMessage());
     }

@@ -125,9 +125,8 @@ class _EditImageState extends ConsumerState<EditImage> {
                       provider.onFontPositionChanged(details.delta);
                     },
                     child: SizedBox(
-                      // width: context.screenWidth * 0.8,
                       child: BrandText.white(
-                        data: wrapTextForFFmpeg(
+                        data: ImageManager.wrapTextForFFmpeg(
                           text: image?.title ?? '--',
                           maxWidth: context.screenWidth,
                           fontSize: provider.fontSize,

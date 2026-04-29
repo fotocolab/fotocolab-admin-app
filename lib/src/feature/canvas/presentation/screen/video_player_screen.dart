@@ -90,6 +90,18 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                           setState(() {});
                         },
                       ),
+                BrandVSpace.gap10(),
+                BrandIconButon(
+                  iconData: Icons.restart_alt_rounded,
+                  height: 32,
+                  width: 32,
+                  onTap: () async {
+                    await controller.seekTo(Duration.zero);
+                    await controller.play();
+                    isPlaying = true;
+                    setState(() {});
+                  },
+                ),
               ],
             )
           : Expanded(
