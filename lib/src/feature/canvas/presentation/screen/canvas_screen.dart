@@ -42,6 +42,8 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
 
   String? mergedVideoPath;
 
+  int mergedVideoSize = 10;
+
   Future<void> attachOnTap() async {
     var imgList = await FileManager.uploadMultiple();
     for (var i in imgList) {
@@ -100,8 +102,8 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
           assetImages.add(
             ImageTitleResponseModel(
               image: PlatformFile(
-                name: 'mergedVideo.mp4',
-                size: 10,
+                name: 'fotocolab_video.mp4',
+                size: mergedVideoSize,
                 path: mergedVideoPath,
               ),
               language: .english,
@@ -198,12 +200,17 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   void gotoVideoMergeScreen() {
     context.push(RouteName.videoMerge).then((videoPath) async {
       mergedVideoPath = videoPath?.toString();
+      
+      mergedVideoSize = (await File(
+        mergedVideoPath.toString(),
+      ).readAsBytes()).lengthInBytes;
+
       if (mergedVideoPath != null) {
         assetImages.add(
           ImageTitleResponseModel(
             image: PlatformFile(
               name: 'fotocolab_video.mp4',
-              size: (await File(mergedVideoPath!).readAsBytes()).lengthInBytes,
+              size: mergedVideoSize,
               path: videoPath.toString(),
             ),
             language: .english,

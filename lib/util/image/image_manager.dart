@@ -4,7 +4,6 @@ import 'package:ffmpeg_kit_flutter_new/ffprobe_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:fotocolab_design_system/design_system/utils/utils.dart';
 import 'package:image/image.dart' as img;
-import 'package:video_player/video_player.dart';
 
 class FFmpegTextPosition {
   final double x;
@@ -114,11 +113,24 @@ abstract class ImageManager {
   }
 
   static Future<Size> getVideoSize(String filePath) async {
-    final controller = VideoPlayerController.file(File(filePath));
-    await controller.initialize();
-    final size = controller.value.size;
-    await controller.dispose();
-    return size;
+    final session = await FFprobeKit.getMediaInformation(filePath);
+    final info = session.getMediaInformation();
+
+    final streams = info?.getStreams();
+    final videoStream = streams?.firstWhere((s) => s.getType() == 'video');
+
+    final width =
+        double.tryParse(
+          videoStream?.getAllProperties()?['width'].toString() ?? '',
+        ) ??
+        0;
+    final height =
+        double.tryParse(
+          videoStream?.getAllProperties()?['height'].toString() ?? '',
+        ) ??
+        0;
+
+    return Size(width, height);
   }
 
   static Future<FFmpegTextPosition> calculateFFmpegPosition({

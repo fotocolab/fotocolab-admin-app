@@ -189,12 +189,14 @@ abstract class VideoManager {
     if (context.mounted) {
       context.pop();
     }
+    var videoSize = await ImageManager.getVideoSize(inputVideoPath);
 
-    double fW = (await ImageManager.getVideoSize(inputVideoPath)).width;
-    double fh = (await ImageManager.getVideoSize(inputVideoPath)).height;
+    double fW = videoSize.width;
+
+    double fh = videoSize.height;
 
     final cmd =
-        '''-i $inputVideoPath -framerate 25 -i ${frameDir.path}/frame_%04d.png -filter_complex "[1:v]scale=$fW:$fh:flags=lanczos[fg];[0:v][fg]overlay=0:0:format=auto,gblur=sigma=0.3,unsharp=5:5:1.2:5:5:0.0" -c:v libx264 -pix_fmt yuv420p -crf 12 -preset slow -x264-params aq-mode=3:aq-strength=1.0:deblock=0,0 $outputPath''';
+        '''-i $inputVideoPath -framerate 25 -i ${frameDir.path}/frame_%04d.png -filter_complex "[1:v]scale=${fW.toInt()}:${fh.toInt()}[fg];[0:v][fg]overlay=0:0" -c:v libx264 -pix_fmt yuv420p -crf 18 -preset veryfast $outputPath''';
 
     var session = await FFmpegKit.execute(cmd);
 

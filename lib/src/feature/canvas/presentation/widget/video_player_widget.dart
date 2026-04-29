@@ -35,11 +35,11 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           });
         }
       });
-      controller.initialize().then((_) async {
-        if (mounted) {
-          setState(() {});
-        }
-      });
+      // controller.initialize().then((_) async {
+      //   if (mounted) {
+      //     setState(() {});
+      //   }
+      // });
     }
   }
 
