@@ -11,6 +11,8 @@ class RenderScreen extends StatefulWidget {
   final double progress, left, top, fontSize;
   final TransitionEnum transition;
   final Color? fontColor;
+  final Size stackSize;
+  final bool isCenter;
   const RenderScreen({
     super.key,
     required this.text,
@@ -20,7 +22,9 @@ class RenderScreen extends StatefulWidget {
     required this.top,
     required this.fontSize,
     required this.transition,
+    required this.stackSize,
     this.fontColor,
+    this.isCenter = true,
   });
 
   @override
@@ -57,63 +61,91 @@ class RenderScreenState extends State<RenderScreen> {
   }
 
   (double, double) getAnimatedLeftToCenter() {
-    final textWidth = ImageManager.measureTextAdvanced(
+    final textSize = ImageManager.measureTextAdvanced(
       widget.text,
       widget.fontSize,
       widget.fontFamily,
-    ).size.width;
+    ).size;
 
-    final startX = -textWidth;
+    final startX = -textSize.width;
 
-    final endX = widget.left;
+    final endX = widget.isCenter
+        ? (widget.stackSize.width - textSize.width) / 2
+        : widget.left;
 
     final t = easeOut(_progress);
 
-    return (startX + (endX - startX) * t, widget.top);
+    final x = startX + (endX - startX) * t;
+
+    return (x, widget.top);
   }
 
   (double, double) getAnimatedRightToCenter() {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    final startX = screenWidth;
-
-    final endX = widget.left;
-
-    final t = easeOut(_progress);
-
-    return (startX + (endX - startX) * t, widget.top);
-  }
-
-  (double, double) getAnimatedTopToCenter() {
-    final textHeight = ImageManager.measureTextAdvanced(
+    final textSize = ImageManager.measureTextAdvanced(
       widget.text,
       widget.fontSize,
       widget.fontFamily,
-    ).size.height;
+    ).size;
 
-    final startY = -textHeight;
+    final startX = widget.stackSize.width;
 
-    final endY = widget.top;
+    final endX = widget.isCenter ? (startX - textSize.width) / 2 : widget.left;
 
     final t = easeOut(_progress);
 
-    final animatedY = startY + (endY - startY) * t;
+    final x = startX + (endX - startX) * t;
 
-    return (widget.left, animatedY);
+    return (x, widget.top);
+  }
+
+  (double, double) getAnimatedTopToCenter() {
+    final textSize = ImageManager.measureTextAdvanced(
+      widget.text,
+      widget.fontSize,
+      widget.fontFamily,
+    ).size;
+
+    final screenHeight = widget.stackSize.height;
+    final screenWidth = widget.stackSize.width;
+
+    final startY = -textSize.height;
+
+    final endY = widget.isCenter
+        ? (screenHeight - textSize.height) / 2
+        : widget.top;
+
+    final t = easeOut(_progress);
+
+    final y = startY + (endY - startY) * t;
+
+    final x = widget.isCenter
+        ? (screenWidth - textSize.width) / 2
+        : widget.left;
+
+    return (x, y);
   }
 
   (double, double) getAnimatedBottomToCenter() {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final textSize = ImageManager.measureTextAdvanced(
+      widget.text,
+      widget.fontSize,
+      widget.fontFamily,
+    ).size;
 
-    final startY = screenHeight;
+    final screenSize = widget.stackSize;
 
+    final startY = screenSize.height;
     final endY = widget.top;
 
     final t = easeOut(_progress);
 
     final animatedY = startY + (endY - startY) * t;
 
-    return (widget.left, animatedY);
+    final x = widget.isCenter
+        ? (screenSize.width - textSize.width) / 2
+        : widget.left;
+
+    return (x, animatedY);
   }
 
   String getVisibleText() {
@@ -146,6 +178,7 @@ class RenderScreenState extends State<RenderScreen> {
                         top: getleftAndTop().$2.roundToDouble(),
                         child: Text(
                           widget.text,
+                          textAlign: .center,
                           style: TextStyle(
                             fontSize: widget.fontSize,
                             fontFamily: widget.fontFamily,
@@ -164,6 +197,7 @@ class RenderScreenState extends State<RenderScreen> {
                         top: getleftAndTop().$2.roundToDouble(),
                         child: Text(
                           widget.text,
+                          textAlign: .center,
                           style: TextStyle(
                             fontSize: widget.fontSize,
                             color: widget.fontColor ?? Colors.white,

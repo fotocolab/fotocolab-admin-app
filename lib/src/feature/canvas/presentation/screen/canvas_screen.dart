@@ -138,14 +138,17 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
           textfromTop: editImgProvider.fontPositionTop,
           transition: editImgProvider.selectedTransition,
           fontColor: editImgProvider.fontColor,
-          stackSize: Size(context.screenWidth, context.screenWidth),
+          stackSize: Size(
+            context.screenWidth - 16,
+            context.screenWidth * 4 / 3,
+          ),
         );
 
         if (videoPath != null) {
           var video = File(videoPath);
 
           var pf = PlatformFile(
-            name: 'video.mp4',
+            name: 'fotocolab_video.mp4',
             size: await video.length(),
             path: video.path,
             bytes: await video.readAsBytes(),
@@ -200,7 +203,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   void gotoVideoMergeScreen() {
     context.push(RouteName.videoMerge).then((videoPath) async {
       mergedVideoPath = videoPath?.toString();
-      
+
       mergedVideoSize = (await File(
         mergedVideoPath.toString(),
       ).readAsBytes()).lengthInBytes;

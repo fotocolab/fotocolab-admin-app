@@ -155,6 +155,7 @@ abstract class VideoManager {
           fontSize: fontSize,
           transition: transition,
           fontColor: fontColor,
+          stackSize: stackSize,
         ),
       ),
     );

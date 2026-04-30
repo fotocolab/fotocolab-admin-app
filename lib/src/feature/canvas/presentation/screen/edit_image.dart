@@ -105,14 +105,20 @@ class _EditImageState extends ConsumerState<EditImage> {
         children: [
           ConstrainedBox(
             constraints: BoxConstraints(
-              maxHeight: context.screenHeight * 0.6,
-              maxWidth: context.screenHeight * 0.6,
+              // maxHeight: context.screenHeight * 0.6,
+              // maxWidth: context.screenHeight * 0.6,
+              maxWidth: context.screenWidth,
+              maxHeight: context.screenWidth * 4 / 3,
             ),
             child: Stack(
               fit: .passthrough,
               children: [
                 if (image?.image?.path != null)
-                  Image.file(File(image!.image!.path!), fit: .contain),
+                  Image.file(
+                    File(image!.image!.path!),
+                    fit: .cover,
+                    width: context.screenWidth,
+                  ),
 
                 Positioned(
                   top: provider.fontPositionTop,
