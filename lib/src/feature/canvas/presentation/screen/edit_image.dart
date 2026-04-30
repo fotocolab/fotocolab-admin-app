@@ -76,6 +76,7 @@ class _EditImageState extends ConsumerState<EditImage> {
   }
 
   void fetchData() {
+    provider.clearTextPos();
     if (widget.routeArgs != null) {
       try {
         image = widget.routeArgs;
@@ -105,8 +106,6 @@ class _EditImageState extends ConsumerState<EditImage> {
         children: [
           ConstrainedBox(
             constraints: BoxConstraints(
-              // maxHeight: context.screenHeight * 0.6,
-              // maxWidth: context.screenHeight * 0.6,
               maxWidth: context.screenWidth,
               maxHeight: context.screenWidth * 4 / 3,
             ),

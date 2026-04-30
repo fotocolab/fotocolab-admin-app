@@ -42,7 +42,24 @@ class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
   Future<void> attachOnTap() async {
     var imgList = await FileManager.uploadSingle();
     if (imgList != null) {
-      images.add(ImageTitleResponseModel(image: imgList, language: .english));
+      var croppedImage = await ImageManager.cropToAspectSmart(imgList.path!);
+      var dir = await getApplicationCacheDirectory();
+
+      String path =
+          '${dir.path}/image_${DateTime.now().millisecondsSinceEpoch}.png';
+
+      var newFile = await File(path).writeAsBytes(croppedImage);
+
+      images.add(
+        ImageTitleResponseModel(
+          image: PlatformFile(
+            name: 'fotocolab_image.png',
+            size: (await newFile.readAsBytes()).lengthInBytes,
+            path: path,
+          ),
+          language: .english,
+        ),
+      );
       setState(() {});
     }
   }

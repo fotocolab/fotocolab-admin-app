@@ -146,6 +146,10 @@ class EditImageNotifierProvider extends StateNotifier<EditImageState> {
     );
   }
 
+  void clearTextPos() {
+    state = state.copyWith(fontPositionTop: 100, fontPositionLeft: 10);
+  }
+
   set setLogoWidth(double value) {
     state = state.copyWith(logoWidth: value);
   }
