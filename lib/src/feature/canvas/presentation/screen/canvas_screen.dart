@@ -138,10 +138,7 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
           textfromTop: editImgProvider.fontPositionTop,
           transition: editImgProvider.selectedTransition,
           fontColor: editImgProvider.fontColor,
-          stackSize: Size(
-            context.screenWidth - 16,
-            context.screenWidth * 4 / 3,
-          ),
+          stackSize: Size(context.screenWidth, context.screenWidth * 4 / 3),
         );
 
         if (videoPath != null) {

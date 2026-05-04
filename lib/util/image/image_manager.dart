@@ -133,117 +133,6 @@ abstract class ImageManager {
     return Size(width, height);
   }
 
-  static Future<FFmpegTextPosition> calculateFFmpegPosition({
-    required String videoPath,
-    required Size stackSize,
-    required BoxFit fit,
-    required Offset textOffset, // position of text in Stack
-    required String text,
-    required double uiFontSize,
-    required String fontFamily,
-    double? fromTop,
-    double? fromBottom,
-  }) async {
-    final session = await FFprobeKit.execute(
-      '-v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$videoPath"',
-    );
-
-    final output = await session.getOutput();
-    final parts = output!.trim().split(',');
-    final videoWidth = double.parse(parts[0]);
-    final videoHeight = double.parse(parts[1]);
-
-    final scaleX = videoWidth / stackSize.width;
-    final scaleY = videoHeight / stackSize.height;
-
-    // final ffmpegX = textOffset.dx * scaleX;
-    // final ffmpegY = textOffset.dy * scaleY;
-    final ffmpegX = (textOffset.dx * 3 * scaleX).round().toDouble();
-    final ffmpegY = (textOffset.dy * 3 * scaleY).round().toDouble();
-    // final fitted = applyBoxFit(fit, videoSize, stackSize);
-    // final renderSize = fitted.destination;
-
-    // final dx = (stackSize.width - renderSize.width) / 2;
-    // final dy = (stackSize.height - renderSize.height) / 2;
-
-    // final rect = Rect.fromLTWH(dx, dy, renderSize.width, renderSize.height);
-
-    // final adjustedX = (textOffset.dx - rect.left).clamp(0.0, rect.width);
-    // final adjustedY = (textOffset.dy - rect.top).clamp(0.0, rect.height);
-
-    // // Step 3: Convert to relative
-    // final relativeX = adjustedX / rect.width;
-    // final relativeY = adjustedY / rect.height;
-
-    // final ffmpegX = relativeX * videoSize.width;
-    // final ffmpegY = relativeY * videoSize.height;
-
-    // final scale = videoSize.width / rect.width;
-    // final metrics = measureTextAdvanced(text, uiFontSize, fontFamily);
-
-    // final ffmpegYCorrected = ffmpegY + (metrics.ascent * scale);
-
-    return FFmpegTextPosition(x: ffmpegX, y: ffmpegY, fontSize: uiFontSize);
-    // );
-    // // Step 2: Calculate rendered image size inside Stack
-    // final fitted = applyBoxFit(fit, originalSize, stackSize);
-
-    // final renderSize = fitted.destination;
-
-    // final dx = (stackSize.width - renderSize.width) / 2;
-    // final dy = (stackSize.height - renderSize.height) / 2;
-
-    // final imageRect = Rect.fromLTWH(dx, dy, renderSize.width, renderSize.height);
-
-    // // Step 3: Resolve vertical position (top/bottom)
-    // double finalTop;
-
-    // if (fromTop != null) {
-    //   finalTop = fromTop;
-    // } else if (fromBottom != null) {
-    //   finalTop = stackSize.height - fromBottom;
-    // } else {
-    //   throw Exception("Provide either fromTop or fromBottom");
-    // }
-
-    // // Override stackOffset Y if using top/bottom logic
-    // final effectiveOffset = Offset(textOffset.dx, finalTop);
-
-    // // Step 4: Measure text in Flutter
-    // // Step 5: Calculate scale factor (Stack → Image)
-    // final scale = originalSize.width / imageRect.width;
-
-    // // Step 6: Convert stack position → image space
-    // final adjustedX = (effectiveOffset.dx - imageRect.left).clamp(
-    //   0.0,
-    //   imageRect.width,
-    // );
-
-    // final adjustedY = (effectiveOffset.dy - imageRect.top).clamp(
-    //   0.0,
-    //   imageRect.height,
-    // );
-
-    // // Step 7: Convert to relative position
-    // final relativeX = adjustedX / imageRect.width;
-    // final relativeY = adjustedY / imageRect.height;
-
-    // // Step 8: Convert to FFmpeg pixel space
-    // final ffmpegLeft = relativeX * originalSize.width;
-    // final ffmpegTop = relativeY * originalSize.height;
-    // final scaledAscent = metrics.ascent * scale;
-
-    // final ffmpegTopCorrected = ffmpegTop + scaledAscent;
-
-    // final ffmpegFontSize = uiFontSize * scale;
-
-    // return FFmpegTextPosition(
-    //   x: ffmpegLeft,
-    //   y: ffmpegTopCorrected,
-    //   fontSize: ffmpegFontSize,
-    // );
-  }
-
   static TextMetrics measureTextAdvanced(
     String text,
     double fontSize,
@@ -275,7 +164,12 @@ abstract class ImageManager {
     required double fontSize,
     required String fontFamily,
   }) {
+    const double horizontalPadding = 16 * 2;
+
+    final effectiveWidth = maxWidth - horizontalPadding;
+
     final words = text.split(RegExp(r'\s+'));
+
     final lines = <String>[];
 
     String currentLine = '';
@@ -295,7 +189,7 @@ abstract class ImageManager {
         maxLines: 1,
       )..layout(maxWidth: double.infinity);
 
-      if (tp.width > maxWidth) {
+      if (tp.width > effectiveWidth) {
         if (currentLine.isNotEmpty) {
           lines.add(currentLine);
         }

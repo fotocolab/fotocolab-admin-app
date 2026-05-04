@@ -40,7 +40,9 @@ class _VideoMergeScreenState extends ConsumerState<VideoMergeScreen> {
   bool isMergeAndGoLoding = false;
 
   Future<void> attachOnTap() async {
-    var imgList = await FileManager.uploadSingle();
+    var imgList = await FileManager.uploadSingle(
+      allowedExtensions: ['png', 'jpg', 'jpeg'],
+    );
     if (imgList != null) {
       var croppedImage = await ImageManager.cropToAspectSmart(imgList.path!);
       var dir = await getApplicationCacheDirectory();
